@@ -13,8 +13,8 @@
 
 [layout-margins]
 
-.force { min-height: 10px; }
- 
+[layout-heights]
+
 .clearfloat { clear:both; }
 
 .clearfix:before, .clearfix:after, .container:after { content: " "; display: table; }
@@ -28,9 +28,3 @@
 .pull-right { float: right; }
 
 .pull-left { float: left; }
-
-.lh-small { line-height: 15px; }
-
-.lh-normal { line-height: 20px; }
-
-.lh-large { line-height: 30px; }
