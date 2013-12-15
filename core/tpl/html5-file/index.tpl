@@ -1,4 +1,4 @@
-[set app-name=Waffle]
+[set app-name="Nimbly Framework"]
 [set site-name=[app-name]]
 [set language=en]
 [set body-classes=page]
