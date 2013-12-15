@@ -1,0 +1,37 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2013-07-29 21:52-0300\n"
+"PO-Revision-Date: 2013-07-29 21:53-0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
+"X-Poedit-Basepath: .\n"
+
+msgid "step1_long"
+msgstr "Verify System Requirements"
+
+msgid "step1_short"
+msgstr "Verify"
+
+msgid "step2_long"
+msgstr "Enter Basic Configuration"
+
+msgid "step2_short"
+msgstr "Config"
+
+msgid "step3_long"
+msgstr "Database Setup"
+
+msgid "step3_short"
+msgstr "Database"
+
+msgid "step4_long"
+msgstr "Finished"
+
+msgid "step4_short"
+msgstr "Done"
