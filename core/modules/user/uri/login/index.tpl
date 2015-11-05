@@ -1,6 +1,6 @@
 [module user forms]
 [access role=anonymous]
-[set login-url=css-demo/type]
+[set login-url=]
 [post]
 [set page-title=Login]
 [html5-file]

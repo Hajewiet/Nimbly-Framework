@@ -1,1 +1,0 @@
-<li> <a href="#" data-filter='{"key": "wall-post", "space": [row-gid]}' data-trigger='{"key": "wall-post"}'>[row-label]</a> </li>

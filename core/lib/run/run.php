@@ -229,15 +229,11 @@ function run_single_token($token_call) {
     }
 
     /*
-     * 5. Find a template implementing the token, iterating
+     * 4. Find a template implementing the token, iterating
      * through the environments
      */
     if (count($params) == 0) {
-        if (isset($SYSTEM['variables'][$function_id])) {
-            run_template($SYSTEM['variables'][$function_id]);
-            return;
-        }
-
+        
         $path_tpl = find_template($function_id);
         if ($path_tpl !== false) {
             add_token_level($function_id, $path_tpl);
@@ -245,10 +241,15 @@ function run_single_token($token_call) {
             remove_token_level();
             return;
         }
+        
+        if (isset($SYSTEM['variables'][$function_id])) {
+            run_template($SYSTEM['variables'][$function_id]);
+            return;
+        }
     }
 
     /*
-     * 6. Find a module implementing the token, iterating
+     * 5. Find a module implementing the token, iterating
      * through the environments
      */
     $path_lib = load_library($function_id);
@@ -260,7 +261,7 @@ function run_single_token($token_call) {
     }
 
     /*
-     * 7. If not found as template or as module, just echo the token name
+     * 6. If not found as template or as module, just echo the token name
      */
     echo TOKEN_TAG_OPEN . $function_id;
     foreach ($params as $key => $param) {

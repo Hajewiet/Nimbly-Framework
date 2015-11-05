@@ -1,5 +1,0 @@
-[module install forms]
-[post]
-[set css-links="" step=1 body-classes=dialog-page]
-[set page-title="Installation Step [step]/4"]
-[html5-file]

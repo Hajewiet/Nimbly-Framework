@@ -1,1 +1,0 @@
-http://localhost/communities/sites/all/modules/communities/communities_services/services/node-get.php

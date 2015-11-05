@@ -1,1 +1,0 @@
-<option value="[uuid]" data-uuid="[uuid]">[row-label]</option>

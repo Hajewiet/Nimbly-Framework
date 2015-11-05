@@ -56,30 +56,30 @@ AddOutputFilterByType DEFLATE application/x-javascript
 # rewrite: initialize
 RewriteEngine on
 
-RewriteBase /stagedash
+RewriteBase /nimbly
 
 # rewrite: use cache if available for the requested file
-RewriteCond %{REQUEST_URI} ^/stagedash/(.*)
+RewriteCond %{REQUEST_URI} ^/nimbly/(.*)
 RewriteCond data/tmp/cache/%1 -F
 RewriteRule ^ data/tmp/cache/%1 [L]
 
 # rewrite: use cache if available for the requested uri
-RewriteCond %{REQUEST_URI} ^/stagedash/(.*)
+RewriteCond %{REQUEST_URI} ^/nimbly/(.*)
 RewriteCond data/tmp/cache/%1._cached_.html -F
 RewriteRule ^ data/tmp/cache/%1._cached_.html [L]
 
 # rewrite: use EXT static if available for the requested file
-RewriteCond %{REQUEST_URI} ^/stagedash/(.*)
+RewriteCond %{REQUEST_URI} ^/nimbly/(.*)
 RewriteCond ext/static/%1 -F
 RewriteRule ^ ext/static/%1 [L]
 
 # rewrite: use CONTRIB static if available for the requested file
-RewriteCond %{REQUEST_URI} ^/stagedash/(.*)
+RewriteCond %{REQUEST_URI} ^/nimbly/(.*)
 RewriteCond contrib/static/%1 -F
 RewriteRule ^ contrib/static/%1 [L]
 
 # rewrite: use CORE static if availble for the requested file
-RewriteCond %{REQUEST_URI} ^/stagedash/(.*)
+RewriteCond %{REQUEST_URI} ^/nimbly/(.*)
 RewriteCond core/static/%1 -F
 RewriteRule ^ core/static/%1 [L]
 
