@@ -16,6 +16,7 @@
     </head>
     <body class="[body-classes]">
         [header]
+        [system-messages]
         [body]
         [footer]
         <script>
