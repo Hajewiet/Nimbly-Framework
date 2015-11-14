@@ -1,1 +1,1 @@
-[set page-title="Internal server error"][html5-file]
+[set page-title="Internal server error"][html5-foundation]

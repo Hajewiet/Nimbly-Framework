@@ -1,1 +1,1 @@
-[set page-title="Access denied"][html5-file]
+[set page-title="Access denied"][html5-foundation]

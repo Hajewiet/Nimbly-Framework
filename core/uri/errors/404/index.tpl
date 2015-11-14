@@ -1,2 +1,2 @@
 [set page-title="Page not found"]
-[html5-file]
+[html5-foundation]
