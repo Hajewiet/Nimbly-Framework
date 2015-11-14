@@ -1,1 +1,1 @@
-[debug]
+[html5-foundation]

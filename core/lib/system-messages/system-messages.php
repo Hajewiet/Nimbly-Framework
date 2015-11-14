@@ -3,7 +3,7 @@
 function system_messages_token($params) {
     run_library("session");
     if (empty($_SESSION['SYSTEM']['messages'])) {
-        return;
+        return "";
     } else if (is_array($_SESSION['SYSTEM']['messages'])){
         load_library("set");
         $tpl = find_template("system-messages", 'lib/system-messages');
