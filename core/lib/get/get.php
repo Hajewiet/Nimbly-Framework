@@ -15,4 +15,6 @@ function get_token($params, $default=null) {
     return $default;
 }
 
-?>
+function get_variable($key) {
+    return $GLOBALS['SYSTEM']['variables'][$key];
+}

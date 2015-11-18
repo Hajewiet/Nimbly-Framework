@@ -3,7 +3,17 @@
 $GLOBALS['SYSTEM']['data_base'] = $GLOBALS['SYSTEM']['file_base'] . 'data';
 
 function crud_token($params) {
-    
+    $op = get_param_value($params, "op", "read");
+    if ($op === "read") {
+        $cat = get_param_value($params, "cat");
+        $key = get_param_value($params, "key");
+        load_library('set');
+        $data = data_load($cat, $key);
+        foreach ($data as $key => $value) {
+            set_variable('crud-obj.' . $key, $value);
+        }
+    }
+    return "";
 }
 
 /**
@@ -15,7 +25,7 @@ function crud_token($params) {
 function data_list($cat) {
     $path = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat;
     $result = array_diff(scandir($path), array('..', '.'));
-    var_dump($result);
+    return $result;
 }
 
 /**

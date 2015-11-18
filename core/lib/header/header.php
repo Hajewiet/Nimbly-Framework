@@ -11,6 +11,11 @@ function header_token($params) {
         header("Content-type: application/javascript");
         return;
     }
+    $json = get_single_param_value($params, "json", true, false);
+    if ($json) {
+        header("Content-type: application/json");
+        return;
+    }
     $woff = get_single_param_value($params, "woff", true, false);
     if ($woff) {
         header("Content-type: application/x-font-woff");
