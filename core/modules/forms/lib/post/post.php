@@ -1,18 +1,18 @@
 <?php
 
 function post_token($params) {
-    if ($_SERVER['REQUEST_METHOD'] != 'POST' || empty($_POST['form-key'])) {
+    if ($_SERVER['REQUEST_METHOD'] != 'POST' || empty($_POST['form_key'])) {
         return; //not a valid post, do nothing
     }
     run_library("session");
-    if (empty($_SESSION['key']) || $_SESSION['key'] != $_POST['form-key']) {
+    if (empty($_SESSION['key']) || $_SESSION['key'] != $_POST['form_key']) {
         return; //suspicious, could be a CSRF attack.. do nothing.
     }
     load_library("validate");
     $id_suffix = "";
-    if (isset($_POST['form-id'])) {
+    if (isset($_POST['form_id'])) {
         load_library("sanitize");
-        $id_suffix = '_' . sanitize_id($_POST['form-id']);
+        $id_suffix = '_' . sanitize_id($_POST['form_id']);
     }
     
     $validate_include_file = $GLOBALS['SYSTEM']['uri_path'] . '/validate' . $id_suffix . '.inc';

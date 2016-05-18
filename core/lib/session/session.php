@@ -18,19 +18,15 @@ function session_token() {
         $session_started = true;
     }
     
-    
-   
     session_save_path($GLOBALS['SYSTEM']['session_base']);
     session_name("session_id");
     @session_start();
-    
 
     //2. if it's a new session, just create and initialize it and done.
     if (empty($_SESSION)) { //a new session
         session_initialize();
         return;
     }
-
 
     //3. remove and restart session if it does not validate
     if (empty($_SESSION['modified']) 
@@ -45,6 +41,17 @@ function session_token() {
 
     //4. update session
     $_SESSION['modified'] = $_SERVER['REQUEST_TIME'];
+}
+
+function session_exists() {
+    return !empty($_SESSION) || !empty($_COOKIE['session_id']);
+}
+
+function session_resume() {
+    if (session_exists()) {
+        session_token();
+    }
+    return !empty($_SESSION);
 }
 
 function session_initialize() {

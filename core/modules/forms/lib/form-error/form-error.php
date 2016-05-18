@@ -15,6 +15,7 @@ function form_error_token($params) {
     
     $errors = $GLOBALS['SYSTEM']['validation_errors'][$field];
 
+    //eew... get this from a (backend) template
     $result = '<span class="errors">';
     foreach ($errors as $error) {
         $result .= '<span class="error">' . $error . '</span>';

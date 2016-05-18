@@ -18,18 +18,20 @@ function find_uri($name, $tpl_name = "index.tpl") {
     return $result;
 }
 
-function find_template($name, $dir=null) {
+function find_template($name, $dir = null) {
     global $SYSTEM;
-    
+
     if (isset($dir)) {
         foreach ($SYSTEM['env_paths'] as $env_path) {
-            $path = $SYSTEM['file_base'] . $env_path . '/' . $dir . '/' . $name . ".tpl";
-             if (file_exists($path)) {
-                 return $path;
-             }
-        }    
+            foreach ($SYSTEM['modules'] as $module_path) {
+                $path = $SYSTEM['file_base'] . $env_path . $module_path . $dir . '/' . $name . ".tpl";
+                if (file_exists($path)) {
+                    return $path;
+                }
+            }
+        }
     }
-    
+
     $path = find_path($SYSTEM['uri'], 'uri', $name . ".tpl");
     if ($path !== false) {
         return $path;
@@ -98,12 +100,24 @@ function find_all_modules($sub = '') {
     }
 }
 
-function load_library($name) {
+function load_library($name, $mod=null) {
+    static $loaded = [];
+    if (!empty($loaded[$name])) {
+        return;
+    }
+    if (!empty($mod)) {
+        load_module($mod);
+    }
     $path = find_library($name);
     if ($path !== false) {
         require_once($path);
     }
+    $loaded[$name] = true;
     return $path;
+}
+
+function load_module($name) {
+    $GLOBALS['SYSTEM']['modules'][$name] = '/modules/' . $name . '/';
 }
 
 function find_token($params) {
@@ -118,4 +132,4 @@ function find_token($params) {
     }
     return find_template($name, $dir);
 }
-?>
+

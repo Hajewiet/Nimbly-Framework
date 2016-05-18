@@ -67,7 +67,9 @@ function img_generate_placeholder(&$params) {
     imagefilledrectangle($img, 0, 0, $width, $height, $bg_color);
 
     //add diagonal crossed lines
-    imageantialias($img, true);
+    if (function_exists("imageantialias")) {
+        imageantialias($img, true);
+    }
     imagesetthickness($img, 5);
     imageline($img, 0, 0, $width, $height, $line_color);
     imageline($img, $width, 0, 0, $height, $line_color);
@@ -86,7 +88,7 @@ function img_generate_placeholder(&$params) {
     imagetruecolortopalette($img, false, 3);
 
     //save image and clean up
-    @mkdir(dirname($img_path));
+    @mkdir(dirname($img_path, 0755));
     if (@imagepng($img, $img_path, 9)) {
         $result = $img_uri;
     }

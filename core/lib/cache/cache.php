@@ -13,8 +13,8 @@ function cache_token($params) {
         //strip comments (small yet safe optimization)
         $content = preg_replace('!/\*.*?\*/!s', '', $content);
     }
-    @mkdir(dirname($file_path));
-    @file_put_contents($file_path, $content);
+    @mkdir(dirname($file_path), 0755);
+    @file_put_contents($file_path, $content, LOCK_EX);
 }
 
 ?>

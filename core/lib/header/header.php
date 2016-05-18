@@ -11,6 +11,11 @@ function header_token($params) {
         header("Content-type: application/javascript");
         return;
     }
+    $json = get_single_param_value($params, "json", true, false);
+    if ($json) {
+        header("Content-type: application/json");
+        return;
+    }
     $woff = get_single_param_value($params, "woff", true, false);
     if ($woff) {
         header("Content-type: application/x-font-woff");
@@ -26,6 +31,20 @@ function header_token($params) {
         header('HTTP/1.0 404 Not Found');
         return;
     }
+    $error_500 = get_single_param_value($params, "500", true, false);
+    if ($error_500) {
+        header('HTTP/1.1 500 Internal Server Error');
+        return;
+    }
+    $csv = get_single_param_value($params, "csv", true, false);
+    if ($css) {
+        header("Content-type: application/csv; charset=UTF-8");
+        return;
+    }
+}
+
+function return_header($type) {
+    header_token(array($type => $type));
 }
 
 ?>
