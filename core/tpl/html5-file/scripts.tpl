@@ -1,1 +1,0 @@
-$script('[jquery-url]', 'jquery');

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 .portlet { background-color: #eee; margin-bottom: 1rem; }
+=======
+.portlet { background-color: #eee; }
+>>>>>>> origin/master
 
 .portlet.radius { border-radius: 5px; }
 
