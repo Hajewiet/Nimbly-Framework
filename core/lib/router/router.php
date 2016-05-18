@@ -10,6 +10,9 @@ function router_run($uri) {
     $GLOBALS['SYSTEM']['route_found'] = false;
     load_library("crud");
     $routes = data_list("routes");
+    if (empty($routes)) {
+        return false;
+    }
     foreach ($routes as $route) {
         $r = data_load("routes", $route);
         $ep = $r['route'];
