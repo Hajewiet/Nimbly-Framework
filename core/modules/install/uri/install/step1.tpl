@@ -4,7 +4,7 @@
 [set data_dir_ok=[require cond=[setup-data-dir]]]
 [set data_write_ok=[require write_access=data]]
 
-[if require=fail tpl=step1_fail]
+[if require_all=fail tpl=step1_fail]
 
 [if session_ok=fail tpl=require_session]
 [if php_ok=fail tpl=require_php]
@@ -13,4 +13,5 @@
 [if data_dir_ok=fail tpl=require_data_dir]
 [if data_write_ok=fail tpl=require_data_write]
 
-[ifnot require=fail tpl=step1_pass]
+[if require_all=pass tpl=step1_pass]
+

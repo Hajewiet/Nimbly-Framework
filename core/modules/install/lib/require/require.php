@@ -1,24 +1,20 @@
 <?php
 
 function require_sc($params) {
-    $result['pass'] = "pass";
-    $result['fail'] = "fail";
+    load_library("get");
     $pass = true;
     foreach ($params as $key => $value) {
-        if ($key == "pass") {
-            $result['pass'] = $value;
-        } else if ($key == "fail") {
-            $result['fail'] = "";
-        } else {
+        if ($key !== "pass") {
             $pass &= require_test($key, $value);
         }
     }
     if ($pass) {
-        return $result['pass'];
+        set_variable("require", 'pass', false, false);
+        return 'pass';
     }
     load_library("set");
-    set_variable("require", $result['fail']);
-    return $result['fail'];
+    set_variable("require", 'fail', false, true);
+    return 'fail';
 }
 
 function require_test($key, $value) {
