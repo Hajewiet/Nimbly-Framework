@@ -1,1 +1,0 @@
-/* add your angular scripts at ext/uri/js/ng.js/ng-scripts.tpl */

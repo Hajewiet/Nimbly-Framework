@@ -1,6 +1,6 @@
 <?php
 
-function redirect_token() {
+function redirect_sc() {
     
 }
 
@@ -13,5 +13,3 @@ function redirect($url, $status=303) {
     echo "redirecting to <a href=\"{$url}\">{$url}</a>";        
     exit();
 }
-
-?>

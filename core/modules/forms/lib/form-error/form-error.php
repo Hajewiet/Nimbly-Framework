@@ -1,6 +1,6 @@
 <?php
 
-function form_error_token($params) {
+function form_error_sc($params) {
     
     if (empty($params)) {
         //return global errors
@@ -16,11 +16,11 @@ function form_error_token($params) {
     $errors = $GLOBALS['SYSTEM']['validation_errors'][$field];
 
     //eew... get this from a (backend) template
-    $result = '<span class="errors">';
+    $result = '<div class="callout alert errors">';
     foreach ($errors as $error) {
         $result .= '<span class="error">' . $error . '</span>';
     }
-    $result .= '</span>';
+    $result .= '</div>';
     return $result;
 }
  

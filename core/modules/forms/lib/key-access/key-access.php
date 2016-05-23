@@ -1,6 +1,6 @@
 <?php
 
-function key_access_token($params) {
+function key_access_sc($params) {
     run_library("session");
     $redirect_url = get_param_value($params, "redirect", "errors/403");
 

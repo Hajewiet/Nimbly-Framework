@@ -1,6 +1,6 @@
 <?php
 
-function require_token($params) {
+function require_sc($params) {
     $result['pass'] = "pass";
     $result['fail'] = "fail";
     $pass = true;
@@ -16,6 +16,8 @@ function require_token($params) {
     if ($pass) {
         return $result['pass'];
     }
+    load_library("set");
+    set_variable("require", $result['fail']);
     return $result['fail'];
 }
 
@@ -80,5 +82,3 @@ function require_higher_version($v1, $v2) {
 
     return $major1 >= $major2 && $minor1 >= $minor2 && $release1 >= $release2;
 }
-
-?>

@@ -8,7 +8,7 @@
     allow from all
 </Files>
 
-# 
+# install.php redirects to index.php
 <Files install.php>
     allow from all
 </Files>
@@ -31,8 +31,8 @@ AddDefaultCharset utf-8
 # set the default language
 DefaultLanguage en-US
 
-# set the security salt hash code (unique per installation)
-SetEnv SALT [salt]
+# set the security pepper hash code (unique per installation)
+SetEnv PEPPER [get sticky.pepper]
 
 # compress text, html, javascript, css, xml:
 AddOutputFilterByType DEFLATE text/plain
@@ -56,32 +56,32 @@ AddOutputFilterByType DEFLATE application/x-javascript
 # rewrite: initialize
 RewriteEngine on
 
-RewriteBase /[rewrite-base]
+RewriteBase /[get sticky.rewritebase]
 
 # rewrite: use cache if available for the requested file
-RewriteCond %{REQUEST_URI} ^/[rewrite-base-slash](.*)
+RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
 RewriteCond data/tmp/cache/%1 -F
-RewriteRule ^ data/tmp/cache/%1 [L]
+RewriteRule ^ data/tmp/cache/%1 \[L]
 
 # rewrite: use cache if available for the requested uri
-RewriteCond %{REQUEST_URI} ^/[rewrite-base-slash](.*)
+RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
 RewriteCond data/tmp/cache/%1._cached_.html -F
-RewriteRule ^ data/tmp/cache/%1._cached_.html [L]
+RewriteRule ^ data/tmp/cache/%1._cached_.html \[L]
 
 # rewrite: use EXT static if available for the requested file
-RewriteCond %{REQUEST_URI} ^/[rewrite-base-slash](.*)
+RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
 RewriteCond ext/static/%1 -F
-RewriteRule ^ ext/static/%1 [L]
+RewriteRule ^ ext/static/%1 \[L]
 
 # rewrite: use CONTRIB static if available for the requested file
-RewriteCond %{REQUEST_URI} ^/[rewrite-base-slash](.*)
+RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
 RewriteCond contrib/static/%1 -F
-RewriteRule ^ contrib/static/%1 [L]
+RewriteRule ^ contrib/static/%1 \[L]
 
 # rewrite: use CORE static if availble for the requested file
-RewriteCond %{REQUEST_URI} ^/[rewrite-base-slash](.*)
+RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
 RewriteCond core/static/%1 -F
-RewriteRule ^ core/static/%1 [L]
+RewriteRule ^ core/static/%1 \[L]
 
 # finally, fallback to PHP to handle the request. 
 php_flag register_globals off
@@ -97,15 +97,15 @@ php_value session.cookie_lifetime 1800
 
 # rewrite: redirect anything that is not a file to index.php
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^ index.php [L]
+RewriteRule ^ index.php \[L]
 
 #rewrite: redirect any attempt to access a hidden file/dir (starting with a .) to index.php
-RewriteRule ^\..*$ index.php [L]
+RewriteRule ^\..*$ index.php \[L]
 
 # rewrite: don't allow a direct request to a cache file (redirect to index.php)
-RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /[^\ ]+/tmp/cache/.*\._cached_\..*($|\ ) [NC]
-RewriteRule ^ index.php [L]
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /\[^\ ]+/tmp/cache/.*\._cached_\..*($|\ ) \[NC]
+RewriteRule ^ index.php \[L]
 
 # rewrite: don't allow a direct request to a static file folder (redirect to index.php)
-RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /[^\ ]+/(ext|contrib|core)/static/.*($|\ ) [NC]
-RewriteRule ^ index.php [L]
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /\[^\ ]+/(ext|contrib|core)/static/.*($|\ ) \[NC]
+RewriteRule ^ index.php \[L]

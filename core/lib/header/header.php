@@ -1,6 +1,6 @@
 <?php
 
-function header_token($params) {
+function header_sc($params) {
     $css = get_single_param_value($params, "css", true, false);
     if ($css) {
         header("Content-type: text/css");
@@ -43,8 +43,6 @@ function header_token($params) {
     }
 }
 
-function return_header($type) {
-    header_token(array($type => $type));
+function header_sent($type) {
+    header_sc(array($type => $type));
 }
-
-?>

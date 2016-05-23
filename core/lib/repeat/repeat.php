@@ -1,6 +1,6 @@
 <?php
 
-function repeat_token($params) {
+function repeat_sc($params) {
     load_library('get');
     load_library('set');
     $data_id = get_param_value($params, "data");

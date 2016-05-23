@@ -2,7 +2,7 @@
 
 $GLOBALS['SYSTEM']['data_base'] = $GLOBALS['SYSTEM']['file_base'] . 'data';
 
-function crud_token($params) {
+function crud_sc($params) {
     $op = get_param_value($params, "op", "read");
     if ($op === "read") {
         $cat = get_param_value($params, "cat");
@@ -90,7 +90,7 @@ function data_update($cat, $key, $data_update_ls) {
 function data_create($cat, $key, $data_ls) {
     $dir = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/';
     if (!file_exists($dir)) {
-        @mkdir($dir, 0755);
+        @mkdir($dir, 0750);
     }
     $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/' . $key;
     data_write_file($file, $data_ls);
@@ -126,6 +126,7 @@ function data_write_file($file, $data_ls) {
         }
     }
     file_put_contents($file, implode("\r\n", $data_formatted_ls), LOCK_EX);
+    chmod($file, 0640);
 }
 
 /**
@@ -164,6 +165,6 @@ function _data_ini_line($key, $value) {
 function data_sanitize_key($key) {
     $special_chars = array(" ", "?", "[", "]", "/", "\\", "=", "<", ">", ":", ";",
         ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}");
-    $key = str_replace($special_chars, '-', $key);
-    return $key;
+    $result = str_replace($special_chars, '-', $key);
+    return $result;
 }

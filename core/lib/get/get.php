@@ -1,6 +1,6 @@
 <?php
 
-function get_token($params, $default=null) {
+function get_sc($params, $default=null) {
     if (is_array($params)) {
         $key = current($params);
     } else {

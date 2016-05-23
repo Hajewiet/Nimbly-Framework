@@ -1,6 +1,6 @@
 <?php
 
-function logout_token($params) {
+function logout_sc($params) {
     run_library('session');
     run_library('redirect');
     foreach ($_SESSION['roles'] as $role => $value) {

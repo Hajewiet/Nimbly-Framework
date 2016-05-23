@@ -40,10 +40,10 @@ function find_template($name, $dir = null) {
     if ($path !== false) {
         return $path;
     }
-    if (!empty($SYSTEM['token_stack']) && count($SYSTEM['token_stack']) > 0) {
-        foreach ($SYSTEM['token_stack'] as $token_stack_item) {
-            $token_name = key($token_stack_item);
-            $path = find_path($token_name, 'tpl', $name . ".tpl");
+    if (!empty($SYSTEM['sc_stack']) && count($SYSTEM['sc_stack']) > 0) {
+        foreach ($SYSTEM['sc_stack'] as $sc_stack_item) {
+            $sc_name = key($sc_stack_item);
+            $path = find_path($sc_name, 'tpl', $name . ".tpl");
             if ($path !== false) {
                 return $path;
             }
@@ -58,9 +58,9 @@ function find_library($name) {
 
 function infinite_loop($path) {
     global $SYSTEM;
-    if (!empty($SYSTEM['token_stack'])) {
-        foreach ($SYSTEM['token_stack'] as $token_level) {
-            $parent_path = current($token_level);
+    if (!empty($SYSTEM['sc_stack'])) {
+        foreach ($SYSTEM['sc_stack'] as $sc_level) {
+            $parent_path = current($sc_level);
             if ($parent_path == $path) {
                 return true;
             }
@@ -120,7 +120,7 @@ function load_module($name) {
     $GLOBALS['SYSTEM']['modules'][$name] = '/modules/' . $name . '/';
 }
 
-function find_token($params) {
+function find_sc($params) {
     $dir = "";
     $name = "";
     foreach ($params as $key => $value) {

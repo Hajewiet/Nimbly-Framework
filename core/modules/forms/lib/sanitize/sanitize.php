@@ -1,6 +1,6 @@
 <?php
 
-function sanitize_token($params) {
+function sanitize_sc($params) {
     
 }
 

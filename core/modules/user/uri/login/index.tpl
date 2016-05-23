@@ -3,4 +3,4 @@
 [set login-url=]
 [post]
 [set page-title=Login]
-[html5-foundation]
+[html]

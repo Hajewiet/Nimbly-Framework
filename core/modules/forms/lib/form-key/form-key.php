@@ -1,6 +1,6 @@
 <?php
 
-function form_key_token($params) {
+function form_key_sc($params) {
     run_library("session");
     $key = $_SESSION['key'];
     if (get_single_param_value($params, "plain", true, false)) {

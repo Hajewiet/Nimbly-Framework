@@ -24,7 +24,7 @@
 
  */
 
-function validate_token($params) {
+function validate_sc($params) {
     
 }
 

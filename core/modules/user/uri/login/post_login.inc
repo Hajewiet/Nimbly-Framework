@@ -2,7 +2,7 @@
 
 load_library("redirect");
 load_library("get");
-$url = get_token("login-url");
+$url = get_sc("login-url");
 redirect($url);
 
-?>
+

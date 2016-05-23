@@ -1,6 +1,6 @@
 <?php
 
-function username_token($params) {
+function username_sc($params) {
     return username_get();
 }
 

@@ -1,2 +1,5 @@
 msgid "validate_invalid_user_or_password"
 msgstr "Invalid username or password. Please try again."
+
+msgid "user_logged_out"
+msgstr "You have been logged out"

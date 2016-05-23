@@ -1,6 +1,6 @@
 <?php
 
-function url_token() {
+function url_sc() {
     return $GLOBALS['SYSTEM']['uri_base'] . $GLOBALS['SYSTEM']['uri'];
 }
 

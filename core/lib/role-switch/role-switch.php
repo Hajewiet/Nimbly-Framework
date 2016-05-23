@@ -6,16 +6,16 @@
  * depening upon the available user roles in session and the order
  */
 
-function role_switch_token($params) {
+function role_switch_sc($params) {
     load_library("session");
     $tpl = get_param_value($params, "tpl");
     if (!session_exists()) {
-        run_single_token($tpl . ".anonymous");
+        run_single_sc($tpl . ".anonymous");
         return;
     }
-    session_token();
+    session_sc();
     if (!isset($_SESSION['roles'])) {
-        run_single_token($tpl . ".anonymous");
+        run_single_sc($tpl . ".anonymous");
         return;
     }
     foreach ($_SESSION['roles'] as $role => $enabled) {
@@ -23,7 +23,7 @@ function role_switch_token($params) {
             continue;
         }
         $tpl .= "." . strtolower($role);
-        run_single_token($tpl);
+        run_single_sc($tpl);
         break;
     } 
 }

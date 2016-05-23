@@ -1,6 +1,6 @@
 <?php
 
-function set_token($params) {
+function set_sc($params) {
     global $SYSTEM;
     $append = false;
     if (isset($params["append"])) {

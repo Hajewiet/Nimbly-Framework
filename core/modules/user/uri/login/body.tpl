@@ -1,35 +1,26 @@
-<div class='large-3 large-centered columns'>
-
-    <div class="login panel radius">
+<div class="row">
+    <div class="medium-6 medium-centered large-4 large-centered columns">
         <h1 class="panel-title">Login</h1>
         <form name="login" action="[url]" method="post" accept-charset="utf-8">
+            <div class="row column log-in-form">
 
-            [form-key login]
-            [form-error]
+                [form-key login]
+               
 
-            <label for="username">Name</label> 
-            <div class="row collapse">
-                <div class="small-2  columns">
-                    <span class="prefix"><i class="fi-torso-female"></i></span>
-                </div>
-                <div class="small-10  columns">
+                <label>Name
                     <input type="text" maxlength="64" name="username" id="username"  
                            placeholder="your user name" value="[sticky username]" required />
-                </div>
-            </div>
+                </label> 
 
-            <label for="password">Password</label>  
-            <div class="row collapse">
-                <div class="small-2 columns ">
-                    <span class="prefix"><i class="fi-lock"></i></span>
-                </div>
-                <div class="small-10 columns ">
+                <label>Password
                     <input type="password" maxlength="64" name="password" id="password"
                            placeholder="your password" required /> 
-                </div>
-            </div>
+                </label>  
 
-            <input type="submit" value="Login" class="button radius"  /> 
+                <input type="submit" value="Log In" class="button expanded"  /> 
+                
+                 [form-error]
+            </div>
         </form>
     </div>
 </div>

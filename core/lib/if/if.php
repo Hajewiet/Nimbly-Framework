@@ -1,19 +1,14 @@
 <?php
 
-/*
- * Implements the if token
- */
-
-
-function if_token($params) {
+function if_sc($params) {
     $condition = array();
     $action = array();
-    foreach ($params as $key => $value) {    
+    foreach ($params as $key => $value) {
         if ($key == "tpl") {
-            $action[$key] = $value;  
+            $action[$key] = $value;
         } else if ($key == "echo") {
-            $action[$key] = $value;  
-        }  else {
+            $action[$key] = $value;
+        } else {
             $condition[$key] = $value;
         }
     }
@@ -23,7 +18,7 @@ function if_token($params) {
     $pass = true;
     load_library("get");
     foreach ($condition as $key => $value) {
-        $val = get_token($key);
+        $val = get_sc($key);
         if ($val != $value) {
             $pass = false;
             break;
@@ -38,14 +33,12 @@ function if_token($params) {
 function if_action($action) {
     foreach ($action as $key => $value) {
         switch ($key) {
-            case 'tpl':
-                run_single_token($value);
+            case 'tpl': //run a template
+                run_single_sc($value);
                 break;
-            case 'echo':
+            case 'echo': //echo a value
                 echo $value;
                 break;
         }
     }
 }
-
-?>

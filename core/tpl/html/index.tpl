@@ -1,17 +1,19 @@
 [set app-name="Nimbly Framework"]
 [set site-name=[app-name]]
 [set language=en]
-[set body-classes=page]
+[set body-classes=]
+[set html-classes=no-js]
 [set page-title=Home]
-<!DOCTYPE html>
-<html>
-    <head lang="[language]">
+<!doctype html>
+<html class="[html-classes]" lang="[language]">
+    <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>[page-title] | [site-name]</title>
         [stylesheets]
         [style-tag]
-        [script js/base.js]
+        <script src="[base-url]/js/base.js"></script>
         <link rel="shortcut icon" href="[base-url]/favicon.png" />
     </head>
     <body class="[body-classes]">

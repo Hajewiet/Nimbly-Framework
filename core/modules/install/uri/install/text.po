@@ -1,37 +1,71 @@
-msgid ""
-msgstr ""
-"Project-Id-Version: \n"
-"POT-Creation-Date: 2013-07-29 21:52-0300\n"
-"PO-Revision-Date: 2013-07-29 21:53-0300\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
-"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
-"X-Poedit-Basepath: .\n"
-
 msgid "step1_long"
 msgstr "Verify System Requirements"
 
 msgid "step1_short"
-msgstr "Verify"
+msgstr "1. Verify"
 
 msgid "step2_long"
-msgstr "Enter Basic Configuration"
+msgstr "Enter Site Configuration"
 
 msgid "step2_short"
-msgstr "Config"
+msgstr "2. Configure"
 
 msgid "step3_long"
-msgstr "Database Setup"
-
-msgid "step3_short"
-msgstr "Database"
-
-msgid "step4_long"
 msgstr "Finished"
 
-msgid "step4_short"
-msgstr "Done"
+msgid "step3_short"
+msgstr "3. Done"
+
+msgid "require_php"
+msgstr "You need PHP version 5 or higher to continue"
+
+msgid "require_server"
+msgstr "You need Apache server version 2.0.0 or higher"
+
+msgid "require_mods"
+msgstr "The apache module <strong>rewrite</strong> should be enabled"
+
+msgid "require_data_write"
+msgstr "Could not write to data directory"
+
+msgid "require_data_dir"
+msgstr "Could not create directory structure"
+
+msgid = "requirements_fail"
+msgstr = "Sorry, your system does not yet meet all the requirements to install [app-name]:"
+
+msgid = "requirements_pass"
+msgstr = "Your system meets all requirements for installing [app-name]. Click next to continue."
+
+msgid = "form_error"
+msgstr = "Please fill in "
+
+msgid = "username_required"
+msgstr = "Please fill in a username for administrating [app-name]"
+
+msgid = "password_required"
+msgstr = "Please type in a password"
+
+msgid = "passwords_no_match"
+msgstr = "The passwords do not match. Please enter the same password twice."
+
+msgid = "help_rewritebase"
+msgstr = "If Apache is hosting [app-name] with an alias, please enter it here. Otherwise, leave this field blank."
+
+msgid = "help_pepper"
+msgstr = "The pepper code is a system wide security code, unique for this installation."
+
+msgid = "htaccess_created_ok"
+msgstr = "Successfully configured main htaccess file with alias <strong>[get sticky.rewritebase]</strong>."
+
+msgid = "htaccess_created_fail"
+msgstr = "Could not create or overwrite htaccess file. Please configure the htaccess file manually."
+
+msgid = "user_created_ok"
+msgstr = "Created admin account with username <strong>[get sticky.username]</strong>."
+
+msgid = "user_created_fail"
+msgstr = "Could not create admin account. Please review file writing permissions to data directory."
+
+msgid = "step3_proceed"
+msgstr = "Click the button Next to continue to the login screen."

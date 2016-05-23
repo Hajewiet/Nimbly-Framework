@@ -3,6 +3,12 @@
  * Browser resize event, for implementing RESS
  */
 
+var resizer = {};
+
+resizer.resizes_done = 0;
+
+resizer.once = false;
+
 var add_browser_event = function (object, type, callback) {
     if (object === null || typeof (object) === 'undefined') {
         return;
@@ -26,23 +32,27 @@ function set_cookie(cname, cvalue, exdays) {
 function get_cookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
-    for(var i=0; i< ca.length; i++) {
+    for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0)=== ' ') { 
+        while (c.charAt(0) === ' ') {
             c = c.substring(1);
         }
         if (c.indexOf(name) === 0) {
             return c.substring(name.length, c.length);
-        };
+        }
+        ;
     }
     return "";
 }
 
-function get_viewport_width() {
+resizer.get_viewport_width = function () {
     return Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 }
 
-function update_device(w) {
+resizer.update_device = function (w) {
+    if (resizer.resizes_done++ > 0 && resizer.once) {
+        return;
+    }
     var old_size = get_cookie("viewport_width");
     if (old_size === w) {
         return;
@@ -55,17 +65,17 @@ function update_device(w) {
     }
 }
 
-var on_window_resize = function (event) {
-    var w = get_viewport_width();
+resizer.on_window_resize = function (event) {
+    var w = resizer.get_viewport_width();
     if (w >= 1024) {
-        update_device("large");
+        resizer.update_device("large");
     } else if (w >= 640) {
-        update_device("medium");
+        resizer.update_device("medium");
     } else {
-        update_device("small");
+        resizer.update_device("small");
     }
 };
 
-add_browser_event(window, "resize", on_window_resize);
+add_browser_event(window, "resize", resizer.on_window_resize);
 
-on_window_resize();
+resizer.on_window_resize();

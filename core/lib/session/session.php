@@ -4,11 +4,11 @@ $GLOBALS['SYSTEM']['session_base'] = $GLOBALS['SYSTEM']['file_base'] . 'data/tmp
 $GLOBALS['SYSTEM']['session_lifetime'] = 1800; //30 minutes
 
 /**
- * Implements session token
+ * Implements session sc
  * Start and validate a session
  * @return void
  */
-function session_token() {
+function session_sc() {
 
     //1. initialize session
     static $session_started = false;
@@ -49,7 +49,7 @@ function session_exists() {
 
 function session_resume() {
     if (session_exists()) {
-        session_token();
+        session_sc();
     }
     return !empty($_SESSION);
 }

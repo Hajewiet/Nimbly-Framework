@@ -1,6 +1,6 @@
 <?php
 
-function access_token($params) {
+function access_sc($params) {
     run_library("session");
     $role = get_param_value($params, "role", "anonymous");
     if (empty($_SESSION['roles'][$role])) {

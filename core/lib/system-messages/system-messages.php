@@ -1,11 +1,11 @@
 <?php
 
-function system_messages_token($params) {
+function system_messages_sc($params) {
     load_library("session");
     if (!session_exists()) {
         return "";
     }
-    session_token();
+    session_sc();
     if (empty($_SESSION['SYSTEM']['messages'])) {
         return "";
     } else if (is_array($_SESSION['SYSTEM']['messages'])){

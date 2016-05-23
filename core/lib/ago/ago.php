@@ -1,6 +1,6 @@
 <?php
 
-function ago_token($params) {
+function ago_sc($params) {
     if (empty ($params)) {
         return;
     }

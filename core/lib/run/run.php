@@ -1,19 +1,19 @@
 <?php
 
-define('TOKEN_TAG_OPEN', '[');
-define('TOKEN_TAG_CLOSE', ']');
-define('TOKEN_ESCAPE_CHAR', '\\');
+define('sc_TAG_OPEN', '[');
+define('sc_TAG_CLOSE', ']');
+define('sc_ESCAPE_CHAR', '\\');
 define('BUFFER_SIZE', 16384);
 define('QUOT_CHAR', '"');
 define('QUOTID', '%quot_');
 define('ASSIGNMENT_CHAR', '=');
 
 global $SYSTEM;
-$SYSTEM['token_stack'] = array();
+$SYSTEM['sc_stack'] = array();
 
 /**
  * Executes a template from file, parsing it line by line replacing
- * any tokens.
+ * any scs.
  * @param type $file filename of the template to run
  */
 function run($file) {
@@ -69,7 +69,7 @@ function run_uri($uri) {
 
 /**
  * Same as run, but runs a string/template
- * @param type $str the string which might contain tokens. The string should not
+ * @param type $str the string which might contain scs. The string should not
  * be too large.
  */
 function run_template($str) {
@@ -77,35 +77,35 @@ function run_template($str) {
         return;
     }
 
-    $token_start = strpos($str, TOKEN_TAG_OPEN);
+    $sc_start = strpos($str, sc_TAG_OPEN);
 
     /*
-     * 1. If there are no tokens in this string, it's a very easy case.
+     * 1. If there are no scs in this string, it's a very easy case.
      * Just echo the string and done!
      */
-    if ($token_start === false) {
+    if ($sc_start === false) {
         echo $str;
         return;
     }
-    $tail = substr($str, $token_start + 1);
+    $tail = substr($str, $sc_start + 1);
 
-    if ($token_start > 0) {
-        $head = substr($str, 0, $token_start); //the head part without tokens
+    if ($sc_start > 0) {
+        $head = substr($str, 0, $sc_start); //the head part without scs
 
         /*
-         * 2. Check if the token is escaped, like this: \[token]
-         * In that case it is not a real token ("false alarm")
+         * 2. Check if the sc is escaped, like this: \[sc]
+         * In that case it is not a real sc ("false alarm")
          * and it does not require any special processing. 
-         * Just echo token and look for more tokens in the remaining string.
+         * Just echo sc and look for more scs in the remaining string.
          */
 
 
-        if ($str{$token_start - 1} == TOKEN_ESCAPE_CHAR) {
-            $head{$token_start - 1} = TOKEN_TAG_OPEN;
+        if ($str{$sc_start - 1} == sc_ESCAPE_CHAR) {
+            $head{$sc_start - 1} = sc_TAG_OPEN;
             echo $head;
-            $token_start = strpos($tail, TOKEN_TAG_OPEN);
-            if ($token_start !== false) { //there are more tokens...
-                run_template($tail, $token_start); //...so let's process them.
+            $sc_start = strpos($tail, sc_TAG_OPEN);
+            if ($sc_start !== false) { //there are more scs...
+                run_template($tail, $sc_start); //...so let's process them.
             } else {
                 echo $tail; //otherwise,just output the tail; 
             }
@@ -117,23 +117,23 @@ function run_template($str) {
 
     $sub_levels = 0;
     do {
-        $token_end = strpos($tail, ']');
+        $sc_end = strpos($tail, ']');
 
         /*
-         * 3.  If the token is not properly closed, e.g. "[token" 
-         * it's also not a real token. Just output it and done. 
+         * 3.  If the sc is not properly closed, e.g. "[sc" 
+         * it's also not a real sc. Just output it and done. 
          */
-        if ($token_end === false) {
-            echo TOKEN_TAG_OPEN . $tail;
+        if ($sc_end === false) {
+            echo sc_TAG_OPEN . $tail;
             return;
         }
 
         /*
-         * 3a. Check for sub-tokens and handle these first before continuing
+         * 3a. Check for sub-scs and handle these first before continuing
          */
 
-        $sub_token_start = strpos($tail, '[');
-        if ($sub_token_start === false || $sub_token_start > $token_end) {
+        $sub_sc_start = strpos($tail, '[');
+        if ($sub_sc_start === false || $sub_sc_start > $sc_end) {
             break;
         }
         $sub_levels++;
@@ -141,21 +141,21 @@ function run_template($str) {
         run_template($tail);
         $tail = ob_get_contents();
         ob_end_clean();
-    } while ($sub_token_start !== false && $sub_levels < 10);
+    } while ($sub_sc_start !== false && $sub_levels < 10);
 
 
     /*
-     * 4. At this point the token syntax is valid.
-     * Process this token with the run_token function and proceed with the next.
+     * 4. At this point the sc syntax is valid.
+     * Process this sc with the run_sc function and proceed with the next.
      */
-    $token_call = substr($tail, 0, $token_end);
-    run_single_token($token_call);
+    $sc_call = substr($tail, 0, $sc_end);
+    run_single_sc($sc_call);
 
     /*
      * 5. Processing remaining string (tail) 
      */
-    $tail = substr($tail, $token_end + 1);
-    if ($token_start == 0) { //if a line only contains a token, just return
+    $tail = substr($tail, $sc_end + 1);
+    if ($sc_start == 0) { //if a line only contains a sc, just return
         $trimmed_tail = rtrim($tail, "\n\r\0");
         if (empty($trimmed_tail)) {
             return;
@@ -181,21 +181,21 @@ function _recover_quoted_strings(&$str, &$quoted_parts = null) {
 }
 
 /**
- * Run a token
- * @param type $token_call the token id ("function") and possible parameters
+ * Run a sc
+ * @param type $sc_call the sc id ("function") and possible parameters
  */
-function run_single_token($token_call) {
+function run_single_sc($sc_call) {
     /*
-     * 1. Normalize the token call. Trim outer spaces, remove double spaces,
+     * 1. Normalize the sc call. Trim outer spaces, remove double spaces,
      * get parts between "quotes" (which can contain valid spaces).
      */
 
     global $SYSTEM;
-    $call = trim($token_call); //trim outer spaces
+    $call = trim($sc_call); //trim outer spaces
     if (strpos($call, QUOT_CHAR) > 0) { //handle quoted parts
         $quoted_parts = array();
-        //preg_match_all('/' . ASSIGNMENT_CHAR . '[.]*"([^"\\\\]*[\\\\"]*[^"\\\\]*)"/s', $token_call, $dq_matches);
-        preg_match_all('/' . ASSIGNMENT_CHAR . '[.]*"([^"\\\\]*)"/s', $token_call, $dq_matches);
+        //preg_match_all('/' . ASSIGNMENT_CHAR . '[.]*"([^"\\\\]*[\\\\"]*[^"\\\\]*)"/s', $sc_call, $dq_matches);
+        preg_match_all('/' . ASSIGNMENT_CHAR . '[.]*"([^"\\\\]*)"/s', $sc_call, $dq_matches);
         if (count($dq_matches) > 1) {
             $str_parts = $dq_matches[0];
             $str_vals = $dq_matches[1];
@@ -210,7 +210,7 @@ function run_single_token($token_call) {
     $call = preg_replace('!\s+!', ' ', $call); //remove double spaces
 
     /*
-     * 2. Get the token's function id and function parameters
+     * 2. Get the sc's function id and function parameters
      */
     $call_parts = explode(" ", $call);
     $function_id = $call_parts[0];
@@ -219,35 +219,35 @@ function run_single_token($token_call) {
         $param = $call_parts[$i];
         _recover_quoted_strings($param, $quoted_parts); //recover quoted values
         $assignment_pos = strpos($param, ASSIGNMENT_CHAR);
-        if ($assignment_pos > 0) { //handle key-value pairs in syntax as: [token key=value] 
+        if ($assignment_pos > 0) { //handle key-value pairs in syntax as: [sc key=value] 
             $param_id = substr($param, 0, $assignment_pos);
             $param_value = substr($param, $assignment_pos + 1);
             $params[$param_id] = $param_value;
-        } else { //handle single parameters like "param" in: [token param]
+        } else { //handle single parameters like "param" in: [sc param]
             $params[$param] = $param;
         }
     }
 
     /*
-     * 3. If the token function exists, run it and done.
+     * 3. If the sc function exists, run it and done.
      */
-    $function_name = str_replace("-", "_", $function_id) . "_token";
+    $function_name = str_replace("-", "_", $function_id) . "_sc";
     if (function_exists($function_name)) {
         run_template($function_name($params));
         return;
     }
 
     /*
-     * 4. Find a template implementing the token, iterating
+     * 4. Find a template implementing the sc, iterating
      * through the environments
      */
     if (count($params) == 0) {
         
         $path_tpl = find_template($function_id);
         if ($path_tpl !== false) {
-            add_token_level($function_id, $path_tpl);
+            add_sc_level($function_id, $path_tpl);
             run($path_tpl);
-            remove_token_level();
+            remove_sc_level();
             return;
         }
         
@@ -258,21 +258,21 @@ function run_single_token($token_call) {
     }
 
     /*
-     * 5. Find a module implementing the token, iterating
+     * 5. Find a module implementing the sc, iterating
      * through the environments
      */
     $path_lib = load_library($function_id);
     if ($path_lib !== false && function_exists($function_name)) {
-        add_token_level($function_id, $path_lib);
+        add_sc_level($function_id, $path_lib);
         run_template($function_name($params));
-        remove_token_level();
+        remove_sc_level();
         return;
     }
 
     /*
-     * 6. If not found as template or as module, just echo the token name
+     * 6. If not found as template or as module, just echo the sc name
      */
-    echo TOKEN_TAG_OPEN . $function_id;
+    echo sc_TAG_OPEN . $function_id;
     foreach ($params as $key => $param) {
         if (is_numeric($key)) {
             echo " " . $param;
@@ -280,19 +280,19 @@ function run_single_token($token_call) {
             echo " " . $key . ASSIGNMENT_CHAR . $param;
         }
     }
-    echo TOKEN_TAG_CLOSE;
+    echo sc_TAG_CLOSE;
 }
 
-function add_token_level($token_name, $path) {
+function add_sc_level($sc_name, $path) {
     global $SYSTEM;
-    $levels = count($SYSTEM['token_stack']);
-    $SYSTEM['token_stack'][$levels] = array($token_name => $path);
+    $levels = count($SYSTEM['sc_stack']);
+    $SYSTEM['sc_stack'][$levels] = array($sc_name => $path);
 }
 
-function remove_token_level() {
+function remove_sc_level() {
     global $SYSTEM;
-    $levels = count($SYSTEM['token_stack']) - 1;
-    unset($SYSTEM['token_stack'][$levels]);
+    $levels = count($SYSTEM['sc_stack']) - 1;
+    unset($SYSTEM['sc_stack'][$levels]);
 }
 
 /**
@@ -310,7 +310,7 @@ function get_param_value($params, $name, $default_value = null) {
 }
 
 /**
- * Helper function to get the value of a single parameter like param in [token param]
+ * Helper function to get the value of a single parameter like param in [sc param]
  * @param type $params list of parameters
  * @param type $name name of parameter
  * @param type $value_exists value to return if it exists
@@ -324,7 +324,7 @@ function get_single_param_value($params, $name, $value_exists, $default_value = 
     return $default_value;
 }
 
-function run_token($params) {
+function run_sc($params) {
 
     $tpl = get_param_value($params, "tpl", null);
     if (isset($tpl)) {
@@ -346,9 +346,9 @@ function run_token($params) {
         $SYSTEM['uri_path'] = dirname($file);
 
         //prevent infinite loop and run the template
-        add_token_level('run', $file);
+        add_sc_level('run', $file);
         run($file);
-        remove_token_level('run', $file);
+        remove_sc_level('run', $file);
 
         //restore original uri context
         $SYSTEM['uri'] = $uri_original;
@@ -358,33 +358,31 @@ function run_token($params) {
 }
 
 /**
- * Helper function to run a library token
+ * Helper function to run a library sc
  * 
  */
 function run_library($function_id, $params = null) {
-    $function_name = str_replace('-', '_', $function_id) . "_token";
+    $function_name = str_replace('-', '_', $function_id) . "_sc";
     if (function_exists($function_name)) {
         run_template($function_name($params));
         return;
     }
     $path_lib = load_library($function_id);
     if ($path_lib !== false && function_exists($function_name)) {
-        add_token_level($function_id, $path_lib);
+        add_sc_level($function_id, $path_lib);
         run_template($function_name($params));
-        remove_token_level();
+        remove_sc_level();
     }
 }
 
 /**
- * Helper function to return a single token as a string
- * @param type $token the token to run
+ * Same as run, but returns the string in stead of echo'ing it
+ * @param type $file the file to run
  */
-function run_get_string($token) {
+function run_buffered($file) {
     ob_start();
-    run_single_token($token);
+    run($file);
     $result = ob_get_contents();
     ob_end_clean();
     return $result;
 }
-
-?>

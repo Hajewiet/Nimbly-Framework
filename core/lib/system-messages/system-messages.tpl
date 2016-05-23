@@ -1,4 +1,6 @@
-<div data-alert class="alert-box success">
-    [get system_message]
-    <a href="" class="close">×</a>
+<div class="callout" data-closable>
+  <button class="close-button" aria-label="Close alert" type="button" data-close>
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <p>[get system_message]</p>
 </div>

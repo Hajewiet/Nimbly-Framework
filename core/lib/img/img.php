@@ -1,6 +1,6 @@
 <?php
 
-function img_token(&$params) {
+function img_sc(&$params) {
     $src = get_param_value($params, "src", null);
     if (empty($src)) {
         $src = img_generate_placeholder($params);
@@ -16,7 +16,7 @@ function img_token(&$params) {
 
 /**
  * Generates an image placeholder
- * @param type $params token parameters
+ * @param type $params sc parameters
  * - param['width']. Defaults to 500 px
  * - param['height']. Defaults to width/golden ratio
  * - param['caption']. Title text to show in the image, defaults to "image"
@@ -97,5 +97,3 @@ function img_generate_placeholder(&$params) {
 
     return $result;
 }
-
-?>
