@@ -26,7 +26,7 @@ msgid "require_server"
 msgstr "You need Apache server version 2.0.0 or higher"
 
 msgid "require_mods"
-msgstr "The apache module <strong>rewrite</strong> should be enabled"
+msgstr "The apache module <strong>rewrite</strong> should be enabled. E.g.: sudo a2enmod rewrite"
 
 msgid "require_data_write"
 msgstr "Could not write to data directory"
