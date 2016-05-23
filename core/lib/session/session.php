@@ -17,7 +17,7 @@ function session_sc() {
     } else {
         $session_started = true;
     }
-    
+
     session_save_path($GLOBALS['SYSTEM']['session_base']);
     session_name("session_id");
     if (session_start() === false) {
@@ -31,9 +31,7 @@ function session_sc() {
     }
 
     //3. remove and restart session if it does not validate
-    if (empty($_SESSION['modified']) 
-            || empty($_SESSION['created']) 
-            || $GLOBALS['SYSTEM']['request_time'] >= $_SESSION['modified'] + $GLOBALS['SYSTEM']['session_lifetime']) {
+    if (empty($_SESSION['modified']) || empty($_SESSION['created']) || $GLOBALS['SYSTEM']['request_time'] >= $_SESSION['modified'] + $GLOBALS['SYSTEM']['session_lifetime']) {
         session_unset();
         session_destroy();
         session_start();
@@ -42,7 +40,7 @@ function session_sc() {
     }
 
     //4. update session
-    $_SESSION['modified'] = $_SERVER['REQUEST_TIME'];
+    $_SESSION['modified'] = filter_input(SERVER_INPUT, 'REQUEST_TIME', FILTER_SANITIZE_NUMBER_FLOAT);
 }
 
 function session_exists() {
@@ -57,11 +55,14 @@ function session_resume() {
 }
 
 function session_initialize() {
-    session_regenerate_id(true);
-    $_SESSION['created'] = $_SERVER['REQUEST_TIME'];
-    $_SESSION['modified'] = time();
-    $_SESSION['key'] = md5(uniqid(rand(), true));
-    $_SESSION['roles'] = array("anonymous" => true);
+    if (session_regenerate_id(true) === true) {
+        $_SESSION['created'] = filter_input(SERVER_INPUT, 'REQUEST_TIME', FILTER_SANITIZE_NUMBER_FLOAT); 
+        $_SESSION['modified'] = time();
+        $_SESSION['key'] = md5(uniqid(rand(), true));
+        $_SESSION['roles'] = array("anonymous" => true);
+    } else {
+        session_unset();
+    }
 }
 
 function session_cleanup_files() {
