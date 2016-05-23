@@ -6,6 +6,7 @@
 
 [if require=fail tpl=step1_fail]
 
+[if session_ok=fail tpl=require_session]
 [if php_ok=fail tpl=require_php]
 [if server_ok=fail tpl=require_server]
 [if modules_ok=fail tpl=require_mods]

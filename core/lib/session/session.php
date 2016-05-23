@@ -17,12 +17,10 @@ function session_sc() {
     } else {
         $session_started = true;
     }
-
+    
     session_save_path($GLOBALS['SYSTEM']['session_base']);
     session_name("session_id");
-    if (session_start() === false) {
-        return;
-    }
+    @session_start();
 
     //2. if it's a new session, just create and initialize it and done.
     if (empty($_SESSION)) { //a new session
@@ -31,7 +29,9 @@ function session_sc() {
     }
 
     //3. remove and restart session if it does not validate
-    if (empty($_SESSION['modified']) || empty($_SESSION['created']) || $GLOBALS['SYSTEM']['request_time'] >= $_SESSION['modified'] + $GLOBALS['SYSTEM']['session_lifetime']) {
+    if (empty($_SESSION['modified']) 
+            || empty($_SESSION['created']) 
+            || $GLOBALS['SYSTEM']['request_time'] >= $_SESSION['modified'] + $GLOBALS['SYSTEM']['session_lifetime']) {
         session_unset();
         session_destroy();
         session_start();
@@ -40,7 +40,7 @@ function session_sc() {
     }
 
     //4. update session
-    $_SESSION['modified'] = filter_input(SERVER_INPUT, 'REQUEST_TIME', FILTER_SANITIZE_NUMBER_FLOAT);
+    $_SESSION['modified'] = $_SERVER['REQUEST_TIME'];
 }
 
 function session_exists() {
@@ -55,14 +55,11 @@ function session_resume() {
 }
 
 function session_initialize() {
-    if (session_regenerate_id(true) === true) {
-        $_SESSION['created'] = filter_input(SERVER_INPUT, 'REQUEST_TIME', FILTER_SANITIZE_NUMBER_FLOAT); 
-        $_SESSION['modified'] = time();
-        $_SESSION['key'] = md5(uniqid(rand(), true));
-        $_SESSION['roles'] = array("anonymous" => true);
-    } else {
-        session_unset();
-    }
+    session_regenerate_id(true);
+    $_SESSION['created'] = $_SERVER['REQUEST_TIME'];
+    $_SESSION['modified'] = time();
+    $_SESSION['key'] = md5(uniqid(rand(), true));
+    $_SESSION['roles'] = array("anonymous" => true);
 }
 
 function session_cleanup_files() {
@@ -78,3 +75,5 @@ function session_cleanup_files() {
 function session_count_files() {
     return count(glob(session_save_path() . '/*'));
 }
+
+?>

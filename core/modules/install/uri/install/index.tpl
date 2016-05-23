@@ -1,5 +1,6 @@
 [module install forms]
-[post]
+[session-test]
+[if session_ok=pass tpl=post]
 [set step=1]
 [set page-title="Installation Step [step]/3"]
 [html]

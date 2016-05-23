@@ -16,6 +16,9 @@ msgstr "Finished"
 msgid "step3_short"
 msgstr "3. Done"
 
+msgid "require_session"
+msgstr "A session is required to continue, but could not be created in [base-path]data/tmp/sessions"
+
 msgid "require_php"
 msgstr "You need PHP version 5 or higher to continue"
 
