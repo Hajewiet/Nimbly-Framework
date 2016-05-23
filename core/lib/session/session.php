@@ -20,7 +20,9 @@ function session_sc() {
     
     session_save_path($GLOBALS['SYSTEM']['session_base']);
     session_name("session_id");
-    @session_start();
+    if (session_start() === false) {
+        return;
+    }
 
     //2. if it's a new session, just create and initialize it and done.
     if (empty($_SESSION)) { //a new session
@@ -75,5 +77,3 @@ function session_cleanup_files() {
 function session_count_files() {
     return count(glob(session_save_path() . '/*'));
 }
-
-?>
