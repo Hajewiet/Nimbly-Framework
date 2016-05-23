@@ -7,13 +7,16 @@ function require_sc($params) {
         if ($key !== "pass") {
             $pass &= require_test($key, $value);
         }
+        if ($pass === false) {
+            break;
+        }
     }
     if ($pass) {
         set_variable("require", 'pass', false, false);
         return 'pass';
     }
     load_library("set");
-    set_variable("require", 'fail', false, true);
+    set_variable("require_all", 'fail', false, true);
     return 'fail';
 }
 
