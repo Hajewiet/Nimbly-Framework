@@ -19,20 +19,26 @@ msgstr "3. Done"
 msgid "require_session"
 msgstr "A session is required to continue, but could not be created in [base-path]data/tmp/sessions"
 
-msgid "require_php"
+msgid "require_php5"
 msgstr "You need PHP version 5 or higher to continue"
 
-msgid "require_server"
+msgid "require_ext_mcrypt"
+msgstr "PHP extension <strong>mcrypt</strong> is required but not enabled. Try:<br />sudo apt-get install php5-mcrypt"
+
+msgid "require_ext_session"
+msgstr "PHP extension <strong>session</strong> is required but not enabled."
+
+msgid "require_apache"
 msgstr "You need Apache server version 2.0.0 or higher"
 
-msgid "require_mods"
-msgstr "The apache module <strong>rewrite</strong> should be enabled. E.g.: sudo a2enmod rewrite"
+msgid "require_apache_rewrite"
+msgstr "The apache module <strong>rewrite</strong> should be enabled. Example:<br />sudo a2enmod rewrite"
 
 msgid "require_data_write"
-msgstr "Could not write to data directory"
+msgstr "Could not write to data directory. Please review ownership and permissions."
 
 msgid "require_data_dir"
-msgstr "Could not create directory structure"
+msgstr "Could not create directory structure. Please review ownership and permissions."
 
 msgid = "requirements_fail"
 msgstr = "Sorry, your system does not yet meet all the requirements to install [app-name]:"

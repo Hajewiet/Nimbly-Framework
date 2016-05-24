@@ -1,6 +1,6 @@
 <?php
 
-function setup_data_dir_sc($params) {
+function setup_data_dir_sc() {
     $result = true;
     $dirs = array('data', 'ext', 'contrib', 'ext/static', 'ext/lib', 'ext/modules',
         'ext/tpl', 'ext/uri', 'contrib/static', 'contrib/lib',
