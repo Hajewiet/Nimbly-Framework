@@ -61,10 +61,10 @@ function validate_error_count() {
 
 function _validate_length($input, $max_length = 64) {
     if (empty($input)) {
-        return "[msg validate_empty]";
+        return "[text validate_empty]";
     }
     if (strlen($input) > $max_length) {
-        return "[msg validate_too_long]";
+        return "[text validate_too_long]";
     }
     return true;
 }
@@ -77,7 +77,7 @@ function _validate_name($input) {
     $var = filter_var($input, FILTER_VALIDATE_REGEXP, array(
         "options" => array("regexp" => "/^[a-zA-Z0-9'´_\-\s]+$/")));
     if ($var === false) {
-        return "[msg validate_invalid_characters]";
+        return "[text validate_invalid_characters]";
     }
     return true;
 }
@@ -93,7 +93,7 @@ function _validate_password($input) {
 function _validate_alphanumeric($input) {
     $result = ctype_alnum($input);
     if ($result !== true) {
-        return "[msg validate_invalid_characters]";
+        return "[text validate_invalid_characters]";
     }
     return $result;
 }

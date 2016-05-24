@@ -8,7 +8,7 @@ function logout_sc($params) {
     }
     $_SESSION['roles']['anonymous'] = true;
     $_SESSION['username'] = 'anonymous';
-    $_SESSION['SYSTEM']['messages'][] = '[msg user_logged_out]';
+    $_SESSION['SYSTEM']['messages'][] = '[text user_logged_out]';
     $redirect_url = get_param_value($params, "redirect", "");
     redirect($redirect_url);
 }

@@ -14,7 +14,7 @@ function load_user_roles($name) {
     load_library('crud');
     $roles = data_load('users', $name, 'roles');
     if (!empty($roles)) {
-        $result = split(',', $roles);
+        $result = explode(',', $roles);
     } else {
         $result = array();
     }
@@ -29,7 +29,7 @@ function persist_login($name, $password) {
     $pw_stored = data_load('users', $name, 'password');
     if (timesafe_strcmp($pw_stored, $pw_typed) !== true) {
         //password fail
-        $GLOBALS['SYSTEM']['validation_errors']['_global'][] = "[msg validate_invalid_user_or_password]";
+        $GLOBALS['SYSTEM']['validation_errors']['_global'][] = "[text validate_invalid_user_or_password]";
         return false;
     } else if (_persist_user_roles($name)) {
         //login success

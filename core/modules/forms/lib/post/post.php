@@ -18,7 +18,7 @@ function post_sc($params) {
     $validate_include_file = $GLOBALS['SYSTEM']['uri_path'] . '/validate' . $id_suffix . '.inc';
     if (!file_exists($validate_include_file)) {
         //force handling validation by ensuring the validation file existst
-        $GLOBALS['SYSTEM']['validation_errors']['_global'][] = "[msg validate_missing]";
+        $GLOBALS['SYSTEM']['validation_errors']['_global'][] = "[text validate_missing]";
         return;
     }
     include_once($validate_include_file);
