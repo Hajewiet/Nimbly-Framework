@@ -6,6 +6,9 @@
  */
 $SYSTEM['request_time'] = microtime(true);
 $SYSTEM['uri_base'] = trim(dirname($_SERVER['SCRIPT_NAME']), '\\') . '/';
+if ($SYSTEM['uri_base'] === '//') {
+	$SYSTEM['uri_base'] = '/';
+}
 $SYSTEM['file_base'] = dirname(__FILE__) . '/';
 if (empty($_SERVER['REQUEST_URI'])) {
     //todo.. request_uri is not available on all webservers

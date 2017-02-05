@@ -18,7 +18,7 @@ function session_sc() {
         $session_started = true;
     }
 
-    if (!defined("ENV-DEV")) {
+    if (defined("SESSION_SAVE_PATH") && !empty(SESSION_SAVE_PATH)) {
         session_save_path($GLOBALS['SYSTEM']['session_base']);
     }
     session_name("session_id");

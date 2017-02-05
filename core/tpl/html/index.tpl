@@ -13,7 +13,7 @@
         <title>[page-title] | [site-name]</title>
         [stylesheets]
         [style-tag]
-        <script src="[base-url]/js/base.js"></script>
+		[base-script]
         <link rel="shortcut icon" href="[base-url]/favicon.png" />
     </head>
     <body class="[body-classes]">
