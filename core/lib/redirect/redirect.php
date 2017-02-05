@@ -1,7 +1,14 @@
 <?php
 
-function redirect_sc() {
-    
+function redirect_sc($params) {
+    $url = current($params);
+    if (empty($url)) {
+        return;
+    }
+    if ($url === $GLOBALS['SYSTEM']['request_uri']) {
+        return;
+    }
+    redirect($url);
 }
 
 function redirect($url, $status=303) {

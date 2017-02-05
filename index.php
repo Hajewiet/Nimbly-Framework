@@ -5,10 +5,7 @@
  * get the requested URI from the webserver
  */
 $SYSTEM['request_time'] = microtime(true);
-$SYSTEM['uri_base'] = dirname($_SERVER['SCRIPT_NAME']) . '/';
-if ($SYSTEM['uri_base'] === '//') {
-    $SYSTEM['uri_base'] = '/';
-}
+$SYSTEM['uri_base'] = trim(dirname($_SERVER['SCRIPT_NAME']), '\\') . '/';
 $SYSTEM['file_base'] = dirname(__FILE__) . '/';
 if (empty($_SERVER['REQUEST_URI'])) {
     //todo.. request_uri is not available on all webservers
@@ -43,4 +40,3 @@ run_uri($SYSTEM['request_uri']);
  */
 header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
 echo "<h1>Oops. Something went wrong!</h1>";
-?>

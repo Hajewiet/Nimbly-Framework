@@ -1,10 +1,24 @@
 <?php
 
-function get_sc($params, $default=null) {
+function get_sc($params, $default = null) {
     if (is_array($params)) {
         $key = current($params);
     } else {
         $key = $params;
+    }
+
+    //get default value
+    if ($default === null && is_array($params) && count($params) >= 2) {
+        $d = get_param_value($params, "default");
+        if ($d === null) {
+            $d = next($params);
+            $k = key($params);
+            if ($k === $d) {
+                $default = $d;
+            }
+        } else {
+            $default = $d;
+        }
     }
     if (isset($_SESSION['variables'][$key])) {
         return $_SESSION['variables'][$key];
@@ -19,6 +33,6 @@ function get_sc($params, $default=null) {
     return $default;
 }
 
-function get_variable($key) {
-    return $GLOBALS['SYSTEM']['variables'][$key];
+function get_variable($key, $default = null) {
+    return get_sc($key, $default);
 }

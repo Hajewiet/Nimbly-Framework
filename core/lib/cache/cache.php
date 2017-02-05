@@ -21,3 +21,18 @@ function cache_sc($params) {
     @mkdir(dirname($file_path), 0755, true);
     @file_put_contents($file_path, $content, LOCK_EX);
 }
+
+function cache_clear() {
+    cache_rmdirr($GLOBALS['SYSTEM']['cache_base']);
+}
+
+function cache_rmdirr($dir) {
+    foreach (glob($dir . '/*') as $file) {
+        if (is_dir($file)) {
+            cache_rmdirr($file);
+        } else {
+            unlink($file);
+        }
+    }
+    @rmdir($dir);
+}

@@ -1,6 +1,6 @@
 <?php
 
-load_library("crud");
+load_library("data");
 load_library("get");
 
 if (post_get("submit", false) == "Next") {

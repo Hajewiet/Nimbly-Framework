@@ -18,8 +18,8 @@ function if_sc($params) {
     $pass = true;
     load_library("get");
     foreach ($condition as $key => $value) {
-        $val = get_sc($key);
-        if ($val != $value) {
+        //loop through and test all conditions
+        if (if_condition($key, $value) !== true) {
             $pass = false;
             break;
         }
@@ -40,5 +40,18 @@ function if_action($action) {
                 echo $value;
                 break;
         }
+    }
+}
+
+function if_condition($key, $value) {
+    if ($value === "(not-empty)") {
+        $eval = get_sc($key);
+        return !empty($eval);
+    } else if ($value === "(empty)") {
+        $eval = get_sc($key);
+        return empty($eval);
+    } else {
+        $eval = get_sc($key);
+        return $eval == $value;
     }
 }

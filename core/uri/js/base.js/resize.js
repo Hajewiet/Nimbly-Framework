@@ -3,69 +3,109 @@
  * Browser resize event, for implementing RESS
  */
 
-var resizer = {};
-
-resizer.resizes_done = 0;
-
-resizer.once = false;
-
-var add_browser_event = function (object, type, callback) {
-    if (object === null || typeof (object) === 'undefined') {
+var add_browser_event = function (o, tp, cb) {
+    if (o === null || typeof (o) === 'undefined') {
         return;
     }
-    if (object.addEventListener) {
-        object.addEventListener(type, callback, false);
-    } else if (object.attachEvent) {
-        object.attachEvent("on" + type, callback);
+    if (o.addEventListener) {
+        o.addEventListener(tp, cb, false);
+    } else if (o.attachEvent) {
+        o.attachEvent("on" + tp, cb);
     } else {
-        object["on" + type] = callback;
+        o["on" + tp] = cb;
     }
 };
 
-function set_cookie(cname, cvalue, exdays) {
+function set_cookie(cn, cv, xd) {
     var d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + "; " + expires;
+    d.setTime(d.getTime() + (xd * 24 * 60 * 60 * 1000));
+    var x = "expires=" + d.toUTCString();
+    document.cookie = cn + "=" + cv + "; " + x;
 }
 
-function get_cookie(cname) {
-    var name = cname + "=";
+function get_cookie(cn) {
+    var n = cn + "=";
     var ca = document.cookie.split(';');
     for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
         while (c.charAt(0) === ' ') {
             c = c.substring(1);
         }
-        if (c.indexOf(name) === 0) {
-            return c.substring(name.length, c.length);
+        if (c.indexOf(n) === 0) {
+            return c.substring(n.length, c.length);
         }
         ;
     }
     return "";
 }
 
+function has_class(e, c) {
+    return e.className.match(new RegExp('(\\s|^)' + c + '(\\s|$)'));
+}
+
+function remove_class(e, c) {
+    if (has_class(e, c)) {
+        var rx = new RegExp('(\\s|^)' + c + '(\\s|$)');
+        e.className = e.className.replace(rx, ' ');
+    }
+}
+
+function add_class(e, c) {
+    if (e.className === '') {
+        e.className = c;
+    } else {
+        e.className += ' ' + c;
+    }
+}
+
+var resizer = {};
+
+resizer.resizes_done = 0;
+
+resizer.once = false;
+
+resizer.class_set = '';
+
 resizer.get_viewport_width = function () {
     return Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 }
 
+resizer.set_class = function (c) {
+    if (resizer.class_set === c) {
+        return;
+    }
+    var e = document.documentElement;
+    remove_class(e, 'large-screen');
+    remove_class(e, 'medium-screen');
+    remove_class(e, 'small-screen');
+    add_class(e, c);
+    resizer.class_set = c;
+}
+
 resizer.update_device = function (w) {
+
+    resizer.set_class(w + '-screen');
+
     if (resizer.resizes_done++ > 0 && resizer.once) {
         return;
     }
-    var old_size = get_cookie("viewport_width");
-    if (old_size === w) {
+
+    if (get_cookie("vpw") === w) {
         return;
     }
-    set_cookie("viewport_width", w);
-    if (get_cookie("viewport_width") !== "" + w) {
-        window.location = window.location + '?viewport_width=' + w;
+
+    set_cookie("vpw", w);
+
+    if (get_cookie("vpw") !== "" + w) {
+        if (window.location.indexOf("vpw=") < 0) {
+            window.location = window.location + '?vpw=' + w;
+        }
     } else {
         window.location.reload();
     }
 }
 
-resizer.on_window_resize = function (event) {
+resizer.on_window_resize = function () {
     var w = resizer.get_viewport_width();
     if (w >= 1024) {
         resizer.update_device("large");

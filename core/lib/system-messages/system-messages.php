@@ -18,3 +18,10 @@ function system_messages_sc($params) {
         unset($_SESSION['SYSTEM']['messages']);
     }
 }
+
+function system_message($msg) {
+    if (!session_exists()) {
+        return;
+    }
+    $_SESSION['SYSTEM']['messages'][] = $msg;
+}

@@ -8,7 +8,7 @@
 
 function role_switch_sc($params) {
     load_library("session");
-    $tpl = get_param_value($params, "tpl");
+    $tpl = get_param_value($params, "tpl", current($params));
     if (!session_exists()) {
         run_single_sc($tpl . ".anonymous");
         return;

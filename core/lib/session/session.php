@@ -1,7 +1,7 @@
 <?php
 
 $GLOBALS['SYSTEM']['session_base'] = $GLOBALS['SYSTEM']['file_base'] . 'data/tmp/sessions';
-$GLOBALS['SYSTEM']['session_lifetime'] = 1800; //30 minutes
+$GLOBALS['SYSTEM']['session_lifetime'] = 1800; //half hour
 
 /**
  * Implements session sc
@@ -17,8 +17,10 @@ function session_sc() {
     } else {
         $session_started = true;
     }
-    
-    session_save_path($GLOBALS['SYSTEM']['session_base']);
+
+    if (!defined("ENV-DEV")) {
+        session_save_path($GLOBALS['SYSTEM']['session_base']);
+    }
     session_name("session_id");
     @session_start();
 
@@ -29,9 +31,7 @@ function session_sc() {
     }
 
     //3. remove and restart session if it does not validate
-    if (empty($_SESSION['modified']) 
-            || empty($_SESSION['created']) 
-            || $GLOBALS['SYSTEM']['request_time'] >= $_SESSION['modified'] + $GLOBALS['SYSTEM']['session_lifetime']) {
+    if (empty($_SESSION['modified']) || empty($_SESSION['created']) || $GLOBALS['SYSTEM']['request_time'] >= $_SESSION['modified'] + $GLOBALS['SYSTEM']['session_lifetime']) {
         session_unset();
         session_destroy();
         session_start();
@@ -75,5 +75,3 @@ function session_cleanup_files() {
 function session_count_files() {
     return count(glob(session_save_path() . '/*'));
 }
-
-?>

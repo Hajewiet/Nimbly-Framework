@@ -33,7 +33,7 @@ if (false === file_put_contents($htaccess_file, $htaccess_content)) {
  * Create admin user
  */
 
-load_library("crud");
+load_library("data");
 load_library("pwcrypt", "user");
 load_library("salt");
 $salt = salt_sc();

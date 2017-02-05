@@ -1,7 +1,8 @@
 <?php
 
 function key_access_sc($params) {
-    run_library("session");
+    load_library("session");
+    session_resume();
     $redirect_url = get_param_value($params, "redirect", "errors/403");
 
     if (empty($_SESSION['key'])) {

@@ -4,8 +4,12 @@ function post_sc($params) {
     if ($_SERVER['REQUEST_METHOD'] != 'POST' || empty($_POST['form_key'])) {
         return; //not a valid post, do nothing
     }
-    run_library("session");
+    load_library("session");
+
+    session_resume();
     if (empty($_SESSION['key']) || $_SESSION['key'] != post_get('form_key')) {
+        load_library("log");
+        log_system("Post: session key does not match form key");
         return; //suspicious, could be a CSRF attack.. do nothing.
     }
     load_library("validate");
@@ -14,7 +18,7 @@ function post_sc($params) {
         load_library("sanitize");
         $id_suffix = '_' . sanitize_id(post_get("form_id"));
     }
-    
+
     $validate_include_file = $GLOBALS['SYSTEM']['uri_path'] . '/validate' . $id_suffix . '.inc';
     if (!file_exists($validate_include_file)) {
         //force handling validation by ensuring the validation file existst
@@ -28,7 +32,7 @@ function post_sc($params) {
     }
 }
 
-function post_get($input_name, $default=null) {
+function post_get($input_name, $default = null) {
     if (isset($_POST[$input_name])) {
         return filter_input(INPUT_POST, $input_name, FILTER_SANITIZE_STRING);
     }

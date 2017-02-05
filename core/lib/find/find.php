@@ -100,7 +100,7 @@ function find_all_modules($sub = '') {
     }
 }
 
-function load_library($name, $mod=null) {
+function load_library($name, $mod = null) {
     static $loaded = [];
     if (!empty($loaded[$name])) {
         return;
@@ -114,6 +114,20 @@ function load_library($name, $mod=null) {
     }
     $loaded[$name] = true;
     return $path;
+}
+
+function load_libraries($libs) {
+    if (is_string($libs)) {
+        return load_library($libs);
+    }
+    foreach ($libs as $lib) {
+
+        if (is_string($lib)) {
+            load_library($lib);
+        } else if (is_array($lib) && isset($lib['name']) && isset($lib['mod'])) {
+            load_library($lib['name'], $lib['mod']);
+        }
+    }
 }
 
 function load_module($name) {
@@ -132,4 +146,3 @@ function find_sc($params) {
     }
     return find_template($name, $dir);
 }
-

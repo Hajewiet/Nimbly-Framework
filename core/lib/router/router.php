@@ -8,7 +8,7 @@
 
 function router_run($uri) {
     $GLOBALS['SYSTEM']['route_found'] = false;
-    load_library("crud");
+    load_library("data");
     $routes = data_list("routes");
     if (empty($routes)) {
         return false;
@@ -25,14 +25,16 @@ function router_run($uri) {
 
 function router_accept($accept = true) {
     $GLOBALS['SYSTEM']['route_found'] = $accept;
+    return $accept;
 }
 
 function router_deny($accept = false) {
     $GLOBALS['SYSTEM']['route_found'] = $accept;
+    return $accept;
 }
 
 function router_handle($ep) {
-    $path = find_path($ep, "uri", "route.inc");
+    $path = find_uri($ep, "route.inc");
     if ($path === false) {
         return false;
     }

@@ -67,5 +67,3 @@ function set_session_variable($key, $value, $append = "append", $overwrite = fal
         return;
     }
 }
-
-?>

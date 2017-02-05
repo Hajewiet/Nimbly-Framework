@@ -2,21 +2,29 @@
 
 $GLOBALS['SYSTEM']['data_base'] = $GLOBALS['SYSTEM']['file_base'] . 'data';
 
-function crud_sc($params) {
+function data_sc($params) {
+    if (empty($params)) {
+        return;
+    }
+    $cat = get_param_value($params, "cat", false);
+    if ($cat === false) {
+        data_run($params);
+        return;
+    }
     $op = get_param_value($params, "op", "read");
     if ($op === "read") {
-        $cat = get_param_value($params, "cat");
         $key = get_param_value($params, "key");
         load_library('set');
         $data = data_load($cat, $key);
-        foreach ($data as $key => $value) {
-            set_variable('crud-obj.' . $key, $value, false, true);
+        if (!empty($data)) {
+            foreach ($data as $key => $value) {
+                set_variable('data.' . data_sanitize_key($cat) . '.' . $key, $value, false, true);
+            }
         }
     } else if ($op === "list") {
-        $cat = get_param_value($params, "cat");
         load_library('set');
         $data = data_list($cat);
-        set_variable('crud-list-' . data_sanitize_key($cat), $data, false, true);
+        set_variable('data-list.' . data_sanitize_key($cat), $data, false, true);
     }
     return "";
 }
@@ -24,7 +32,6 @@ function crud_sc($params) {
 /**
  * Returns a list of all data objects
  * Example: data_list('users') returns an array of all users
- * The results are limited to 100
  * @param type $cat category (table name)
  * @return array
  */
@@ -33,6 +40,29 @@ function data_list($cat) {
     $all = @scandir($path);
     if (!empty($all)) {
         $all = array_diff(@scandir($path), array('..', '.'));
+        foreach ($all as $key => $value) {
+            if (strpos($value, "^") !== false) {
+                $all[$key] = data_load($cat, $value, "orig_key");
+            }
+        }
+    }
+    return $all;
+}
+
+/**
+ * Returns a list of all data object with data
+ * Example: data_load_all('users') returns an array of all users and their data
+ * @param type $cat category (table name)
+ * @return array
+ */
+function data_load_all($cat) {
+    $path = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat;
+    $all = @scandir($path);
+    if (!empty($all)) {
+        $all = array_diff(@scandir($path), array('..', '.'));
+        foreach ($all as $key => $value) {
+            $all[$key] = data_load($cat, $value);
+        }
     }
     return $all;
 }
@@ -43,14 +73,17 @@ function data_exists($cat, $key) {
 }
 
 /**
- * Returns a specific data object
+ * Returns a specific data object from file
  * @param type $cat category (table name)
  * @param type $key key (row)
  * @param type $setting optional setting to retrieve (column)
  * @return array or null
  */
 function data_load($cat, $key, $setting = null) {
-    $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/' . $key;
+    if (empty($key)) {
+        return null;
+    }
+    $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/' . data_sanitize_key($key);
     $result = @parse_ini_file($file);
     if (!empty($setting) && isset($result[$setting])) {
         return $result[$setting];
@@ -62,7 +95,7 @@ function data_load($cat, $key, $setting = null) {
 }
 
 /**
- * Updates a specific data object
+ * Updates a specific data object file
  * @param type $cat category (table name)
  * @param type $key key (row)
  * @param type $data_update_ls array with data to update
@@ -71,7 +104,7 @@ function data_update($cat, $key, $data_update_ls) {
     if (empty($data_update_ls)) {
         return;
     }
-    $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/' . $key;
+    $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/' . data_sanitize_key($key);
     $data_ls = @parse_ini_file($file);
     if (empty($data_ls)) {
         $data_merged_ls = $data_update_ls;
@@ -82,7 +115,7 @@ function data_update($cat, $key, $data_update_ls) {
 }
 
 /**
- * Creates or rewrites a data object
+ * Creates or rewrites a data object file
  * @param type $cat category (table name)
  * @param type $key key (row)
  * @param type $data_ls data array
@@ -90,14 +123,18 @@ function data_update($cat, $key, $data_update_ls) {
 function data_create($cat, $key, $data_ls) {
     $dir = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/';
     if (!file_exists($dir)) {
-        @mkdir($dir, 0750);
+        @mkdir($dir, 0750, true);
     }
-    $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/' . $key;
+    $sane_key = data_sanitize_key($key);
+    if ($sane_key !== $key) {
+        $data_ls['orig_key'] = $key;
+    }
+    $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/' . $sane_key;
     data_write_file($file, $data_ls);
 }
 
 /**
- * Deletes a data object
+ * Deletes a data object file
  * @param type $cat category (table name)
  * @param type $key key (row)
  */
@@ -106,8 +143,42 @@ function data_delete($cat, $key) {
     if (!file_exists($dir)) {
         return false;
     }
-    $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/' . $key;
+    $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/' . data_sanitize_key($key);
     return unlink($file);
+}
+
+/**
+ * Deletes a specific item from a data object file
+ * @param type $cat category (table name)
+ * @param type $key key (row)
+ * @param type $item_key item key
+ * @param type $item_value specific value to delete (optional)
+ */
+function data_delete_item($cat, $key, $item_key, $item_value = null) {
+    $dir = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/';
+    if (!file_exists($dir)) {
+        return false;
+    }
+    $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/' . data_sanitize_key($key);
+    $data_ls = @parse_ini_file($file);
+    $do_update = false;
+    if (empty($data_ls[$item_key])) {
+        //don't update
+    } else if ($item_value === null) {
+        $data_ls[$item_key] = "";
+        $do_update = true;
+    } else {
+        $v_ls = split(",", $data_ls[$item_key]);
+        $ix = array_search($item_value, $v_ls);
+        if ($ix !== false) {
+            unset($v_ls[$ix]);
+            $data_ls[$item_key] = join(",", $v_ls);
+            $do_update = true;
+        }
+    }
+    if ($do_update) {
+        data_write_file($file, $data_ls);
+    }
 }
 
 /**
@@ -162,9 +233,40 @@ function _data_ini_line($key, $value) {
     return $result;
 }
 
-function data_sanitize_key($key) {
-    $special_chars = array(" ", "?", "[", "]", "/", "\\", "=", "<", ">", ":", ";",
+function data_sanitize_key($key, $repl = '^') {
+    $special_chars = array("?", "[", "]", "/", "\\", "=", "<", ">", ":", ";",
         ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}");
-    $result = str_replace($special_chars, '-', $key);
+    $result = str_replace($special_chars, $repl, $key);
     return $result;
+}
+
+function data_run($params, $suffix = ".data.inc") {
+    $paths = array(
+        $GLOBALS['SYSTEM']['file_base'] . 'data/inc/',
+        $GLOBALS['SYSTEM']['uri_path']);
+    if (is_array($params)) {
+        $tpl = current($params);
+    } else if (is_string($params)) {
+        $tpl = $params;
+    } else {
+        //log an error?
+        return;
+    }
+    $file_name = $tpl . $suffix;
+    foreach ($paths as $path) {
+        $data_include_file = $path . $file_name;
+        if (file_exists($data_include_file)) {
+            $result = include($data_include_file);
+            load_library("set");
+            if (is_array($result)) {
+                set_variable("data." . data_sanitize_key($tpl), $result);
+            }
+            return $result;
+        }
+    }
+    return null;
+}
+
+function data_bootstrap($params) {
+    return data_run($params, ".data.bootstrap.inc", true);
 }
