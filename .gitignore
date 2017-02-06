@@ -1,3 +1,4 @@
-/data/
-/ext/
+/data/tmp/
+/data/users/
+/ext/uri/install
 .htaccess
