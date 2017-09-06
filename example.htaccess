@@ -8,7 +8,7 @@
     allow from all
 </Files>
 
-# 
+#
 <Files install.php>
     allow from all
 </Files>
@@ -52,7 +52,7 @@ AddOutputFilterByType DEFLATE application/x-javascript
     Header set Cache-Control "max-age=290304000, public"
     </filesMatch>
 </ifModule>
-    
+
 # rewrite: initialize
 RewriteEngine on
 
@@ -60,13 +60,13 @@ RewriteBase /nimbly
 
 # rewrite: use cache if available for the requested file
 RewriteCond %{REQUEST_URI} ^/nimbly/(.*)
-RewriteCond data/tmp/cache/%1 -F
-RewriteRule ^ data/tmp/cache/%1 [L]
+RewriteCond data/.tmp/cache/%1 -F
+RewriteRule ^ data/.tmp/cache/%1 [L]
 
 # rewrite: use cache if available for the requested uri
 RewriteCond %{REQUEST_URI} ^/nimbly/(.*)
-RewriteCond data/tmp/cache/%1._cached_.html -F
-RewriteRule ^ data/tmp/cache/%1._cached_.html [L]
+RewriteCond data/.tmp/cache/%1._cached_.html -F
+RewriteRule ^ data/.tmp/cache/%1._cached_.html [L]
 
 # rewrite: use EXT static if available for the requested file
 RewriteCond %{REQUEST_URI} ^/nimbly/(.*)
@@ -83,7 +83,7 @@ RewriteCond %{REQUEST_URI} ^/nimbly/(.*)
 RewriteCond core/static/%1 -F
 RewriteRule ^ core/static/%1 [L]
 
-# finally, fallback to PHP to handle the request. 
+# finally, fallback to PHP to handle the request.
 php_flag register_globals off
 php_flag magic_quotes_gpc off
 php_flag magic_quotes_sybase off
