@@ -43,24 +43,25 @@ function run_output($buffer) {
  * @param string $uri the path of the uri, e.g. css-demo/type
  */
 function run_uri($uri) {
-    $file = find_uri($uri);
-    if ($file !== false) {
-        /*
-         * Found! Run the template and exit.
-         */
-        $GLOBALS['SYSTEM']['uri'] = $uri;
-        $GLOBALS['SYSTEM']['uri_path'] = dirname($file);
-        run($file);
-        exit();
+    $routed = find_uri($uri, 'route.inc');
+    if ($routed === false) {
+        $file = find_uri($uri);
+        if ($file !== false) {
+            $GLOBALS['SYSTEM']['uri'] = $uri;
+            $GLOBALS['SYSTEM']['uri_path'] = dirname($file);
+            run($file);
+            exit();
+        }
     }
+
     /*
-     * Not found.. fallback to router 
+     * Not found.. fallback to router
      */
     load_library("router");
     if (router_run($uri)) {
         exit();
     }
-    
+
     /*
      * Not routed either.. fallback to page not found error
      */
@@ -95,7 +96,7 @@ function run_template($str) {
         /*
          * 2. Check if the sc is escaped, like this: \[sc]
          * In that case it is not a real sc ("false alarm")
-         * and it does not require any special processing. 
+         * and it does not require any special processing.
          * Just echo sc and look for more scs in the remaining string.
          */
 
@@ -107,7 +108,7 @@ function run_template($str) {
             if ($sc_start !== false) { //there are more scs...
                 run_template($tail, $sc_start); //...so let's process them.
             } else {
-                echo $tail; //otherwise,just output the tail; 
+                echo $tail; //otherwise,just output the tail;
             }
             return;
         }
@@ -120,8 +121,8 @@ function run_template($str) {
         $sc_end = strpos($tail, ']');
 
         /*
-         * 3.  If the sc is not properly closed, e.g. "[sc" 
-         * it's also not a real sc. Just output it and done. 
+         * 3.  If the sc is not properly closed, e.g. "[sc"
+         * it's also not a real sc. Just output it and done.
          */
         if ($sc_end === false) {
             echo sc_TAG_OPEN . $tail;
@@ -152,7 +153,7 @@ function run_template($str) {
     run_single_sc($sc_call);
 
     /*
-     * 5. Processing remaining string (tail) 
+     * 5. Processing remaining string (tail)
      */
     $tail = substr($tail, $sc_end + 1);
     if ($sc_start == 0) { //if a line only contains a sc, just return
@@ -219,7 +220,7 @@ function run_single_sc($sc_call) {
         $param = $call_parts[$i];
         _recover_quoted_strings($param, $quoted_parts); //recover quoted values
         $assignment_pos = strpos($param, ASSIGNMENT_CHAR);
-        if ($assignment_pos > 0) { //handle key-value pairs in syntax as: [sc key=value] 
+        if ($assignment_pos > 0) { //handle key-value pairs in syntax as: [sc key=value]
             $param_id = substr($param, 0, $assignment_pos);
             $param_value = substr($param, $assignment_pos + 1);
             $params[$param_id] = $param_value;
@@ -242,7 +243,7 @@ function run_single_sc($sc_call) {
      * through the environments
      */
     if (count($params) == 0) {
-        
+
         $path_tpl = find_template($function_id);
         if ($path_tpl !== false) {
             add_sc_level($function_id, $path_tpl);
@@ -250,7 +251,7 @@ function run_single_sc($sc_call) {
             remove_sc_level();
             return;
         }
-        
+
         if (isset($SYSTEM['variables'][$function_id])) {
             run_template($SYSTEM['variables'][$function_id]);
             return;
@@ -331,7 +332,7 @@ function run_sc($params) {
         $uri = dirname($tpl);
         $tpl_name = basename($tpl);
     } else {
-        $uri = get_param_value($params, "uri", null);
+        $uri = get_param_value($params, "uri", current($params));
         $tpl_name = "index.tpl";
     }
     if (!empty($uri) && $file = find_uri($uri, $tpl_name)) {
@@ -359,7 +360,7 @@ function run_sc($params) {
 
 /**
  * Helper function to run a library sc
- * 
+ *
  */
 function run_library($function_id, $params = null) {
     $function_name = str_replace('-', '_', $function_id) . "_sc";

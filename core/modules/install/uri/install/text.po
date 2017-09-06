@@ -17,7 +17,7 @@ msgid "step3_short"
 msgstr "3. Done"
 
 msgid "require_session"
-msgstr "A session is required to continue, but could not be created in [base-path]data/tmp/sessions"
+msgstr "A session is required to continue, but could not be created"
 
 msgid "require_php5"
 msgstr "You need PHP version 5 or higher to continue"
@@ -49,8 +49,8 @@ msgstr = "Your system meets all requirements for installing [app-name]. Click ne
 msgid = "form_error"
 msgstr = "Please fill in "
 
-msgid = "username_required"
-msgstr = "Please fill in a username for administrating [app-name]"
+msgid = "email_required"
+msgstr = "Please fill in an email for administrating [app-name]"
 
 msgid = "password_required"
 msgstr = "Please type in a password"
@@ -65,16 +65,16 @@ msgid = "help_pepper"
 msgstr = "The pepper code is a system wide security code, unique for this installation."
 
 msgid = "htaccess_created_ok"
-msgstr = "Successfully configured main htaccess file with alias <strong>[get sticky.rewritebase]</strong>."
+msgstr = "Successfully configured main htaccess file."
 
 msgid = "htaccess_created_fail"
 msgstr = "Could not create or overwrite htaccess file. Please configure the htaccess file manually."
 
 msgid = "user_created_ok"
-msgstr = "Created admin account with username <strong>[get sticky.username]</strong>."
+msgstr = "Created admin account with email <strong>[get sticky.email]</strong>."
 
 msgid = "user_created_fail"
 msgstr = "Could not create admin account. Please review file writing permissions to data directory."
 
 msgid = "step3_proceed"
-msgstr = "Click the button Next to continue to the login screen."
+msgstr = "Click Next to continue to the login screen."

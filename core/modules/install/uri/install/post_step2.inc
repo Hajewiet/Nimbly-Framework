@@ -20,7 +20,7 @@ if (!empty($alias)) {
  */
 
 load_library("set");
-$htaccess_content = run_buffered(realpath(dirname(__FILE__)) . "/root.htaccess.tpl"); 
+$htaccess_content = run_buffered(realpath(dirname(__FILE__)) . "/root.htaccess.tpl");
 $htaccess_file = $GLOBALS['SYSTEM']['file_base'] . '.htaccess';
 if (false === file_put_contents($htaccess_file, $htaccess_content)) {
     set_variable("htaccess_ok", "fail");
@@ -34,18 +34,17 @@ if (false === file_put_contents($htaccess_file, $htaccess_content)) {
  */
 
 load_library("data");
-load_library("pwcrypt", "user");
+load_library("encrypt");
 load_library("salt");
 $salt = salt_sc();
-$username = post_get("username");
+$email = post_get("email");
 $pw = post_get("password");
-data_create("users", $username, array(
-    "name" => $username,
+if (false !== data_create("users", md5($email), array(
+    "email" => $email,
     "roles" => "admin,user",
     "salt" => $salt,
-    "password" => pwcrypt($pw, $salt)
-));
-if (data_exists("users", $username)) {
+    "password" => encrypt($pw, $salt)
+))) {
     set_variable("user_ok", "ok");
 } else {
     set_variable("user_ok", "fail");

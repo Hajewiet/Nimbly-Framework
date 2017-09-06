@@ -1,6 +1,6 @@
 <?php
 
-$GLOBALS['SYSTEM']['cache_base'] = $GLOBALS['SYSTEM']['file_base'] . 'data/tmp/cache/';
+$GLOBALS['SYSTEM']['cache_base'] = $GLOBALS['SYSTEM']['file_base'] . 'data/.tmp/cache/';
 
 function cache_sc($params) {
     $content = ob_get_contents();
@@ -15,7 +15,7 @@ function cache_sc($params) {
         //strip whitepaces, newlines, tabs
         $content = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $content);
     } else if ($file_ext === ".js") {
-        include_once(realpath(dirname(__FILE__)) . "/Minifier.php");  
+        include_once(realpath(dirname(__FILE__)) . "/Minifier.php");
         $content = "/* cached */" . Minifier::minify($content);
     }
     @mkdir(dirname($file_path), 0755, true);

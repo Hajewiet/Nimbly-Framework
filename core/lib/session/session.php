@@ -1,7 +1,6 @@
 <?php
 
-$GLOBALS['SYSTEM']['session_base'] = $GLOBALS['SYSTEM']['file_base'] . 'data/tmp/sessions';
-$GLOBALS['SYSTEM']['session_lifetime'] = 1800; //half hour
+$GLOBALS['SYSTEM']['session_lifetime'] = 4 * 3600; //4 hours
 
 /**
  * Implements session sc
@@ -18,9 +17,6 @@ function session_sc() {
         $session_started = true;
     }
 
-    if (defined("SESSION_SAVE_PATH") && !empty(SESSION_SAVE_PATH)) {
-        session_save_path($GLOBALS['SYSTEM']['session_base']);
-    }
     session_name("session_id");
     @session_start();
 
@@ -60,6 +56,7 @@ function session_initialize() {
     $_SESSION['modified'] = time();
     $_SESSION['key'] = md5(uniqid(rand(), true));
     $_SESSION['roles'] = array("anonymous" => true);
+    $_SESSION['features'] = array();
 }
 
 function session_cleanup_files() {
@@ -74,4 +71,12 @@ function session_cleanup_files() {
 
 function session_count_files() {
     return count(glob(session_save_path() . '/*'));
+}
+
+function session_anon() {
+    return session_resume() === false || empty($_SESSION['roles']['anonymous']) === false;
+}
+
+function session_user() {
+    return session_resume() && empty($_SESSION['roles']['anonymous']);
 }

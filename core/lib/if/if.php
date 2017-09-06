@@ -2,12 +2,13 @@
 
 function if_sc($params) {
     $condition = array();
+    $negate = false;
     $action = array();
     foreach ($params as $key => $value) {
-        if ($key == "tpl") {
+        if ($key === "tpl" || $key === "echo" || $key === "redirect") {
             $action[$key] = $value;
-        } else if ($key == "echo") {
-            $action[$key] = $value;
+        } else if ($key === "not") {
+            $negate = true;
         } else {
             $condition[$key] = $value;
         }
@@ -19,7 +20,7 @@ function if_sc($params) {
     load_library("get");
     foreach ($condition as $key => $value) {
         //loop through and test all conditions
-        if (if_condition($key, $value) !== true) {
+        if (if_condition($key, $value, $negate) !== true) {
             $pass = false;
             break;
         }
@@ -39,19 +40,29 @@ function if_action($action) {
             case 'echo': //echo a value
                 echo $value;
                 break;
+            case 'redirect': //redirect to url
+                load_library("redirect");
+                redirect($value);
+                break;
         }
     }
 }
 
-function if_condition($key, $value) {
+function if_condition($key, $value, $negate = false) {
+    $result = null;
     if ($value === "(not-empty)") {
         $eval = get_sc($key);
-        return !empty($eval);
+        $result = !empty($eval);
     } else if ($value === "(empty)") {
         $eval = get_sc($key);
-        return empty($eval);
+        $result = empty($eval);
     } else {
         $eval = get_sc($key);
-        return $eval == $value;
+        $result = $eval == $value;
+    }
+    if ($negate === false) {
+        return $result;
+    } else {
+        return !$result;
     }
 }

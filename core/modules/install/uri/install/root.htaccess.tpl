@@ -52,7 +52,7 @@ AddOutputFilterByType DEFLATE application/x-javascript
     Header set Cache-Control "max-age=290304000, public"
     </filesMatch>
 </ifModule>
-    
+
 # rewrite: initialize
 RewriteEngine on
 
@@ -60,13 +60,13 @@ RewriteBase /[get sticky.rewritebase]
 
 # rewrite: use cache if available for the requested file
 RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
-RewriteCond data/tmp/cache/%1 -F
-RewriteRule ^ data/tmp/cache/%1 \[L]
+RewriteCond data/.tmp/cache/%1 -F
+RewriteRule ^ data/.tmp/cache/%1 \[L]
 
 # rewrite: use cache if available for the requested uri
 RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
-RewriteCond data/tmp/cache/%1._cached_.html -F
-RewriteRule ^ data/tmp/cache/%1._cached_.html \[L]
+RewriteCond data/.tmp/cache/%1._cached_.html -F
+RewriteRule ^ data/.tmp/cache/%1._cached_.html \[L]
 
 # rewrite: use EXT static if available for the requested file
 RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
@@ -83,7 +83,7 @@ RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
 RewriteCond core/static/%1 -F
 RewriteRule ^ core/static/%1 \[L]
 
-# finally, fallback to PHP to handle the request. 
+# finally, fallback to PHP to handle the request.
 php_flag register_globals off
 php_flag magic_quotes_gpc off
 php_flag magic_quotes_sybase off
@@ -92,8 +92,8 @@ php_flag mbstring.encoding_translation off
 php_value mbstring.http_input pass
 php_value mbstring.http_output pass
 php_value zlib.output_compression 16386
-php_value session.gc.maxlifetime 1800
-php_value session.cookie_lifetime 1800
+php_value session.gc_maxlifetime 14400
+php_value session.cookie_lifetime 14400
 
 # rewrite: redirect anything that is not a file to index.php
 RewriteCond %{REQUEST_FILENAME} !-f

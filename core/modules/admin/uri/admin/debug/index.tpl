@@ -1,0 +1,5 @@
+[module user admin]
+[access feature=debug]
+[set page-title="Debug"]
+[set bar-title="Admin | Debug"]
+[html]

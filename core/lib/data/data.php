@@ -2,271 +2,371 @@
 
 $GLOBALS['SYSTEM']['data_base'] = $GLOBALS['SYSTEM']['file_base'] . 'data';
 
+/**
+ * Implements [data] shortcode
+ * Example: [data resource=users op=read]
+ */
 function data_sc($params) {
     if (empty($params)) {
         return;
     }
-    $cat = get_param_value($params, "cat", false);
-    if ($cat === false) {
-        data_run($params);
+    $resource = get_param_value($params, "resource", current($params));
+    if (empty($resource)) {
         return;
     }
     $op = get_param_value($params, "op", "read");
-    if ($op === "read") {
-        $key = get_param_value($params, "key");
-        load_library('set');
-        $data = data_load($cat, $key);
-        if (!empty($data)) {
-            foreach ($data as $key => $value) {
-                set_variable('data.' . data_sanitize_key($cat) . '.' . $key, $value, false, true);
-            }
-        }
-    } else if ($op === "list") {
-        load_library('set');
-        $data = data_list($cat);
-        set_variable('data-list.' . data_sanitize_key($cat), $data, false, true);
+    $uuid = get_param_value($params, "uuid", null);
+    $var_id = get_param_value($params, "var", null);
+    $function_name = sprintf("data_%s", $op);
+    $result = call_user_func($function_name, $resource, $uuid);
+
+    $sort = get_param_value($params, "sort", false);
+    if ($sort) {
+        $result = data_sort_param($result, $sort);
     }
-    return "";
+
+    $search = get_param_value($params, "search", false);
+    if ($search !== false) {
+        $result = data_search($result, $search);
+    }
+
+    load_library("set");
+    $data_var = data_var($resource, $uuid, $op);
+    set_variable($data_var, $result);
+    if (!empty($uuid) && !empty($var_id)) {
+        set_variable_dot($var_id, $result);
+    }
+}
+
+function data_var($resource, $uuid = "", $op = "read") {
+    return sprintf("data.%s%s%s", trim($resource, '.'), empty($uuid)? "" : '.' . $uuid, ($op === "read")? "" : '.' . $op);
 }
 
 /**
- * Returns a list of all data objects
- * Example: data_list('users') returns an array of all users
- * @param type $cat category (table name)
- * @return array
+ * Returns true if a resource exists.
+ * Example: data_exists('users') or data_exists('users', 1)
+ * @return boolean
  */
-function data_list($cat) {
-    $path = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat;
-    $all = @scandir($path);
-    if (!empty($all)) {
-        $all = array_diff(@scandir($path), array('..', '.'));
-        foreach ($all as $key => $value) {
-            if (strpos($value, "^") !== false) {
-                $all[$key] = data_load($cat, $value, "orig_key");
-            }
-        }
-    }
-    return $all;
-}
-
-/**
- * Returns a list of all data object with data
- * Example: data_load_all('users') returns an array of all users and their data
- * @param type $cat category (table name)
- * @return array
- */
-function data_load_all($cat) {
-    $path = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat;
-    $all = @scandir($path);
-    if (!empty($all)) {
-        $all = array_diff(@scandir($path), array('..', '.'));
-        foreach ($all as $key => $value) {
-            $all[$key] = data_load($cat, $value);
-        }
-    }
-    return $all;
-}
-
-function data_exists($cat, $key) {
-    $path = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/' . $key;
+function data_exists($resource, $uuid = "") {
+    $path = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . $uuid;
     return file_exists($path);
 }
 
 /**
- * Returns a specific data object from file
- * @param type $cat category (table name)
- * @param type $key key (row)
- * @param type $setting optional setting to retrieve (column)
+ * Returns a list of id's for a certain resource
+ * Example: data_list('users') returns an array of all user id's
  * @return array or null
  */
-function data_load($cat, $key, $setting = null) {
-    if (empty($key)) {
+function data_list($resource, $uuid = null) {
+    if (!empty($uuid)) {
+        return data_exists($resource, $uuid)? array($uuid) : array();
+    }
+    $path = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource;
+    $all = @scandir($path);
+    if (empty($all)) {
         return null;
     }
-    $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/' . data_sanitize_key($key);
-    $result = @parse_ini_file($file);
-    if (!empty($setting) && isset($result[$setting])) {
-        return $result[$setting];
-    } else if (!empty($setting)) {
-        return null;
-    } else {
-        return $result;
+    return preg_grep('/^([^.])/', $all);
+}
+
+/**
+ * Implements read operation
+ * Example: data_read('users') returns data for all users
+ * Example: data_read('users', 1) returns data for user 1
+ * @return array or null
+ */
+function data_read($resource, $uuid = null, $setting = null) {
+    if (empty($uuid)) {
+        return _data_read_all($resource, $setting);
     }
+    $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . $uuid;
+    $contents = file_get_contents($file);
+    $result = json_decode($contents, true);
+    if (!empty($setting)) {
+        if (isset($result[$setting])) {
+            return $result[$setting];
+        }
+        return null;
+    }
+    return $result;
+}
+
+function data_cached_read($resource, $uuid = null) {
+    load_library("get");
+    $data_var = data_var($resource, $uuid);
+    $result = get_variable($data_var);
+    if (empty($result)) {
+        $result = data_read($resource, $uuid);
+    }
+    return $result;
+}
+
+/**
+ * Returns a list of all data object with data
+ * Example: _data_read_all('users') returns an array of all users and their data
+ */
+function _data_read_all($resource, $setting = null) {
+    $result = array();
+    $path = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource;
+    $all = @scandir($path);
+    if (is_array($all)) {
+        foreach ($all as $uuid) {
+            if ($uuid[0] !== '.') {
+                $result[$uuid] = data_read($resource, $uuid, $setting);
+            }
+        }
+    }
+    return $result;
 }
 
 /**
  * Updates a specific data object file
- * @param type $cat category (table name)
- * @param type $key key (row)
- * @param type $data_update_ls array with data to update
  */
-function data_update($cat, $key, $data_update_ls) {
-    if (empty($data_update_ls)) {
-        return;
+function data_update($resource, $uuid, $data_update_ls) {
+    if (empty($data_update_ls) || !data_exists($resource, $uuid)) {
+        return false;
     }
-    $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/' . data_sanitize_key($key);
-    $data_ls = @parse_ini_file($file);
+    if (empty($uuid)) { // update multiple
+        $result = array();
+        foreach ($data_update_ls as $pk => $updates) {
+            $id = empty($pk)? $updates['uuid'] : $pk;
+            if (empty($id)) {
+                continue;
+            }
+            $r = data_update($resource, $id, $updates);
+            if (!is_array($r)) {
+                return false;
+            }
+            $result[$id] = $r;
+        }
+        return $result;
+    }
+    $data_ls = data_read($resource, $uuid);
     if (empty($data_ls)) {
         $data_merged_ls = $data_update_ls;
     } else {
         $data_merged_ls = array_merge($data_ls, $data_update_ls);
     }
-    data_write_file($file, $data_merged_ls);
+    if (data_create($resource, $uuid, $data_merged_ls)) {
+        return $data_merged_ls;
+    }
+    return false;
 }
+
 
 /**
  * Creates or rewrites a data object file
- * @param type $cat category (table name)
- * @param type $key key (row)
- * @param type $data_ls data array
  */
-function data_create($cat, $key, $data_ls) {
-    $dir = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/';
+function data_create($resource, $uuid, $data_ls) {
+    $dir = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/';
     if (!file_exists($dir)) {
         @mkdir($dir, 0750, true);
     }
-    $sane_key = data_sanitize_key($key);
-    if ($sane_key !== $key) {
-        $data_ls['orig_key'] = $key;
+    if (empty($uuid)) {
+        return file_exists($dir);
     }
-    $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/' . $sane_key;
-    data_write_file($file, $data_ls);
+    $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . $uuid;
+    $json_data = json_encode($data_ls, JSON_UNESCAPED_UNICODE);
+    return @file_put_contents($file, $json_data) !== false;
 }
 
 /**
- * Deletes a data object file
- * @param type $cat category (table name)
- * @param type $key key (row)
+ * Deletes resource/id or resource/*
  */
-function data_delete($cat, $key) {
-    $dir = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/';
+function data_delete($resource, $uuid = null) {
+    $dir = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/';
     if (!file_exists($dir)) {
         return false;
     }
-    $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/' . data_sanitize_key($key);
-    return unlink($file);
-}
-
-/**
- * Deletes a specific item from a data object file
- * @param type $cat category (table name)
- * @param type $key key (row)
- * @param type $item_key item key
- * @param type $item_value specific value to delete (optional)
- */
-function data_delete_item($cat, $key, $item_key, $item_value = null) {
-    $dir = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/';
-    if (!file_exists($dir)) {
-        return false;
+    if (!empty($uuid)) {
+        $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . $uuid;
+        return file_exists($file) && unlink($file);
     }
-    $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $cat . '/' . data_sanitize_key($key);
-    $data_ls = @parse_ini_file($file);
-    $do_update = false;
-    if (empty($data_ls[$item_key])) {
-        //don't update
-    } else if ($item_value === null) {
-        $data_ls[$item_key] = "";
-        $do_update = true;
-    } else {
-        $v_ls = split(",", $data_ls[$item_key]);
-        $ix = array_search($item_value, $v_ls);
-        if ($ix !== false) {
-            unset($v_ls[$ix]);
-            $data_ls[$item_key] = join(",", $v_ls);
-            $do_update = true;
+
+    $delete_count = 0;
+    $files = @scandir($dir);
+    foreach($files as $file) {
+        if ($file[0] === '.' && $file !== ".meta") {
+            continue;
         }
-    }
-    if ($do_update) {
-        data_write_file($file, $data_ls);
-    }
-}
-
-/**
- * Writes to an ini file
- * @param type $file full path
- * @param type $data_ls data array
- */
-function data_write_file($file, $data_ls) {
-    $data_formatted_ls = array();
-    foreach ($data_ls as $key => $value) {
-        if (is_array($value)) {
-            $data_formatted_ls[] = "[$key]";
-            $data_formatted_ls = array_merge($data_formatted_ls, _data_ini_lines($value));
-        } else {
-            $data_formatted_ls[] = _data_ini_line($key, $value);
+        $f = $dir . $file;
+        if (!is_file($f)) {
+            continue;
         }
+        $delete_count += (int) unlink($f);
     }
-    file_put_contents($file, implode("\r\n", $data_formatted_ls), LOCK_EX);
-    chmod($file, 0640);
+    @rmdir($dir);
+    return $delete_count;
 }
 
-/**
- * Creates multiple key=value lines for an ini file from an array
- * @param type $values array of values
- * @return array with formatted ini strings: key=value
+function data_sort_param($data, $sort_csv) {
+    $parts = explode(",", $sort_csv);
+    $len = count($parts);
+    if ($len < 2) {
+        return $data;
+    }
+    $meta = array(
+        "field" => $parts[0],
+        "flags" => $len > 1? $parts[1] : 'default',
+        "order" => $len > 2? $parts[2] : 'default'
+    );
+    return data_sort_meta($data, $meta);
+}
+
+function data_sort_meta($data, $meta) {
+    switch (trim(strtolower($meta['flags']))) {
+        case 'numeric':
+            $flags = SORT_NUMERIC;
+            break;
+        case 'string':
+            $flags = SORT_STRING;
+            break;
+        default:
+            $flags = SORT_REGULAR;
+    }
+     switch (trim(strtolower($meta['order']))) {
+        case 'desc':
+            $order = SORT_DESC;
+            break;
+        default:
+            $order = SORT_ASC;
+    }
+    return data_sort($data, $meta['field'], $flags, $order);
+}
+
+function data_sort($data, $key, $sort_flags = SORT_REGULAR, $sort_order = SORT_ASC) {
+    switch ($sort_flags) {
+        case SORT_REGULAR:
+            return data_sort_regular($data, $key, $sort_order);
+        case SORT_NUMERIC:
+            return data_sort_numeric($data, $key, $sort_order);
+        case SORT_STRING:
+            return data_sort_string($data, $key, $sort_order);
+        default:
+            return $data;
+    }
+}
+
+function data_sort_regular($data, $key, $sort_order = SORT_ASC) {
+    uasort($data, $sort_order === SORT_ASC?
+            function($a, $b) use ($key) { return $a[$key] - $b[$key]; }
+        :   function($b, $a) use ($key) { return $a[$key] - $b[$key]; });
+    return $data;
+}
+
+function data_sort_numeric($data, $key, $sort_order = SORT_ASC) {
+    uasort($data,  $sort_order ===  SORT_ASC?
+            function($a, $b) use ($key) { return floatval($a[$key]) - floatval($b[$key]); }
+        :   function($b, $a) use ($key) { return floatval($a[$key]) - floatval($b[$key]); });
+    return $data;
+}
+
+function data_sort_string($data, $key, $sort_order = SORT_ASC) {
+    uasort($data, $sort_order ===  SORT_ASC?
+            function($a, $b) use ($key) { return strcasecmp($a[$key], $b[$key]); }
+        :   function($b, $a) use ($key) { return strcasecmp($a[$key], $b[$key]); });
+    return $data;
+}
+
+/*
+ * Simple search on all fields, given a search term
  */
-function _data_ini_lines($values, $key_prefix = "") {
-    $result = array();
-    foreach ($values as $key => $val) {
-        if (is_array($val)) {
-            $result = array_merge($result, _data_ini_lines($val, $key_prefix . $key . "."));
-        } else {
-            $result[] = _data_ini_line($key_prefix . $key, $val);
-        }
+function data_search($data, $term, $level = 0) {
+    if ($level === 0) {
+        $result = array();
     }
-    return $result;
-}
-
-/**
- * Creates one key=value line for an ini file
- * @param type $key key string, must be alphanumeric
- * @param type $value value string
- * @return string formatted ini string: key=value
- */
-function _data_ini_line($key, $value) {
-    $result = "$key=";
-    if (ctype_alnum($value)) {
-        $result .= $value;
-    } else {
-        $result .= '"' . addslashes($value) . '"';
+    if (empty($term) || strlen($term) < 2) {
+        return $result;
     }
-    return $result;
-}
-
-function data_sanitize_key($key, $repl = '^') {
-    $special_chars = array("?", "[", "]", "/", "\\", "=", "<", ">", ":", ";",
-        ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}");
-    $result = str_replace($special_chars, $repl, $key);
-    return $result;
-}
-
-function data_run($params, $suffix = ".data.inc") {
-    $paths = array(
-        $GLOBALS['SYSTEM']['file_base'] . 'data/inc/',
-        $GLOBALS['SYSTEM']['uri_path']);
-    if (is_array($params)) {
-        $tpl = current($params);
-    } else if (is_string($params)) {
-        $tpl = $params;
-    } else {
-        //log an error?
-        return;
-    }
-    $file_name = $tpl . $suffix;
-    foreach ($paths as $path) {
-        $data_include_file = $path . $file_name;
-        if (file_exists($data_include_file)) {
-            $result = include($data_include_file);
-            load_library("set");
-            if (is_array($result)) {
-                set_variable("data." . data_sanitize_key($tpl), $result);
+    foreach ($data as $key => $record) {
+        $score = 0;
+        foreach ($record as $field_name => $field_value) {
+            if (is_scalar($field_value)) {
+                $v = trim($field_value);
+                $p = stripos($v, $term);
+                if ($p === false) {
+                    // nothing
+                } else if ($p === 0) {
+                    $score += 2;
+                } else {
+                    $score += 1;
+                }
+            } else if (is_array($field_value)){
+                $score += data_search($field_value, $term, $level + 1);
             }
-            return $result;
+            if ($score > 0 && $level === 0) {
+                $result[$key] = $record;
+                $result[$key]['search_score'] = $score;
+            } else if ($score > 0 && $level > 0) {
+                return $score;
+            }
         }
     }
-    return null;
+    if ($level === 0) {
+        $result = data_sort_numeric($result, 'search_score', SORT_DESC);
+        return $result;
+    }
+    return 0;
 }
 
-function data_bootstrap($params) {
-    return data_run($params, ".data.bootstrap.inc", true);
+/*
+ * Get all resource types
+ */
+function data_resources_list() {
+    $rs = @scandir($GLOBALS['SYSTEM']['data_base']);
+    $result = array();
+    if (is_array($rs)) {
+        foreach ($rs as $r) {
+            if ($r[0] === '.') {
+                continue;
+            }
+            $dir = $GLOBALS['SYSTEM']['data_base'] . '/' . $r;
+            if (!is_dir($dir)) {
+                continue;
+            }
+            $entities = data_list($r);
+            $result[$r] = array(
+                "name" => $r,
+                "count" => count($entities)
+            );
+        }
+    }
+    return $result;
+}
+
+/*
+ * Get meta data about a resource
+ */
+function data_meta($resource, $items = null) {
+    if (data_exists($resource, ".meta")) {
+        $meta = data_read($resource, ".meta");
+    } else {
+        if ($items === null) {
+            $items = data_read($resource);
+        }
+        $meta = _data_meta_build($items);
+        if ($meta !== false) {
+            data_create($resource, ".meta", $meta);
+        }
+    }
+    return $meta;
+}
+
+/*
+ * Build meta data by inspecting the entities (not ideal)
+ */
+function _data_meta_build($items) {
+   if (empty($items)) {
+        return false;
+    }
+    $meta = array();
+    $fields = array_keys(current($items));
+    $exclude = array("uuid", "salt");
+    $fields = array_diff($fields, $exclude);
+    $fields = array_fill_keys($fields, array('type' => 'text', 'name' => ''));
+    foreach ($fields as $k => $v) {
+        $fields[$k]['name'] = $k;
+    }
+    $meta['fields'] = $fields;
+    return $meta;
 }

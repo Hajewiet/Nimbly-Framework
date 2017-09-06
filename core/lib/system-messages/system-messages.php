@@ -10,18 +10,18 @@ function system_messages_sc($params) {
         return "";
     } else if (is_array($_SESSION['SYSTEM']['messages'])){
         load_library("set");
-        $tpl = find_template("system-messages", 'lib/system-messages');
         foreach ($_SESSION['SYSTEM']['messages'] as $msg) {
-            set_variable("system_message", $msg, false, true);
-            run($tpl);
+            set_variable("system_message", $msg, '<br />');
         }
         unset($_SESSION['SYSTEM']['messages']);
     }
 }
 
 function system_message($msg) {
+    load_library("session");
     if (!session_exists()) {
         return;
     }
+    session_sc();
     $_SESSION['SYSTEM']['messages'][] = $msg;
 }

@@ -1,10 +1,7 @@
 <?php
 
 function redirect_sc($params) {
-	if (empty($params)) {
-		return;
-	}
-    $url = current($params);
+    $url = is_array($params)? current($params) : $params;
     if (empty($url)) {
         return;
     }

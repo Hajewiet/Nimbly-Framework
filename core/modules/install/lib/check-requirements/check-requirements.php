@@ -3,8 +3,8 @@
 function check_requirements_sc($params) {
     load_library("get");
     load_library("set");
-    set_variable("require_all", 'fail', false, true);
-    
+    set_variable("require_all", 'fail');
+
     if (get_variable("session_ok") === "fail") {
         set_variable("require_msg", "require_session");
         return;
@@ -16,7 +16,7 @@ function check_requirements_sc($params) {
     }
 
     $ext = get_loaded_extensions();
-    
+
     if (!in_array("mcrypt", $ext)) {
         set_variable("require_msg", "require_ext_mcrypt");
         return;
@@ -52,24 +52,24 @@ function check_requirements_sc($params) {
         set_variable("require_msg", "require_apache_rewrite");
         return;
     }
-    
+
     load_library("setup-data-dir");
     if (!setup_data_dir_sc()) {
         set_variable("require_msg", "require_data_dir");
         return;
     }
 
-    $file_path = $GLOBALS['SYSTEM']['file_base'] . "data/tmp";
+    $file_path = $GLOBALS['SYSTEM']['file_base'] . "data/.tmp";
     $temp_file_name = tempnam($file_path, "tmp-");
-    
+
     if ($temp_file_name !== false) {
         unlink($temp_file_name);
     } else {
         set_variable("require_msg", "require_data_write");
         return;
     }
-    
-    set_variable("require_all", 'pass', false, true);
+
+    set_variable("require_all", 'pass');
 }
 
 /**
@@ -82,7 +82,7 @@ function require_higher_version($v1, $v2) {
     if (empty($v1)) {
         return false;
     }
-    
+
     if (empty($v2)) {
         return true;
     }

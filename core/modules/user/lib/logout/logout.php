@@ -3,10 +3,8 @@
 function logout_sc($params) {
     run_library('session');
     run_library('redirect');
-    foreach ($_SESSION['roles'] as $role => $value) {
-        $_SESSION['roles'][$role] = false;
-    }
-    $_SESSION['roles']['anonymous'] = true;
+    $_SESSION['roles'] = array('anonymous' => true);
+    $_SESSION['features'] = array();
     $_SESSION['username'] = 'anonymous';
     $_SESSION['SYSTEM']['messages'][] = '[text user_logged_out]';
     $redirect_url = get_param_value($params, "redirect", "");

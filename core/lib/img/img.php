@@ -39,7 +39,7 @@ function img_generate_placeholder(&$params) {
      */
     $img_footprint = trim(base64_encode($width . $text . $height), '=/');
     $img_uri = 'img/placeholder_' . $img_footprint . '.png';
-    
+
     load_library("cache");
     $img_path = $GLOBALS['SYSTEM']['cache_base'] . $img_uri;
     if (@file_exists($img_path)) {
@@ -62,7 +62,7 @@ function img_generate_placeholder(&$params) {
     $bg_color = imagecolorallocate($img, 200, 200, 200); //medium gray
     $line_color = imagecolorallocate($img, 175, 175, 175); //a bit darker
     $txt_color = imagecolorallocate($img, 150, 150, 150); //a bit darker
-    
+
     //add background
     imagefilledrectangle($img, 0, 0, $width, $height, $bg_color);
 
@@ -70,7 +70,7 @@ function img_generate_placeholder(&$params) {
     if (function_exists("imageantialias")) {
         imageantialias($img, true);
     }
-    imagesetthickness($img, 5);
+    imagesetthickness($img, 2);
     imageline($img, 0, 0, $width, $height, $line_color);
     imageline($img, $width, 0, 0, $height, $line_color);
 
@@ -88,11 +88,11 @@ function img_generate_placeholder(&$params) {
     imagetruecolortopalette($img, false, 3);
 
     //save image and clean up
-    @mkdir(dirname($img_path, 0755));
+    @mkdir(dirname($img_path), 0750, true);
     if (@imagepng($img, $img_path, 9)) {
         $result = $img_uri;
     }
-    
+
     imagedestroy($img);
 
     return $result;

@@ -1,0 +1,5 @@
+[module user admin]
+[access feature=get_[data.resource]]
+[set page-title="[field-name [data.resource]]"]
+[set bar-title="Admin | [field-name [data.resource]]"]
+[html]

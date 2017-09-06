@@ -1,7 +1,15 @@
 <?php
 
-function url_sc() {
-    return $GLOBALS['SYSTEM']['uri_base'] . $GLOBALS['SYSTEM']['request_uri'];
+function url_sc($params) {
+
+	if (empty($params)) {
+		return $GLOBALS['SYSTEM']['uri_base'] . $GLOBALS['SYSTEM']['request_uri'];
+	} else if (current($params) === "relative") {
+		return $GLOBALS['SYSTEM']['request_uri'];
+	} else {
+		return url_absolute($GLOBALS['SYSTEM']['request_uri']);
+	}
+	
 }
 
 function url_absolute($relative_url) {

@@ -2,8 +2,11 @@
 [set site-name=[app-name]]
 [set language=en]
 [set body-classes=]
-[set html-classes=no-js]
+[set html-classes=]
 [set page-title=Home]
+[set head=]
+[module user]
+[init]
 <!doctype html>
 <html class="[html-classes]" lang="[language]">
     <head>
@@ -12,15 +15,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>[page-title] | [site-name]</title>
         [stylesheets]
-        [style-tag]
-		[base-script]
-        <link rel="shortcut icon" href="[base-url]/favicon.png" />
+        [head]
+        [scripts]
+        [favicon]
     </head>
     <body class="[body-classes]">
-        [header]
-        [system-messages]
-        [body]
-        [footer]
+        [top]
+        [page]
+        [bottom]
+        [left]
+        [right]
         <script>
             [load-scripts]
         </script>

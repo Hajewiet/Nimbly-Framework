@@ -25,7 +25,7 @@
  */
 
 function validate_sc($params) {
-    
+
 }
 
 $GLOBALS['SYSTEM']['validation_errors'] = array();
@@ -76,6 +76,19 @@ function _validate_name($input) {
     }
     $var = filter_var($input, FILTER_VALIDATE_REGEXP, array(
         "options" => array("regexp" => "/^[a-zA-Z0-9'´_\-\s]+$/")));
+    if ($var === false) {
+        return "[text validate_invalid_characters]";
+    }
+    return true;
+}
+
+function _validate_email($input) {
+    $result = _validate_length($input);
+    if ($result !== true) {
+        return $result;
+    }
+    $var = filter_var($input, FILTER_VALIDATE_REGEXP, array(
+        "options" => array("regexp" => "/^[a-zA-Z0-9'´@._\-\s]+$/")));
     if ($var === false) {
         return "[text validate_invalid_characters]";
     }

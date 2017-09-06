@@ -97,8 +97,8 @@ resizer.update_device = function (w) {
     set_cookie("vpw", w);
 
     if (get_cookie("vpw") !== "" + w) {
-        if (window.location.indexOf("vpw=") < 0) {
-            window.location = window.location + '?vpw=' + w;
+        if (window.location.search.indexOf("vpw=") < 0) {
+            window.location.href = window.location.href + '?vpw=' + w;
         }
     } else {
         window.location.reload();

@@ -1,0 +1,5 @@
+[module user admin]
+[access feature=test_style]
+[set page-title="Style"]
+[set bar-title="Admin | Style"]
+[html]

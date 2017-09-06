@@ -2,14 +2,12 @@
 
 function set_sc($params) {
     global $SYSTEM;
-    $append = false;
+    $if_exists = false;
     if (isset($params["append"])) {
-        $append = get_param_value($params, "append", false);
+        $if_exists = get_param_value($params, "append", false);
         unset($params["append"]);
-    }
-    $overwrite = false;
-    if (isset($params["overwrite"])) {
-        $overwrite = $append == false && get_param_value($params, "overwrite", false);
+    } else if (isset($params["overwrite"])) {
+        $if_exists = true;
         unset($params["overwrite"]);
     }
     $session = false;
@@ -19,51 +17,64 @@ function set_sc($params) {
     }
     foreach ($params as $key => $value) {
         if ($session) {
-            set_session_variable($key, $value, $append, $overwrite);
+            set_session_variable($key, $value, $if_exists);
         } else {
-            set_variable($key, $value, $append, $overwrite);
+            set_variable($key, $value, $if_exists);
         }
     }
-
     return null;
 }
 
-function set_variable($key, $value, $append = "append", $overwrite = false) {
+function set_variable($rkey, $value, $if_exists = true) {
     global $SYSTEM;
-    if (empty($SYSTEM['variables'][$key])) {
+    $key = preg_replace('/[^a-zA-Z0-9._-]/', '_', $rkey);
+    if (empty($SYSTEM['variables'][$key]) || $if_exists === true) {
         $SYSTEM['variables'][$key] = $value;
-        return;
-    }
-    if ($append == "append") {
-        $SYSTEM['variables'][$key] .= ' ' . $value;
-        return;
-    }
-    if (!empty($append) && $append !== false) {
-        $SYSTEM['variables'][$key] .= $append . $value;
-        return;
-    }
-    if (!empty($overwrite) && $overwrite !== false) {
-        $SYSTEM['variables'][$key] = $value;
-        return;
+    } else if (is_string($if_exists)) {
+        $SYSTEM['variables'][$key] .= $if_exists . $value;
     }
 }
 
-function set_session_variable($key, $value, $append = "append", $overwrite = false) {
+function set_session_variable($rkey, $value, $if_exists=true) {
     run_library("session");
-    if (empty($_SESSION['variables'][$key])) {
+    $key = preg_replace('/[^a-zA-Z0-9._-]/', '_', $rkey);
+    if (empty($_SESSION['variables'][$key]) || $if_exists === true) {
         $_SESSION['variables'][$key] = $value;
         return;
+    } if (is_string($if_exists)) {
+        $_SESSION['variables'][$key] .= $if_exists . $value;
     }
-    if ($append == "append") {
-        $_SESSION['variables'][$key] .= ' ' . $value;
+}
+
+function clear_variable($name) {
+    global $SYSTEM;
+    if (isset($SYSTEM['variables'][$k])) {
+         unset($SYSTEM['variables'][$k]);
+         return;
+    }
+    $prefix = $name;
+    foreach($SYSTEM['variables'] as $k => $v) {
+        if (substr($k, 0, strlen($prefix)) === $prefix) {
+            unset($SYSTEM['variables'][$k]);
+        }
+    }
+}
+
+function set_variables($prefix, $vs, $if_exists = true) {
+    foreach ($vs as $key => $value) {
+        set_variable($prefix . $key, $value, $if_exists);
+    }
+}
+
+function set_variable_dot($key, $value) {
+    global $SYSTEM;
+    if (is_scalar($value)) {
+        $SYSTEM['variables'][$key] = $value;
         return;
     }
-    if (!empty($append) && $append !== false) {
-        $_SESSION['variables'][$key] .= $append . $value;
-        return;
-    }
-    if (!empty($overwrite) && $overwrite !== false) {
-        $_SESSION['variables'][$key] = $value;
-        return;
+    if (is_array($value) || is_object($value)) {
+        foreach($value as $k => $v) {
+            set_variable_dot($key . '.' . $k, $v);
+        }
     }
 }

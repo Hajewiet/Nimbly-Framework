@@ -1,0 +1,5 @@
+[module user admin forms]
+[access feature=add_routes]
+[set page-title="Add Route"]
+[set bar-title="Admin | Add Route"]
+[html]

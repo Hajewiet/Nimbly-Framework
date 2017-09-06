@@ -1,6 +1,4 @@
-<div class="row">
-    <h1>It works!</h1>
-    <p>
-        This text is defined in the default \[body] shortcode (sc). 
-    </p>
+<div class="container">
+    <h1>[page-title]</h1>
+    [render uuid="content1.[url]" content]
 </div>

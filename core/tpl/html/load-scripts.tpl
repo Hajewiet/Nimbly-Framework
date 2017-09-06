@@ -1,10 +1,7 @@
-$script('http://code.jquery.com/jquery-1.11.3.min.js', 'jquery');
-$script('https://cdn.jsdelivr.net/what-input/2.1.0/what-input.min.js', 'what-input');
+$script('https://code.jquery.com/jquery-3.2.1.min.js', 'jquery');
 
-$script.ready(\['jquery', 'what-input'], function () {
-    $script('https://cdn.jsdelivr.net/foundation/6.2.1/foundation.min.js', 'foundation');
+$script.ready('jquery', function() {
+    $script('[base-url]/js/app.js');
 });
 
-$script.ready('foundation', function() {
-    $(document).foundation();
-});
+[feature-cond edit tpl=edit-script]

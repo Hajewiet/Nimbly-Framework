@@ -1,26 +1,36 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 function router_run($uri) {
     $GLOBALS['SYSTEM']['route_found'] = false;
+    $GLOBALS['SYSTEM']['uri_parts'] = explode("/", $GLOBALS['SYSTEM']['request_uri']);
     load_library("data");
-    $routes = data_list("routes");
+    $routes = data_read(".routes");
+    $routes = data_sort($routes, 'order', SORT_NUMERIC);
     if (empty($routes)) {
         return false;
     }
-    foreach ($routes as $route) {
-        $r = data_load("routes", $route);
-        $ep = $r['route'];
-        if (router_handle($ep)) {
+    foreach ($routes as $r) {
+        if (router_handle($r['route'])) {
             return true;
         }
     }
     return false;
+}
+
+function router_match($path) {
+    $parts = $GLOBALS['SYSTEM']['uri_parts'];
+    $path_parts = explode(DIRECTORY_SEPARATOR . "uri" . DIRECTORY_SEPARATOR, dirname($path));
+    $file_parts = explode(DIRECTORY_SEPARATOR, $path_parts[1]);
+    $result = array();
+    for ($i = 0; $i < count($parts); $i++) {
+        if ($file_parts[$i][0] === '(' || $parts[$i][0] === '(') {
+            $result[] = $parts[$i];
+        } else if ($parts[$i] !== $file_parts[$i]) {
+            router_deny();
+            return false;
+        }
+    }
+    return $result;
 }
 
 function router_accept($accept = true) {
@@ -42,6 +52,13 @@ function router_handle($ep) {
     if ($GLOBALS['SYSTEM']['route_found'] !== true) {
         return false;
     }
-    run_uri($ep);
-    return true;
+    $file = find_uri($ep);
+    if ($file !== false) {
+        $GLOBALS['SYSTEM']['uri'] = $ep;
+        $GLOBALS['SYSTEM']['uri_path'] = dirname($ep);
+        run($file);
+        return true;
+    }
+
+    return false;
 }
