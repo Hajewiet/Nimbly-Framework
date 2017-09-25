@@ -5,8 +5,8 @@
                 type="submit"
                 value="Save"
                 class="button"
-                data-post="[data.resource]"
-                data-done='{"redirect": "admin/[data.resource]", "msg": "[resource-name [data.resource]] created"}'
+                data-put="[data.resource]/[data.uuid]"
+                data-done='{"redirect": "admin/[data.resource]", "msg": "[resource-name [data.resource]] updated"}'
             />
     </form>
 </section>

@@ -3,7 +3,7 @@
 define('sc_TAG_OPEN', '[');
 define('sc_TAG_CLOSE', ']');
 define('sc_ESCAPE_CHAR', '\\');
-define('BUFFER_SIZE', 16384);
+define('BUFFER_SIZE', 0);
 define('QUOT_CHAR', '"');
 define('QUOTID', '%quot_');
 define('ASSIGNMENT_CHAR', '=');

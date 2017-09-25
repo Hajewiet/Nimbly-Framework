@@ -147,10 +147,13 @@ $('body').on('click', '[data-post]', function (e) {
         return;
     }
     if (!payload && frm) {
-        payload = JSON.stringify(frm.serializeObject());
+        var data = frm.serializeObject();
+        api_include_fields(frm, data);
+        payload = JSON.stringify(data);
     }
+
     if (!payload) {
-        api_then({"msg": true}, "Post data empty");
+        api_then({"msg": "Post data empty"});
         return;
     }
     api({ method: 'post', url: url, done: me.data('done'), payload: payload });
@@ -166,10 +169,12 @@ $('body').on('click', '[data-put]', function (e) {
         return;
     }
     if (!payload && frm) {
-        payload = JSON.stringify(frm.serializeObject());
+        var data = frm.serializeObject();
+        api_include_fields(frm, data);
+        payload = JSON.stringify(data);
     }
     if (!payload) {
-        api_then({"msg": true}, "Put data empty");
+        api_then({"msg": "Put data empty"});
         return;
     }
     api({ method: 'put', url: url, done: me.data('done'), payload: payload });
@@ -188,8 +193,24 @@ $('body').on('click', '[data-push]', function () {
     }
 });
 
+$('body').on('input', 'input[data-live-pk]', function (e) {
+    var f = $(this).data('live-pk');
+    var pk_field = $(this).closest('form').find('input[name=' + f + ']');
+    if (pk_field.length !== 1) {
+        return;
+    }
+    var val = $(this).val();
+    var clean_val = val.toLowerCase().trim().replace(/[^0-9a-zA-Z-]/g, '-');
+    pk_field.val(clean_val);
+});
+
+$('body').on('keydown', 'input[data-input-pk]', function (e) {
+    if(/[^0-9a-zA-Z-]/.test(e.key)) {
+       return false;
+    }
+});
+
 function api(options) {
-    console.log('api', options);
     $.ajax({
         url: base_url + '/api/v1/' + options.url,
         type: options.method,
@@ -254,8 +275,34 @@ function api_then(options, msg) {
     }
 }
 
+function api_include_fields(frm, data) {
+     frm.find('[data-edit-field],[data-edit-img],[data-field-boolean]').each(function(ix) {
+        var me = $(this);
+        var field = me.data('edit-field');
+        if (field) {
+            data[field] = me.html();
+            return;
+        }
+        field = me.data('edit-img');
+        if (field) {
+            data[field] = me.attr('src').replace('/small', '');
+            return;
+        }
+        field = me.data('field-boolean');
+        if (field) {
+            data[field] = me.is(':checked');
+            return;
+        }
+    });
+}
+
 // wrap tables in a div for horizontal scrolling
-$('table').wrap('<div class="table scroll-h"></div>');
+$('table').each(function() {
+    var skip = $(this).data('no-scroll') || $(this).parents('.scroll-h').length > 0
+    if (!skip) {
+        $(this).wrap('<div class="table scroll-h"></div>');
+    }
+});
 
 function system_message(msg) {
     $("#system-messages p").text(msg);

@@ -69,7 +69,6 @@ a.edit-img-icon {
 
 a.editor.add-img-icon {
     position: absolute;
-    display: block;
     width: 3rem;
     height: 3rem;
     left: -3.5rem;

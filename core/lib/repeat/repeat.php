@@ -51,5 +51,6 @@ function repeat_sc($params) {
         }
 
         run($tpl);
+        clear_variable_dot($var_id);
     }
 }

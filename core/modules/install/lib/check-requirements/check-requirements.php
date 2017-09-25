@@ -10,8 +10,8 @@ function check_requirements_sc($params) {
         return;
     }
 
-    if (require_higher_version(phpversion(), "5.0.0") === false) {
-        set_variable("require_msg", "require_php5");
+    if (require_higher_version(phpversion(), "7.0.0") === false) {
+        set_variable("require_msg", "require_php7");
         return;
     }
 

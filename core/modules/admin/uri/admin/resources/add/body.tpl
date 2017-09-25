@@ -21,8 +21,13 @@
                         <div class="col">
                             <select name="field_types">
                                 <option value="text">Text</option>
-                                <option value="textarea">Textarea</option>
-                                <option value="date">Date (single)</option>
+                                <option value="date">Date</option>
+                                <option value="boolean">Boolean</option>
+                                <option value="image">Image</option>
+                                <option value="block-plain-text">Inline plain text</option>
+                                <option value="block-text">Inline text</option>
+                                <option value="block-html">Inline HTML</option>
+                                <option value="select">Select</option>
                             </select>
                         </div>
                         <div class="col col-20">

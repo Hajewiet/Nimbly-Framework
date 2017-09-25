@@ -2,79 +2,69 @@
 
 function render_sc($params) {
     load_libraries(["data", "set", "get", "md5", "session"]);
-    $uuid = md5_uuid(get_param_value($params, "uuid", current($params)));
+    $resource = get_param_value($params, "resource", ".blocks");
+    $uuid = get_param_value($params, "uuid", md5_uuid(current($params)));
     $img_insert = get_param_value($params, "insert", false) !== false;
-    if (!data_exists(".blocks", $uuid)) {
-        // auto create a new render block for convenience
-        render_create_defaults($uuid, get_param_value($params, "tpl", count($params) > 1? next($params) : "plain_text"));
-   }
-    $blocks = data_read(".blocks", $uuid);
+    $field = get_param_value($params, "field", count($params) > 1? next($params) : md5($uuid . 'block1'));
+    $tpl = get_param_value($params, "tpl", count($params) > 2? next($params) : "plain_text");
+
+    if (!data_exists($resource, $uuid)) {
+        render_create_resource($resource, $uuid);
+    }
+    $content = data_read($resource, $uuid, $field);
+
+    if (!$content) {
+        $content = render_create_field($resource, $uuid, $field, $tpl);
+    }
     if (session_user()) {
         if ($img_insert) {
-            echo sprintf("<span data-block='%s' class='editor img-insert'>", $uuid);
+            echo sprintf("<span data-edit-resource='%s' data-edit-uuid='%s' class='editor img-insert'>", $resource, $uuid);
             echo sprintf('<a href="#" class="editor add-img-icon" data-modal=\'{"url":"img-select", "uid":"(new)"}\'>+</a>');
         } else {
-            echo sprintf("<span data-block='%s'>", $uuid);
+            echo sprintf("<span data-edit-resource='%s' data-edit-uuid='%s'>", $resource, $uuid);
         }
-        render_blocks($blocks);
+        render_block($field, $content, $tpl);
         echo "</span>";
     } else {
-        render_blocks($blocks);
+        render_block($field, $content, $tpl);
     }
 }
 
-function render_blocks($blocks) {
-    if (empty($blocks)) {
+function render_block($field, $content, $tpl) {
+    if ($tpl === 'img') {
+        render_img($field, $content);
         return;
     }
-    foreach ($blocks as $k => $block) {
-        if (empty($block['tpl'])) {
-            continue;
-        }
-        if ($block['tpl'] === 'img') {
-            render_img($k, $block);
-            continue;
-        }
-        set_variable('block-name', $k);
-        if (empty($block['content'])) {
-            set_variable('block-content', '');
-        } else {
-            set_variable('block-content', $block['content']);
-        }
-        $block_tpl = data_read(".block-templates", md5($block["tpl"]));
-        if (!session_user()) {
-            run_template($block_tpl['tpl']);
-            return;
-        }
-        $btns = "";
-        if (!empty($block_tpl["buttons"])) {
-            $btns = sprintf('data-edit-buttons="%s"', $block_tpl['buttons']);
-        }
-        echo sprintf('<%s data-edit="%s" data-tpl="%s" %s>',
-            $block_tpl['elem'] ?? 'div', $k, $block_tpl["name"], $btns);
-        run_template($block_tpl['tpl']);
-        echo sprintf('</%s>', $block_tpl['elem'] ?? 'div');
-    }
-}
-
-function render_img($key, $block) {
+    set_variable('block-name', $field);
+    set_variable('block-content', $content);
+    $block_tpl = render_create_template($tpl);
     if (!session_user()) {
-        echo sprintf('<img src="%s">', $block['content']);
+        run_template($block_tpl['tpl']);
         return;
     }
-    echo sprintf('<img data-edit-img="%s" data-tpl="img" src="%s" />',
-        $key, $block['content']);
+    $btns = "";
+    if (!empty($block_tpl["buttons"])) {
+        $btns = sprintf('data-edit-buttons="%s"', $block_tpl['buttons']);
+    }
+    echo sprintf('<%s data-edit-field="%s" data-edit-tpl="%s" %s>',
+        $block_tpl['elem'] ?? 'div', $field, $block_tpl["name"], $btns);
+    run_template($block_tpl['tpl']);
+    echo sprintf('</%s>', $block_tpl['elem'] ?? 'div');
 }
 
-function render_create_defaults($uuid, $tpl) {
-    render_create_block_template($tpl);
-    render_create_block($uuid, $tpl);
+function render_img($field, $content) {
+    if (!session_user()) {
+        echo sprintf('<img src="%s">', $content);
+        return;
+    }
+    echo sprintf('<img data-edit-img="%s" data-edit-tpl="img" src="%s/small" />',
+        $field, $content);
 }
 
-function render_create_block_template($tpl_name) {
+function render_create_template($tpl_name) {
     $uuid = md5_uuid($tpl_name);
     if (data_exists(".block-templates", $uuid)) {
-        return;
+        return data_read(".block-templates", $uuid);
     }
     switch ($tpl_name) {
         case 'text':
@@ -86,7 +76,7 @@ function render_create_block_template($tpl_name) {
         default:
             $btns = "";
     }
-    if (!empty($btns)) {
+    if (empty($btns)) {
         $tpl = sprintf("<span class='%1\$s' data-edit='[block-name]' data-tpl='%1\$s'>[block-content]</span>", $tpl_name);
     } else {
         $tpl = sprintf("<div class='%1\$s' data-edit='[block-name]' data-tpl='%1\$s' data-edit-buttons='%2$'>[block-content]</div>", $tpl_name, $btns);
@@ -97,18 +87,22 @@ function render_create_block_template($tpl_name) {
         "tpl" => "[block-content]",
         "buttons" => $btns
     ));
+    return data_read(".block-templates", $uuid);
 }
 
-function render_create_block($uuid, $tpl_name) {
-    if (data_exists(".blocks", $uuid)) {
+function render_create_resource($resource, $uuid) {
+    if (data_exists($resource, $uuid)) {
         return;
     }
-    data_create(".blocks", $uuid,
-        array(
-            md5($uuid . 'block1') => array(
-                "tpl" => $tpl_name,
-                "content" => "[ipsum words=20]"
-            )
-        )
-    );
+    data_create($resource, $uuid, array());
+}
+
+function render_create_field($resource, $uuid, $field, $tpl_name) {
+    $data = data_read($resource, $uuid);
+    if (!is_array($data)) {
+        return;
+    }
+    $data[$field] = $tpl_name === 'img'? 'img/placeholder.png' : '[ipsum words=10]';
+    data_create($resource, $uuid, $data);
+    return $data[$field];
 }

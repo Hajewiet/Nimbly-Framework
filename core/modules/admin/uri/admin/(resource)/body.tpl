@@ -1,5 +1,5 @@
 <section class="container">
-    [feature_cond add_[data.resource] tpl=add_button]
+    [feature-cond add_[data.resource] tpl=add_button]
     <table>
           <thead>
             <tr>

@@ -27,6 +27,7 @@ if (isset($meta['sort'])) {
 load_library("set");
 set_variable("data.resource", $resource);
 set_variable("data.records", $items);
+$meta['fields'] = data_exclude($meta['fields'], 'admin_col', false);
 set_variable("data.fields", $meta['fields']);
 load_module("admin");
 router_accept();

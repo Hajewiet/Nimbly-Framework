@@ -48,8 +48,8 @@ function set_session_variable($rkey, $value, $if_exists=true) {
 
 function clear_variable($name) {
     global $SYSTEM;
-    if (isset($SYSTEM['variables'][$k])) {
-         unset($SYSTEM['variables'][$k]);
+    if (isset($SYSTEM['variables'][$name])) {
+         unset($SYSTEM['variables'][$name]);
          return;
     }
     $prefix = $name;
@@ -77,4 +77,8 @@ function set_variable_dot($key, $value) {
             set_variable_dot($key . '.' . $k, $v);
         }
     }
+}
+
+function clear_variable_dot($key) {
+    clear_variable($key . '.');
 }

@@ -1,6 +1,7 @@
 <?php
 
 $GLOBALS['SYSTEM']['data_base'] = $GLOBALS['SYSTEM']['file_base'] . 'data';
+load_library('data-sort');
 
 /**
  * Implements [data] shortcode
@@ -75,23 +76,26 @@ function data_list($resource, $uuid = null) {
  * Example: data_read('users', 1) returns data for user 1
  * @return array or null
  */
-function data_read($resource, $uuid = null, $setting = null) {
+function data_read($resource, $uuid = null, $field = null) {
     if (empty($uuid)) {
-        return _data_read_all($resource, $setting);
+        return _data_read_all($resource, $field);
     }
     $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . $uuid;
+    if (!file_exists($file)) {
+        return null;
+    }
     $contents = file_get_contents($file);
     $result = json_decode($contents, true);
-    if (!empty($setting)) {
-        if (isset($result[$setting])) {
-            return $result[$setting];
+    if (!empty($field)) {
+        if (isset($result[$field])) {
+            return $result[$field];
         }
         return null;
     }
     return $result;
 }
 
-function data_cached_read($resource, $uuid = null) {
+function data_cached_read($resource, $uuid = null, $field = null) {
     load_library("get");
     $data_var = data_var($resource, $uuid);
     $result = get_variable($data_var);
@@ -108,6 +112,9 @@ function data_cached_read($resource, $uuid = null) {
 function _data_read_all($resource, $setting = null) {
     $result = array();
     $path = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource;
+    if (!file_exists($path)) {
+        return $result;
+    }
     $all = @scandir($path);
     if (is_array($all)) {
         foreach ($all as $uuid) {
@@ -197,75 +204,6 @@ function data_delete($resource, $uuid = null) {
     }
     @rmdir($dir);
     return $delete_count;
-}
-
-function data_sort_param($data, $sort_csv) {
-    $parts = explode(",", $sort_csv);
-    $len = count($parts);
-    if ($len < 2) {
-        return $data;
-    }
-    $meta = array(
-        "field" => $parts[0],
-        "flags" => $len > 1? $parts[1] : 'default',
-        "order" => $len > 2? $parts[2] : 'default'
-    );
-    return data_sort_meta($data, $meta);
-}
-
-function data_sort_meta($data, $meta) {
-    switch (trim(strtolower($meta['flags']))) {
-        case 'numeric':
-            $flags = SORT_NUMERIC;
-            break;
-        case 'string':
-            $flags = SORT_STRING;
-            break;
-        default:
-            $flags = SORT_REGULAR;
-    }
-     switch (trim(strtolower($meta['order']))) {
-        case 'desc':
-            $order = SORT_DESC;
-            break;
-        default:
-            $order = SORT_ASC;
-    }
-    return data_sort($data, $meta['field'], $flags, $order);
-}
-
-function data_sort($data, $key, $sort_flags = SORT_REGULAR, $sort_order = SORT_ASC) {
-    switch ($sort_flags) {
-        case SORT_REGULAR:
-            return data_sort_regular($data, $key, $sort_order);
-        case SORT_NUMERIC:
-            return data_sort_numeric($data, $key, $sort_order);
-        case SORT_STRING:
-            return data_sort_string($data, $key, $sort_order);
-        default:
-            return $data;
-    }
-}
-
-function data_sort_regular($data, $key, $sort_order = SORT_ASC) {
-    uasort($data, $sort_order === SORT_ASC?
-            function($a, $b) use ($key) { return $a[$key] - $b[$key]; }
-        :   function($b, $a) use ($key) { return $a[$key] - $b[$key]; });
-    return $data;
-}
-
-function data_sort_numeric($data, $key, $sort_order = SORT_ASC) {
-    uasort($data,  $sort_order ===  SORT_ASC?
-            function($a, $b) use ($key) { return floatval($a[$key]) - floatval($b[$key]); }
-        :   function($b, $a) use ($key) { return floatval($a[$key]) - floatval($b[$key]); });
-    return $data;
-}
-
-function data_sort_string($data, $key, $sort_order = SORT_ASC) {
-    uasort($data, $sort_order ===  SORT_ASC?
-            function($a, $b) use ($key) { return strcasecmp($a[$key], $b[$key]); }
-        :   function($b, $a) use ($key) { return strcasecmp($a[$key], $b[$key]); });
-    return $data;
 }
 
 /*
@@ -369,4 +307,16 @@ function _data_meta_build($items) {
     }
     $meta['fields'] = $fields;
     return $meta;
+}
+
+/*
+ * Exclude records based on field value
+ */
+function data_exclude($records, $key, $value) {
+    foreach ($records as $i => $r) {
+        if (isset($r[$key]) && $r[$key] === $value) {
+            unset($records[$i]);
+        }
+    }
+    return $records;
 }
