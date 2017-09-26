@@ -18,7 +18,7 @@ function api_method_switch($func_prefix, $resource = null, $uuid = null) {
     return json_result(array('message' => 'METHOD_NOT_ALLOWED'), 405);
  }
 
- function api_access($feature) {
+ function api_access($feature='api') {
     return get_variable('api_public', false) || api_key_access($feature) || api_user_access($feature);
 }
 
@@ -36,24 +36,16 @@ function api_user_access($feature) {
 }
 
 /*
- * Basic implementation on resource:
+ * Creates data array from json input
+ * + Resolves primary key field
+ * + Encrypts fields
  */
-
-function resource_get($resource) { // get all
-    $result = data_read($resource);
-    return json_result(array($resource => $result, 'count' => count($result)));
-}
-
-function resource_post($resource) { // create new
+function api_json_input($resource) {
     $meta = data_meta($resource);
     if (isset($meta['pk'])) {
         $data = json_input(true, $meta['pk']);
     } else {
         $data = json_input();
-    }
-    $uuid = $data['uuid'];
-    if (data_exists($resource, $uuid)) {
-        return json_result(array('message' => 'RESOURCE_EXISTS'), 409);
     }
     if (isset($meta['encrypt'])) {
         load_library('salt');
@@ -64,6 +56,25 @@ function resource_post($resource) { // create new
             $data[$f] = encrypt($data[$f], $data['salt']);
         }
     }
+    return $data;
+}
+
+/*
+ * Basic implementation on resource:
+ */
+
+function resource_get($resource) { // get all
+    $result = data_read($resource);
+    return json_result(array($resource => $result, 'count' => count($result)));
+}
+
+function resource_post($resource) { // create new
+    $data = api_json_input($resource);
+    $uuid = $data['uuid'];
+    if (data_exists($resource, $uuid)) {
+        return json_result(array('message' => 'RESOURCE_EXISTS'), 409);
+    }
+
     if (data_create($resource, $uuid, $data)) {
         return json_result(array(
             $resource => array($uuid => $data),
@@ -75,7 +86,7 @@ function resource_post($resource) { // create new
 }
 
 function resource_put($resource) { // update multiple
-    $data = json_input(false);
+    $data = api_json_input($resource);
     $result = data_update($resource, null, $data);
     if (is_array($result)) {
         return json_result(array(
@@ -107,7 +118,7 @@ function resource_id_post($resource, $uuid) { // create new with uuid
     if (data_exists($resource, $uuid)) {
         return json_result(array('message' => 'RESOURCE_EXISTS'), 409);
     }
-    $data = json_input(false);
+    $data = api_json_input($resource);
     $data['uuid'] = $uuid;
     $result = data_create($resource, $uuid, $data);
     if ($result) {
@@ -121,7 +132,8 @@ function resource_id_post($resource, $uuid) { // create new with uuid
 }
 
 function resource_id_put($resource, $uuid) { // update one
-    $data = json_input(false);
+    $data = api_json_input($resource);
+    $data['uuid'] = $uuid;
     $result = data_update($resource, $uuid, $data);
     if (is_array($result)) {
         return json_result(array(

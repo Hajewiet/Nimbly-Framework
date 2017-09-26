@@ -103,7 +103,7 @@ RewriteRule ^ index.php \[L]
 RewriteRule ^\..*$ index.php \[L]
 
 # rewrite: don't allow a direct request to a cache file (redirect to index.php)
-RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /\[^\ ]+/tmp/cache/.*\._cached_\..*($|\ ) \[NC]
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /\[^\ ]+/.tmp/cache/.*\._cached_\..*($|\ ) \[NC]
 RewriteRule ^ index.php \[L]
 
 # rewrite: don't allow a direct request to a static file folder (redirect to index.php)

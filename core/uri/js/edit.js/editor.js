@@ -6,19 +6,20 @@ editor.last_inputs = 0;
 editor.editors = [];
 editor.timer = null;
 editor.active = null;
+editor.autoenabled = false;
 
 editor.enable = function() {
     if (editor.enabled === true) {
         return;
     }
     editor.enabled = true;
-    $("[data-edit]").attr("contenteditable", true);
+    $("[data-edit-field]").attr("contenteditable", true);
     $('#edit-menu [data-edit-on').addClass("close");
     $('#edit-menu [data-edit-off').removeClass("close");
     $('#edit-menu [data-edit-save').removeClass("close");
     $('#edit-button[data-edit-toggle] .button').addClass("active");
     if (editor.editors.length === 0) {
-        $('[data-edit').each(function(ix) {
+        $('[data-edit-field]').each(function(ix) {
             btns = $(this).data("edit-buttons");
             if (!btns) {
                 return;
@@ -53,10 +54,11 @@ editor.disable = function() {
     });
     editor.editors = [];
     editor.active = null;
-    $("[data-edit").attr("contenteditable", false);
-    $('#edit-menu [data-edit-on').removeClass("close");
-    $('#edit-menu [data-edit-off').addClass("close");
-    $('#edit-menu [data-edit-save').addClass("close");
+    $('.editor-active').removeClass('editor-active');
+    $("[data-edit-field]").attr("contenteditable", false);
+    $('#edit-menu [data-edit-on]').removeClass("close");
+    $('#edit-menu [data-edit-off]').addClass("close");
+    $('#edit-menu [data-edit-save]').addClass("close");
     $('#edit-button[data-edit-toggle] .button').removeClass("active");
     if (editor.timer) {
         clearInterval(editor.timer);
@@ -77,26 +79,36 @@ editor.save = function() {
         return;
     }
     editor.last_inputs = editor.inputs;
-    $('[data-block]').each(function(ix) {
-          var payload = {};
-          var buuid = $(this).data("block");
-          $(this).find("[data-edit],[data-edit-img]").each(function(ix) {
-               var is_img = false;
-               var bname = $(this).data('edit');
-               var tname = $(this).data('tpl');
-               if (!bname && ($(this).data('edit-img'))) {
-                    is_img = true;
-                    bname = $(this).data('edit-img');
-               } else if (!bname) {
-                    bname = "block-" + ix;
-               }
-               payload[bname] = { "tpl": tname, "content": is_img ? $(this).attr('src') : $(this).html() };
-          });
-          api({ method: 'put', url: '.blocks/' + buuid, payload: JSON.stringify(payload), done: {notification: "Saved"} });
+    $('[data-edit-uuid]').each(function(ix) {
+        var payload = {};
+        var resource = $(this).data("edit-resource");
+        var uuid = $(this).data("edit-uuid");
+        var changes = false;
+        $(this).find("[data-edit-field],[data-edit-img]").each(function(ix) {
+            var changed = $(this).data('edit-changed');
+            if (!changed) {
+                return;
+            }
+            changes = true;
+            $(this).data('edit-changed', false);
+            var is_img = false;
+            var field = $(this).data('edit-field');
+            var tpl = $(this).data('edit-tpl');
+            if (!field && ($(this).data('edit-img'))) {
+                is_img = true;
+                field = $(this).data('edit-img');
+            } else if (!field) {
+                field = "block-" + ix;
+            }
+            payload[field] = is_img ? $(this).attr('src').replace('/small', '') : $(this).html();
+        });
+        if (changes) {
+            api({ method: 'put', url: resource + '/' + uuid, payload: JSON.stringify(payload), done: {notification: "Saved"} });
+        }
      });
 }
 
-if ($('[data-edit]').length || $('[data-edit-img]').length) {
+if ($('[data-edit-field]').length || $('[data-edit-img]').length) {
 
     // load medium editor style sheet
     $("head").append("<link>");
@@ -113,7 +125,7 @@ if ($('[data-edit]').length || $('[data-edit-img]').length) {
     // initialize html editing
     $script.ready('medium', function() {
 
-        $('body').on('dblclick', '[data-edit],[data-edit-img]', function(e) {
+        $('body').on('dblclick', '[data-edit-field],[data-edit-img]', function(e) {
             editor.enable();
         });
 
@@ -137,36 +149,53 @@ if ($('[data-edit]').length || $('[data-edit-img]').length) {
         });
 
 
-        $('body').on('DOMNodeInserted', '[data-edit]', editor.clean_node);
-        $('body').on('keyup', '.editor.img-insert [data-edit]', function(e) {
+        $('body').on('DOMNodeInserted', '[data-edit-field]', editor.clean_node);
+        $('body').on('keyup', '.editor.img-insert [data-edit-field]', function(e) {
             if (editor.enabled) {
                 editor.move_img_icon(e.target);
             }
         });
-        $('body').on('click', '.editor.img-insert [data-edit]', function(e) {
+        $('body').on('click', '.editor.img-insert [data-edit-field]', function(e) {
             if (editor.enabled) {
                 editor.move_img_icon($(this));
             }
         });
 
-        $('#edit-button').removeClass("close");
-        $('#edit-menu').removeClass("close");
-        $('#edit-menu [data-edit-off').addClass("close");
-        $('#edit-menu [data-edit-save').addClass("close");
+        if ($('form[data-edit-autoenable]').length > 0) {
+            editor.autoenabled = true;
+            editor.enable();
+        } else {
+            $('#edit-button').removeClass("close");
+            $('#edit-menu').removeClass("close");
+            $('#edit-menu [data-edit-off').addClass("close");
+            $('#edit-menu [data-edit-save').addClass("close");
+        }
 
     });
 
-    $('body').on('input', '[data-edit]', function(e) {
-        editor.inputs++;
+    $('body').on('input', '[data-edit-field]', function(e) {
+        if (editor.enabled) {
+            editor.inputs++;
+            $(this).data('edit-changed', true);
+        }
+    });
+
+    $('body').on('keydown', '[data-edit-field][data-edit-tpl=plain_text]', function(e) {
+        if (!editor.enabled) {
+            return;
+        }
+        if (e.keyCode === 13) { // prevents inserting divs or p's on pressing enter
+            document.execCommand('insertHTML', false, '<br><br>');
+            return false;
+        } else if ((e.keyCode === 66 || e.keyCode === 73)
+            && (e.ctrlKey || e.metaKey)) { // prevents ctrl+b and ctrl+i
+            return false;
+        }
     });
 
     $(window).on('unload', function() {
         editor.save();
     });
-}
-
-editor.handle_keypress = function(e) {
-
 }
 
 editor.move_img_icon = function(ee) {
@@ -258,12 +287,13 @@ editor.insert_html = function(html) {
 }
 
 editor.handle_click = function(elem, event) {
-    var wrapper = $(elem).closest('span[data-block]');
-    if (wrapper.data('block') !== editor.active) {
-        $('span[data-block].editor-active').removeClass('editor-active');
-        editor.active = wrapper.data('block');
-        wrapper.addClass('editor-active');
+    var wrapper = $(elem).closest('div.editor,span.editor');
+    if (wrapper && wrapper.is(editor.active)) {
+        return;
     }
+    $('.editor-active').removeClass('editor-active');
+    editor.active = wrapper;
+    wrapper.addClass('editor-active');
 }
 
 // handle result from image select modal dialog
@@ -276,6 +306,7 @@ $(document).on('data-select', function(e, o) {
     if (o.modal_uid === '(new)') {
         var img_html = '<img src="' + base_url + '/img/' + o.uuid + '/small">';
         editor.insert_html(img_html);
+        editor.active.data('editor-changed', true);
         editor.inputs++;
         return;
     }
@@ -284,6 +315,7 @@ $(document).on('data-select', function(e, o) {
     var img = $('img[data-edit-img=' + o.modal_uid + ']');
     if (img) {
         img.attr('src', base_url + '/img/' + o.uuid + '/small');
+        img.data('edit-changed', true);
         editor.inputs++;
     }
 });
@@ -302,8 +334,12 @@ $(document).mousedown(function(event) {
         return;
     }
 
-    if ($(event.target).closest('[data-edit],[data-edit-img],.editor,#edit-menu,#edit-button,#top-bar-fixed,#modal,button.medium-editor-action').length) {
+    if ($(event.target).closest('[data-edit-field],[data-edit-img],.editor,#edit-menu,#edit-button,#top-bar-fixed,#modal,button.medium-editor-action').length) {
         editor.handle_click($(event.target), event);
+        return;
+    }
+
+    if (editor.autoenabled) {
         return;
     }
 

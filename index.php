@@ -1,13 +1,14 @@
 <?php
 
 /*
- * 1. Initialize global SYSTEM variable and 
+ * 1. Initialize global SYSTEM variable and
  * get the requested URI from the webserver
  */
+
 $SYSTEM['request_time'] = microtime(true);
 $SYSTEM['uri_base'] = trim(dirname($_SERVER['SCRIPT_NAME']), '\\') . '/';
 if ($SYSTEM['uri_base'] === '//') {
-	$SYSTEM['uri_base'] = '/';
+    $SYSTEM['uri_base'] = '/';
 }
 $SYSTEM['file_base'] = dirname(__FILE__) . '/';
 if (empty($_SERVER['REQUEST_URI'])) {
@@ -19,11 +20,12 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 }
 
 /*
- * 2. Locate and include the "find" library 
+ * 2. Locate and include the "find" library
  * The search order is: 1) EXT, 2) CONTRIB and 3) CORE.
- * Use the load_library function to load the "run" library 
+ * Use the load_library function to load the "run" library
  * and execute the requested uri with the function run_uri.
  */
+
 $SYSTEM['env_paths'] = array('ext', 'contrib', 'core');
 foreach ($SYSTEM['env_paths'] as $env_path) {
     $path = $SYSTEM['file_base'] . $env_path . '/lib/find/find.php';
@@ -32,14 +34,15 @@ foreach ($SYSTEM['env_paths'] as $env_path) {
         break;
     }
 }
-load_library("run");
+load_library('run');
 run_uri($SYSTEM['request_uri']);
 
 /*
- * 3. This point should never be reached. 
- * If reached anyway, something went really, really, wrong. 
- * Because the core functionality is broken, all that can be done 
+ * 3. This point should never be reached.
+ * If reached anyway, something went really, really, wrong.
+ * Because the core functionality is broken, all that can be done
  * is returning a hardcoded internal server error.
  */
+
 header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
-echo "<h1>Oops. Something went wrong!</h1>";
+echo '<h1>Oops. Something went wrong!</h1>';
