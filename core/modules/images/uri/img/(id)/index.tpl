@@ -1,1 +1,1 @@
-[img-file [thumbnail uuid=[img-uuid] h=[img-height]]]
+[img-file [thumbnail uuid=[img-uuid] h=[img-height] ratio=[ratio]]]

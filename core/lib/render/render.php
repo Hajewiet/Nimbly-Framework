@@ -54,7 +54,7 @@ function render_block($field, $content, $tpl) {
 
 function render_img($field, $content) {
     if (!session_user()) {
-        echo sprintf('<img src="%s">', $content);
+        echo sprintf('<img src="%s/small">', $content);
         return;
     }
     echo sprintf('<img data-edit-img="%s" data-edit-tpl="img" src="%s/small" />',

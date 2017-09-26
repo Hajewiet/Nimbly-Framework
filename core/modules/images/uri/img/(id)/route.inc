@@ -31,6 +31,9 @@ if ($h === 'large' || (is_numeric($h) && $h > 1080)) {
 }
 
 load_library("set");
+load_library("get");
+$ratio = get_variable("ratio", 0);
+set_variable("ratio", $ratio);
 set_variable("img-uuid", $uuid);
 set_variable("img-height", $h);
 load_module("images");

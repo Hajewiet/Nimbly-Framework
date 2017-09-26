@@ -4,15 +4,16 @@ function thumbnail_sc($params) {
 
     $uuid = get_param_value($params, "uuid", current($params));
     $height = get_param_value($params, "h", 240) + 0;
-    return thumbnail_create($uuid, $height);
+    $ratio = get_param_value($params, "ratio", 0) + 0;
+    return thumbnail_create($uuid, $height, $ratio);
 }
 
-function thumbnail_create($uuid, $h) {
+function thumbnail_create($uuid, $h, $ratio=0) {
 
     // 1. Check cache
 
     load_library("data");
-    $file_name = sprintf("%s_%s.jpg", $uuid, $h);
+    $file_name = sprintf("%s_%s_%s.jpg", $uuid, $h, str_replace('.', '_', $ratio));
     $path = sprintf(".tmp/thumb/%s", $file_name);
     $cache_path = $GLOBALS['SYSTEM']['data_base'] . '/' . $path;
 
@@ -41,12 +42,27 @@ function thumbnail_create($uuid, $h) {
         return $result;
     }
 
-    //3: Calc aspect ratio and size
-
     $asp = $org_w / $org_h;
-    $w = $asp * $h;
+    $org_x = 0;
+    $org_y = 0;
+
+    //3: Calc thumbnail size given height and aspect ratio
+    if (empty($ratio) || ($ratio < 0) || (abs($asp - $ratio) < 0.01))  {
+        $w = $asp * $h;
+    } else {
+        $w = $ratio * $h;
+        if ($ratio > $asp) {
+            $new_h = $org_w / $ratio;
+            $org_y = ($org_h - $new_h) / 2;
+            $org_h = $new_h;
+        } else {
+            $new_w = $org_h * $ratio;
+            $org_x = ($org_w - $new_w) / 2;
+            $org_w = $new_w;
+        }
+    }
     $thumb_img = imagecreatetruecolor($w, $h);
-    imagecopyresampled($thumb_img, $org_img, 0, 0, 0, 0, $w, $h, $org_w, $org_h);
+    imagecopyresampled($thumb_img, $org_img, 0, 0, $org_x, $org_y, $w, $h, $org_w, $org_h);
 
     //4: save image to cache
 
