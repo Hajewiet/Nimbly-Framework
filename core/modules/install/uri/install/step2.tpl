@@ -20,5 +20,5 @@
 <p class="help-text" id="rewritebasehelp">[text help_pepper]</p>
 
 <div class="button-group">
-    <input type="submit" name="submit" value="Next" class="primary button"  />
+    <input type="submit" name="submit" value="Next" class="nb-button"  />
 </div>

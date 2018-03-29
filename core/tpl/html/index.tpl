@@ -20,6 +20,7 @@
         [favicon]
     </head>
     <body class="[body-classes]">
+        [role-cond user tpl=user-bar]
         [top]
         [page]
         [bottom]

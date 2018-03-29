@@ -2,6 +2,9 @@
 
 $GLOBALS['SYSTEM']['cache_base'] = $GLOBALS['SYSTEM']['file_base'] . 'data/.tmp/cache/';
 
+/**
+ * @doc * `[cache type=html|css|js]` minifies current output buffer and writes it to a static cached file
+ */
 function cache_sc($params) {
     $content = ob_get_contents();
     $file_ext = '.' . get_param_value($params, "type", "_cached_.html");
@@ -22,6 +25,9 @@ function cache_sc($params) {
     @file_put_contents($file_path, $content, LOCK_EX);
 }
 
+/**
+ * @doc * function `cache_clear()` deletes all cached files
+ */
 function cache_clear() {
     cache_rmdirr($GLOBALS['SYSTEM']['cache_base']);
 }

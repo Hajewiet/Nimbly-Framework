@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @doc * `[if condition(s) action]` performs action if condition(s) are true
+ * @doc * action can be "tpl=nameoftemplate" to load a template, "echo=text to show" to display text or "redirect=somepage" to redirect to another page
+ * @doc * condition compares a variable with a value, x=3, x=(empty), x=(not-empty)
+ * @doc * `[if user=(empty) redirect=login]` redirects to login if variable user is empty
+ */
 function if_sc($params) {
     $condition = array();
     $negate = false;

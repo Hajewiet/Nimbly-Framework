@@ -7,6 +7,7 @@ editor.editors = [];
 editor.timer = null;
 editor.active = null;
 editor.autoenabled = false;
+editor.modal_uuid = null;
 
 editor.enable = function() {
     if (editor.enabled === true) {
@@ -14,10 +15,10 @@ editor.enable = function() {
     }
     editor.enabled = true;
     $("[data-edit-field]").attr("contenteditable", true);
-    $('#edit-menu [data-edit-on').addClass("close");
-    $('#edit-menu [data-edit-off').removeClass("close");
-    $('#edit-menu [data-edit-save').removeClass("close");
-    $('#edit-button[data-edit-toggle] .button').addClass("active");
+    $('#edit-menu [data-edit-on').addClass("nb-close");
+    $('#edit-menu [data-edit-off').removeClass("nb-close");
+    $('#edit-menu [data-edit-save').removeClass("nb-close");
+    $('#edit-button[data-edit-toggle] .nb-button').addClass("active");
     if (editor.editors.length === 0) {
         $('[data-edit-field]').each(function(ix) {
             btns = $(this).data("edit-buttons");
@@ -56,10 +57,10 @@ editor.disable = function() {
     editor.active = null;
     $('.editor-active').removeClass('editor-active');
     $("[data-edit-field]").attr("contenteditable", false);
-    $('#edit-menu [data-edit-on]').removeClass("close");
-    $('#edit-menu [data-edit-off]').addClass("close");
-    $('#edit-menu [data-edit-save]').addClass("close");
-    $('#edit-button[data-edit-toggle] .button').removeClass("active");
+    $('#edit-menu [data-edit-on]').removeClass("nb-close");
+    $('#edit-menu [data-edit-off]').addClass("nb-close");
+    $('#edit-menu [data-edit-save]').addClass("nb-close");
+    $('#edit-button[data-edit-toggle] .nb-button').removeClass("active");
     if (editor.timer) {
         clearInterval(editor.timer);
     }
@@ -80,10 +81,16 @@ editor.save = function() {
     }
     editor.last_inputs = editor.inputs;
     $('[data-edit-uuid]').each(function(ix) {
-        var payload = {};
         var resource = $(this).data("edit-resource");
+        if (!resource) {
+            return true;
+        }
         var uuid = $(this).data("edit-uuid");
+        if (!uuid) {
+            return true;
+        }
         var changes = false;
+        var payload = {};
         $(this).find("[data-edit-field],[data-edit-img]").each(function(ix) {
             var changed = $(this).data('edit-changed');
             if (!changed) {
@@ -100,7 +107,17 @@ editor.save = function() {
             } else if (!field) {
                 field = "block-" + ix;
             }
-            payload[field] = is_img ? $(this).attr('src').replace('/small', '') : $(this).html();
+            if (is_img) {
+                payload[field] = $(this).data('img-uuid');
+            } else {
+                
+                // clean up
+                $("[data-remove]", this).remove();
+                $("[style='']", this).removeAttr('style');
+
+                // store
+                payload[field] = $(this).html();
+            }
         });
         if (changes) {
             api({ method: 'put', url: resource + '/' + uuid, payload: JSON.stringify(payload), done: {notification: "Saved"} });
@@ -165,10 +182,10 @@ if ($('[data-edit-field]').length || $('[data-edit-img]').length) {
             editor.autoenabled = true;
             editor.enable();
         } else {
-            $('#edit-button').removeClass("close");
-            $('#edit-menu').removeClass("close");
-            $('#edit-menu [data-edit-off').addClass("close");
-            $('#edit-menu [data-edit-save').addClass("close");
+            $('#edit-button').removeClass("nb-close");
+            $('#edit-menu').removeClass("nb-close");
+            $('#edit-menu [data-edit-off').addClass("nb-close");
+            $('#edit-menu [data-edit-save').addClass("nb-close");
         }
 
     });
@@ -184,8 +201,7 @@ if ($('[data-edit-field]').length || $('[data-edit-img]').length) {
         if (!editor.enabled) {
             return;
         }
-        if (e.keyCode === 13) { // prevents inserting divs or p's on pressing enter
-            document.execCommand('insertHTML', false, '<br><br>');
+        if (e.keyCode === 13) { // prevents enter
             return false;
         } else if ((e.keyCode === 66 || e.keyCode === 73)
             && (e.ctrlKey || e.metaKey)) { // prevents ctrl+b and ctrl+i
@@ -239,8 +255,9 @@ editor.enable_img = function(elem, ix) {
         elem.unwrap();
     }
     elem.wrap('<div class="editor img-wrapper"></div>');
+    var resource_uuid = elem.closest("[data-edit-uuid]").data("edit-uuid");
     var img_uuid = elem.data('edit-img');
-    elem.parent().append('<a href="#" class="edit-img-icon" data-modal=\'{"url": "img-select", "uid": "' + img_uuid + '"}\'>...</a>');
+    elem.parent().append('<a href="#" class="edit-img-icon" data-modal=\'{"url": "img-select", "uid": "' + img_uuid + '", "resource_uuid": "' + resource_uuid + '"}\'>...</a>');
 }
 
 editor.disable_img = function(elem, ix) {
@@ -258,15 +275,16 @@ editor.uuid = function() {
 }
 
 editor.insert_html = function(html) {
-    var sel, range;
     if (window.getSelection) {
-        sel = window.getSelection();
+        var sel = window.getSelection();
         if (sel.getRangeAt && sel.rangeCount) {
-            range = sel.getRangeAt(0);
+            var range = sel.getRangeAt(0);
             range.deleteContents();
             var el = document.createElement("div");
             el.innerHTML = html;
-            var frag = document.createDocumentFragment(), node, lastNode;
+            var frag = document.createDocumentFragment();
+            var node;
+            var lastNode = false;
             while ((node = el.firstChild)) {
                 lastNode = frag.appendChild(node);
             }
@@ -286,6 +304,13 @@ editor.insert_html = function(html) {
     }
 }
 
+editor.replace_html = function(elem_id, html) {
+    if (!elem_id) {
+        return;
+    }
+    $('#' + elem_id).replaceWith(html);
+}
+
 editor.handle_click = function(elem, event) {
     var wrapper = $(elem).closest('div.editor,span.editor');
     if (wrapper && wrapper.is(editor.active)) {
@@ -302,22 +327,38 @@ $(document).on('data-select', function(e, o) {
         return;
     }
 
+    // todo: replace hardcoded image size with dynamic using device pixel ratio
+
     // create new image at caret position
     if (o.modal_uid === '(new)') {
-        var img_html = '<img src="' + base_url + '/img/' + o.uuid + '/small">';
-        editor.insert_html(img_html);
-        editor.active.data('editor-changed', true);
+        // var d = editor.active.find('div:first');
+        // console.log(d, d.width());
+        var img_html = '<img src="' + base_url + '/img/' + o.uuid + '/medium" data-img-uuid=' + o.uuid + '>';
+        editor.replace_html(editor.modal_uuid, img_html);
+        editor.modal_uuid = false;
+        editor.active.find('[data-edit-field]:first').data('edit-changed', true);
         editor.inputs++;
         return;
     }
 
     // update existing image
-    var img = $('img[data-edit-img=' + o.modal_uid + ']');
+    var img = $('[data-edit-uuid=' + o.resource_uuid + '] img[data-edit-img=' + o.modal_uid + ']');
     if (img) {
-        img.attr('src', base_url + '/img/' + o.uuid + '/small');
+        img.attr('src', base_url + '/img/' + o.uuid + '/medium');
         img.data('edit-changed', true);
+        img.data('img-uuid', o.uuid);
         editor.inputs++;
     }
+});
+
+// handle opening modal dialog
+$(document).on('modal.open', function(e, o) {
+    if (editor.enabled === false || o.url !== 'img-select' || o.uid !== '(new)') {
+        return;
+    }
+    editor.save();
+    editor.modal_uuid = editor.uuid(); 
+    editor.insert_html('<a id="' + editor.modal_uuid + '" data-remove="true"></a>');
 });
 
 // handle click outside or click on editor
@@ -330,11 +371,11 @@ $(document).mousedown(function(event) {
         return; // mouse down on a scroll bar
     }
 
-    if ($('#modal').length >0 && !$('#modal').hasClass('close')) {
+    if ($('#modal').length >0 && !$('#modal').hasClass('nb-close')) {
         return;
     }
 
-    if ($(event.target).closest('[data-edit-field],[data-edit-img],.editor,#edit-menu,#edit-button,#top-bar-fixed,#modal,button.medium-editor-action').length) {
+    if ($(event.target).closest('[data-edit-field],[data-edit-img],.editor,#edit-menu,#edit-button,#top-bar-fixed,#modal,button.medium-editor-action,.medium-editor-toolbar').length) {
         editor.handle_click($(event.target), event);
         return;
     }

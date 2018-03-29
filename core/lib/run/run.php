@@ -326,16 +326,22 @@ function get_single_param_value($params, $name, $value_exists, $default_value = 
 }
 
 function run_sc($params) {
-
-    $tpl = get_param_value($params, "tpl", null);
-    if (isset($tpl)) {
-        $uri = dirname($tpl);
-        $tpl_name = basename($tpl);
-    } else {
-        $uri = get_param_value($params, "uri", current($params));
-        $tpl_name = "index.tpl";
+    $file = get_param_value($params, "file", null);
+    if (empty($file) || !file_exists($file)) {
+        $tpl = get_param_value($params, "tpl", null);
+        if (isset($tpl)) {
+            $uri = dirname($tpl);
+            $tpl_name = basename($tpl);
+        } else {
+            $uri = get_param_value($params, "uri", current($params));
+            $tpl_name = "index.tpl";
+        }
+        if (!empty($uri)) {
+            $file = find_uri($uri, $tpl_name);
+        }
     }
-    if (!empty($uri) && $file = find_uri($uri, $tpl_name)) {
+
+    if (!empty($file)) {
         global $SYSTEM;
 
         //remember original uri context

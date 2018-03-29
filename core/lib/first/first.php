@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @doc * `[first dataset]` returns first item from dataset, stored in variable named `first`
+ * @doc * `[first dataset var=varname]` returns first item from dataset, stored in variable named `varname`
+ */
 function first_sc($params) {
     load_library('get');
     load_library('set');

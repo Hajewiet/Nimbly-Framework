@@ -8,6 +8,7 @@ function repeat_sc($params) {
     $tpl_id = get_param_value($params, "tpl", $data_id);
     $tpl_dir = get_param_value($params, "tpldir");
     $var_id = get_param_value($params, "var", "item");
+    $limit = get_param_value($params, "limit", 0);
     $tpl = find_template($tpl_id, $tpl_dir);
     if (empty($tpl)) {
         return;
@@ -37,6 +38,7 @@ function repeat_sc($params) {
         $exclude_ls = explode(",", $exclude);
     }
 
+    $iterations = 0;
     foreach ($data as $k => $item) {
         $excluded = @in_array($item, $exclude_ls) || @in_array(key($item), $exclude_ls);
         if ($excluded) {
@@ -52,5 +54,10 @@ function repeat_sc($params) {
 
         run($tpl);
         clear_variable_dot($var_id);
+        $iterations++;
+        if (!empty($limit) && $iterations >= $limit) {
+            set_variable('repeat.limit', 'yes');
+            break;
+        }
     }
 }

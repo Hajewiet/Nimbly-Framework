@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @doc `[redirect url]` redirects to url
+ */
 function redirect_sc($params) {
     $url = is_array($params)? current($params) : $params;
     if (empty($url)) {

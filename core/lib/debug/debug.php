@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @doc * `[debug]` displays all available nimbly debug information
+ * @doc * `[debug variables session globals apache php]` displays part of debug information
+ */
 function debug_sc($params) {
     if (empty($params) || get_param_value($params, "variables") !== null) {
         echo '<div class="scroll-h">';

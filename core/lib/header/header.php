@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @doc `[header (type)]` outputs a http header, possible header types: css, js, json, woff, 403, 404, 500, csv
+ */
 function header_sc($params) {
     $css = get_single_param_value($params, "css", true, false);
     if ($css) {

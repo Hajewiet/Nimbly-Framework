@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @doc `[int x]` shows integer value of variable named x
+ */
 function int_sc($params) {
     load_library("get");
     $var = get_param_value($params, "var", current($params));

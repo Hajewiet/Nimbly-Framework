@@ -1,5 +1,10 @@
 <?php
 
+/** 
+ *  @doc * `[active-if news]` outputs 'active' if the current url starts with _news_
+ *  @doc * `[active-if news =]` outputs 'active' if the current url is exactly _news_
+ */
+
 function active_if_sc($params) {
     global $SYSTEM;
     $url_prefix = current($params);

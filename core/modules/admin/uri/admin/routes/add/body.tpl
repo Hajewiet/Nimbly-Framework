@@ -1,5 +1,5 @@
-<section class="container medium">
-    <form>
+<section class="nb-container medium">
+    <form class="nb-form">
             <label>URL:
                 <input type="text" maxlength="64" name="route"
                        placeholder="route, example: admin/routes/(id)" value="[sticky route]" required />
@@ -12,7 +12,7 @@
             <input
                 type="submit"
                 value="Save"
-                class="button"
+                class="nb-button"
                 data-post=".routes"
                 data-done='{"redirect": "admin/routes", "msg": "Route created"}'
             />

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @doc `[md5 a]` caculates md5 hash for a
+ */
 function md5_sc($params) {
     $val = implode(' ', $params);
     return md5($val);

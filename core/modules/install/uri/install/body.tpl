@@ -1,4 +1,4 @@
-<div class="container">
+<div class="nb-container">
 
     <h1>[text Installation]</h1>
 
@@ -9,7 +9,7 @@
 
     <p><strong>[text Step] [step]: [text step[step]_long]</strong></p>
 
-    <form name="step[step]" action="[url].php" method="post" accept-charset="utf-8">
+    <form name="step[step]" action="[url].php" method="post" accept-charset="utf-8" class="nb-form">
         [form-error]
         [form-key step[step]]
         [step[step]]

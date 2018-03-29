@@ -27,7 +27,7 @@ function pages_read() {
                 if (file_exists($route_path)) {
                     continue; // it's a route
                 }
-                $parts = explode("uri", $p);
+                $parts = explode("/uri/", $p);
                 $url = trim(str_replace("/index.tpl", "", $parts[1]), '/');
                 if (!empty($result[$url])) {
                     continue;

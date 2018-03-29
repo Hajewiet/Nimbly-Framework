@@ -1,6 +1,7 @@
 var modal = {};
 
 modal.active = false;
+modal.options = {};
 
 modal.open = function(opts) {
     if ($('#modal').length == 0) {
@@ -8,16 +9,19 @@ modal.open = function(opts) {
     }
     $('#modal').data('uid', opts.uid);
     $('#modal-content').load(base_url + '/.modal/' + opts.url);
-    $('#modal').removeClass('close');
+    $('#modal').removeClass('nb-close');
     modal.active = true;
+    modal.options = opts;
+    $(document).trigger('modal.open', opts);
 };
 
 modal.create = function() {
-    $('body').append('<div id="modal" class="close"><div id="modal-content"></div></div>');
+    $('body').append('<div id="modal" class="nb-close"><div id="modal-content"></div></div>');
 };
 
 modal.close = function() {
-    $('#modal').addClass('close');
+    $('#modal').addClass('nb-close');
+    $('#modal-content').html('');
     modal.active = false;
 };
 
@@ -58,7 +62,11 @@ modal.handle_select = function (elem) {
     p.data('select', uuid);
     p.attr('data-select', uuid);
     elem.addClass('selected');
-    $(document).trigger('data-select', {'prev': old_uuid, 'uuid': uuid, 'modal_uid': $('#modal').data('uid') });
+    var opts = modal.options;
+    opts.uuid = uuid;
+    opts.modal_uid = $('#modal').data('uid');
+    opts.prev = old_uuid;
     modal.close();
+    $(document).trigger('data-select', opts);
 }
 

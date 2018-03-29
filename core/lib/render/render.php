@@ -1,7 +1,8 @@
 <?php
 
+load_libraries(["data", "set", "get", "md5", "session", "base-url"]);
+
 function render_sc($params) {
-    load_libraries(["data", "set", "get", "md5", "session"]);
     $resource = get_param_value($params, "resource", ".blocks");
     $uuid = get_param_value($params, "uuid", md5_uuid(current($params)));
     $img_insert = get_param_value($params, "insert", false) !== false;
@@ -31,6 +32,9 @@ function render_sc($params) {
 }
 
 function render_block($field, $content, $tpl) {
+    if (is_array($content)) {
+        $content = $content['content'] ?? '';
+    }
     if ($tpl === 'img') {
         render_img($field, $content);
         return;
@@ -54,10 +58,10 @@ function render_block($field, $content, $tpl) {
 
 function render_img($field, $content) {
     if (!session_user()) {
-        echo sprintf('<img src="%s/small">', $content);
+        echo sprintf('<img data-img-uuid=%s>', $content);
         return;
     }
-    echo sprintf('<img data-edit-img="%s" data-edit-tpl="img" src="%s/small" />',
+    echo sprintf('<img data-edit-img="%s" data-edit-tpl="img" data-img-uuid=%s />',
         $field, $content);
 }
 

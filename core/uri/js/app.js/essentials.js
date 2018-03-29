@@ -8,10 +8,10 @@ $('body').on('click', '[data-toggle]', function () {
     var tgt = $(this).data('toggle');
     if (tgt === "") {
         return;
-    } else if ($(tgt).hasClass("open")) {
-        $(tgt).removeClass("open").addClass("close");
+    } else if ($(tgt).hasClass("nb-open")) {
+        $(tgt).removeClass("nb-open").addClass("nb-close");
     } else {
-        $(tgt).removeClass("close").addClass("open");
+        $(tgt).removeClass("nb-close").addClass("nb-open");
     }
 });
 
@@ -20,8 +20,8 @@ $('body').on('click', '[data-open-modal]', function () {
     if (tgt === "") {
         return;
     }
-    $('.open').removeClass("open").addClass("close");
-    $(tgt).addClass("open").removeClass("close");
+    $('.open').removeClass("nb-open").addClass("nb-close");
+    $(tgt).addClass("nb-open").removeClass("nb-close");
 });
 
 $('body').on('click', '[data-open]', function () {
@@ -29,7 +29,7 @@ $('body').on('click', '[data-open]', function () {
     if (tgt === "") {
         return;
     }
-    $(tgt).removeClass("close").addClass("open");
+    $(tgt).removeClass("nb-close").addClass("nb-open");
 });
 
 $('body').on('click', '[data-close]', function () {
@@ -37,7 +37,7 @@ $('body').on('click', '[data-close]', function () {
     if (tgt === "") {
         tgt = this;
     }
-    $(tgt).removeClass("open").addClass("close");
+    $(tgt).removeClass("nb-open").addClass("nb-close");
 });
 
 $('body').on('click', '[data-active]', function () {
@@ -143,10 +143,12 @@ $('body').on('click', '[data-post]', function (e) {
     var url = me.data('post');
     var payload = me.data('payload');
     var frm = me.closest('form');
-    if (frm && !trigger_validate(frm)) {
+    if (frm && frm.length && !trigger_validate(frm)) {
         return;
     }
-    if (!payload && frm) {
+    if (payload) {
+        payload = JSON.stringify(payload);
+    } else if (frm && frm.length) {
         var data = frm.serializeObject();
         api_include_fields(frm, data);
         payload = JSON.stringify(data);
@@ -165,10 +167,12 @@ $('body').on('click', '[data-put]', function (e) {
     var url = me.data('put');
     var payload = me.data('payload');
     var frm = me.closest('form');
-    if (frm && !trigger_validate(frm)) {
+    if (frm && frm.length && !trigger_validate(frm)) {
         return;
     }
-    if (!payload && frm) {
+    if (payload) {
+        payload = JSON.stringify(payload);
+    } else if (frm && frm.length) {
         var data = frm.serializeObject();
         api_include_fields(frm, data);
         payload = JSON.stringify(data);
@@ -184,11 +188,11 @@ $('body').on('click', '[data-push]', function () {
     var tgt = $(this).data('push');
     if (tgt === "") {
         return;
-    } else if ($(tgt).hasClass("open")) {
-        $(tgt).removeClass("open").addClass("close");
+    } else if ($(tgt).hasClass("nb-open")) {
+        $(tgt).removeClass("nb-open").addClass("nb-close");
         $('#page-wrapper').removeClass('push-right');
     } else {
-        $(tgt).removeClass("close").addClass("open");
+        $(tgt).removeClass("nb-close").addClass("nb-open");
         $('#page-wrapper').addClass('push-right');
     }
 });
@@ -218,15 +222,15 @@ function api(options) {
         dataType : "json"
     }).done(function(json) {
         if (json.success) {
-            api_then(options.done, json.message);
+            api_then(options.done);
         } else {
-            api_then(options.fail, json.message);
+            api_then(options.fail);
         }
     }).fail(function( xhr, status, errorThrown ) {
         opts = options.fail || {};
         opts.msg = opts.msg || xhr.responseJSON.message || errorThrown;
         opts.msg = api_pretty_message(opts.msg);
-        api_then(opts, errorThrown);
+        api_then(opts);
     }).always(function( xhr, status ) {
         api_then(options.always);
     });
@@ -242,7 +246,7 @@ function api_pretty_message(txt) {
     return txt;
 }
 
-function api_then(options, msg) {
+function api_then(options) {
     if (!options) {
         return;
     }
@@ -251,7 +255,7 @@ function api_then(options, msg) {
         return;
     }
     if (options.hide) {
-        $(options.hide).removeClass("open").addClass("close");
+        $(options.hide).removeClass("nb-open").addClass("nb-close");
     }
     if (options.redirect) {
         // remember any messages for the next page
@@ -285,7 +289,7 @@ function api_include_fields(frm, data) {
         }
         field = me.data('edit-img');
         if (field) {
-            data[field] = me.attr('src').replace('/small', '');
+            data[field] = me.data('img-uuid');
             return;
         }
         field = me.data('field-boolean');
@@ -306,9 +310,8 @@ $('table').each(function() {
 
 function system_message(msg) {
     $("#system-messages p").text(msg);
-    $("#system-messages").removeClass("close").addClass("open");
+    $("#system-messages").removeClass("nb-close").addClass("nb-open");
 }
-
 
 // a notification is more subtle than a system message
 var notification_timer = null;
@@ -317,9 +320,92 @@ function system_notification(msg) {
         clearInterval(notification_timer);
     }
     $("#system-notifications p").text(msg);
-    $("#system-notifications").removeClass("close").addClass("open");
+    $("#system-notifications").removeClass("nb-close").addClass("nb-open");
     notification_timer = setTimeout(function(){
-        $("#system-notifications").removeClass("open").addClass("close");
+        $("#system-notifications").removeClass("nb-open").addClass("nb-close");
     }, 1500);
 }
 
+/*
+ * Lazy image loading
+ */
+
+var nb_in_viewport = function (e, offset=0) {
+    var brect = e.getBoundingClientRect();
+    var h = window.innerHeight || document.documentElement.clientHeight;
+    var w = window.innerWidth || document.documentElement.clientWidth;
+
+    if (brect.top > h + offset) {
+        return false;
+    }
+    if (brect.top + brect.height < -offset) {
+        return false;
+    }
+    if (brect.left > w + offset) {
+        return false;
+    }
+    if (brect.left + brect.width < -offset) {
+        return false
+    }
+    return true;
+};
+
+
+function nb_load_images() {
+    $("img[data-img-uuid]").each(function() {
+        nb_load_image(this);
+    });
+    $('[data-bgimg-uuid]').each(function() {
+        nb_load_image(this, true);
+    });
+}
+
+function nb_image_size(e) {
+    var prf = (window.devicePixelRatio || 1) / 10;
+    var max_w = Math.ceil(e.outerWidth() * prf) * 10;
+    var max_h = Math.ceil(e.outerHeight() * prf) * 10;
+    return Math.max(max_w, max_h);
+}
+
+function nb_image_box(e, mf=1.0) {
+    var prf = (window.devicePixelRatio || 1) / 10;
+    var max_w = Math.ceil(e.outerWidth() * prf * mf) * 10;
+    var max_h = Math.ceil(e.outerHeight() * prf * mf) * 10;
+    return max_w + 'x' + max_h + 'f';
+}
+
+function nb_load_image(e, bg=false) {
+    var uuid = $(e).data('img-uuid') || $(e).data('bgimg-uuid');
+    if (!uuid) {
+        return;
+    }
+    if (!$(e).is(':visible')) {
+        return;
+    }
+    if (!nb_in_viewport(e, 200)) {
+        return false;
+    }
+    var container = bg? $(e) : $(e).closest('div');
+    var max = nb_image_size(container);
+    var img_src = full_base_url + '/img/' + uuid + '/' + max + 'w';
+    var ratio = $(e).data('img-ratio') || 0;
+    if (ratio) {
+        img_src += '?ratio=' + ratio;
+    }
+    if (!bg && e.src != img_src) {
+        e.src = img_src;
+    } else if (bg) {
+        var bg_url = 'url("' + img_src + '")';
+        if ($(e).css('background-image') !== bg_url) {
+            $(e).css('background-image', bg_url);
+        }
+    }
+}
+
+function nb_debounced_viewport_changed() {
+    nb_load_images();
+}
+
+$(window).scroll($.debounce(250, nb_debounced_viewport_changed));
+$(window).resize($.debounce(250, nb_debounced_viewport_changed));
+nb_load_images();

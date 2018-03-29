@@ -1,5 +1,9 @@
 <?php
 
+/** 
+ *  @doc * `[ago (timestamp)]` outputs amount of days ago since the _timestamp_, example: 5 days ago, or 12 seconds ago
+ */
+
 function ago_sc($params) {
     if (empty ($params)) {
         return;

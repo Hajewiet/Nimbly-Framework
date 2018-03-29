@@ -6,6 +6,12 @@ load_library('data-sort');
 /**
  * Implements [data] shortcode
  * Example: [data resource=users op=read]
+ * @doc * `[data users]` loads all users in variable _data.users_
+ * @doc * `[data users var=all_users]` use custom variable name. This example loads all users in variable named all_users
+ * @doc * `[data projects sort=date|desc,title|asc]` sorted on a) date (descending) and b) title (ascending)
+ * @doc * `[data blog-items filter=published:yes]` simple field filter (field permission set to yes)
+ * @doc * `[data blog-items search=nimbly]` filters data with any field matching the search term (in this example: nimbly)
+ * @doc * `[data users uuid=20345]` loads one single user with id 20345 in variable _data.users.20345_
  */
 function data_sc($params) {
     if (empty($params)) {
@@ -29,6 +35,11 @@ function data_sc($params) {
     $search = get_param_value($params, "search", false);
     if ($search !== false) {
         $result = data_search($result, $search);
+    }
+
+    $filter = get_param_value($params, "filter", false);
+    if ($filter !== false) {
+        $result = data_filter($result, $filter);
     }
 
     load_library("set");
@@ -81,7 +92,7 @@ function data_read($resource, $uuid = null, $field = null) {
         return _data_read_all($resource, $field);
     }
     $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . $uuid;
-    if (!file_exists($file)) {
+    if (!file_exists($file) || is_dir($file)) {
         return null;
     }
     $contents = file_get_contents($file);
@@ -148,14 +159,48 @@ function data_update($resource, $uuid, $data_update_ls) {
         }
         return $result;
     }
+
+
     $data_ls = data_read($resource, $uuid);
+
     if (empty($data_ls)) {
         $data_merged_ls = $data_update_ls;
     } else {
         $data_merged_ls = array_merge($data_ls, $data_update_ls);
     }
+    
+    // additional handling if PK field changed
+    load_library('log');
+    $pk_field =  $data_update_ls['pk-field-name'] ?? false;
+    if ($pk_field) {
+        $pk_value = $data_update_ls[$pk_field] ?? false;
+        $uuid = data_update_pk($resource, $uuid, $pk_value);
+        if (empty($uuid)) {
+            return false;
+        }
+        $data_merged_ls['uuid'] = $uuid;
+    }
+
     if (data_create($resource, $uuid, $data_merged_ls)) {
         return $data_merged_ls;
+    }
+    return false;
+}
+
+function data_update_pk($resource, $uuid, $pk_value) {
+    if (empty($pk_value)) {
+        return $uuid;
+    }
+    $new_uuid = md5($pk_value);
+    if ($new_uuid === $uuid) {
+        return $uuid;
+    }
+    if (data_exists($resource, $new_uuid)) {
+        return false;
+    }
+    $path = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/';
+    if (rename($path . $uuid, $path . $new_uuid) === true) {
+        return $new_uuid;
     }
     return false;
 }
@@ -246,6 +291,44 @@ function data_search($data, $term, $level = 0) {
     }
     return 0;
 }
+
+/*
+ * Simple field filter e.g. permission:yes
+ */
+function data_filter($data, $filter_str) {
+    $filter_str_parts =  explode(',', $filter_str);
+    $filters = array();
+    foreach ($filter_str_parts as $f) {
+        $parts = explode(':', $f);
+        if (count($parts) !== 2) {
+            continue;
+        }
+        $filters[$parts[0]] = $parts[1];
+    }
+    foreach ($data as $key => $record) {
+        foreach ($filters as $k => $v) {
+
+            // pass if value exists
+            if ($v === '(exists)' && isset($record[$k])) {
+                continue;
+            }
+
+            // pass if value is numeric
+            if ($v === '(num)' && isset($record[$k]) && is_numeric($record[$k])) {
+                continue;
+            }
+
+            // pass if value matches (e.g. permission=yes)
+            if (isset($record[$k]) && $record[$k] == $v) {
+                continue;
+            }
+
+            unset($data[$key]);
+        }
+    }
+    return $data;
+}
+
 
 /*
  * Get all resource types

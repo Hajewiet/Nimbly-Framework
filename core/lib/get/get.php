@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @doc * [get varname] returns value of variable named `varname`
+ * @doc * [get varname default=somevalue] if variable `varname` has no value, the default value `somevalue` is returned
+ * @doc * [get varname default=somevalue echo] echo outputs the value
+ */
 function get_sc($params, $default = null) {
     if (is_array($params)) {
         $key = current($params);
@@ -7,7 +12,6 @@ function get_sc($params, $default = null) {
         $key = $params;
     }
     $key = preg_replace('/[^a-zA-Z0-9._-]/', '_', $key);
-    $echo = get_param_value($params, "echo", false);
 
     // get default value
     if ($default === null && is_array($params) && count($params) >= 2) {
@@ -22,6 +26,7 @@ function get_sc($params, $default = null) {
             $default = $d;
         }
     }
+
     $result = $default;
     if (isset($_SESSION['variables'][$key])) {
         $result = $_SESSION['variables'][$key];
@@ -33,7 +38,12 @@ function get_sc($params, $default = null) {
             $result = $req_get;
         }
     }
-    if ($echo) {
+
+    if (empty($result)) {
+        $result = get_param_value($params, "empty", $result);
+    }
+
+    if (get_param_value($params, "echo", false)) {
         echo $result;
         return;
     }

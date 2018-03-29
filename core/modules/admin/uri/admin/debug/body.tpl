@@ -1,3 +1,3 @@
-<section class="container">
+<section class="nb-container">
     [debug]
 </section>

@@ -3,8 +3,10 @@
 load_library("get");
 load_library("set");
 
-//[data-sort data.join=data.join sort=date|desc,title|asc]
 
+/**
+ * @doc `[data-sort data.articles sort=title|string|asc]` sorts data.articles variable by field title, ascending
+ */
 function data_sort_sc($params) {
     if (count($params) < 2) {
         return;

@@ -2,6 +2,8 @@
 
 load_library("get");
 
+// @doc * `[count var]` outputs amount of items in nimbly variable named _var_
+
 function count_sc($params) {
     $a = current($params);
     $as = get_variable($a, false);

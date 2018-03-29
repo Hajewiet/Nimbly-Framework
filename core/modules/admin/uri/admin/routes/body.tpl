@@ -1,7 +1,7 @@
-<section class="container">
-    <a href="[base-url]/admin/routes/add" class="button">Add Route</a>
+<section class="nb-container">
+    <a href="[base-url]/admin/routes/add" class="nb-button">Add Route</a>
     [data .routes]
-    <table>
+    <table class="nb-table">
       <thead>
         <tr>
           <th>Route</th>

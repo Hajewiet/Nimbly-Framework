@@ -1,7 +1,7 @@
-<section class="container">
-    <a href="[base-url]/admin/pages/add" class="button">Add Page</a>
+<section class="nb-container">
+    <a href="[base-url]/admin/pages/add" class="nb-button">Add Page</a>
     [get-pages]
-    <table>
+    <table class="nb-table">
       <thead>
         <tr>
           <th>URL</th>

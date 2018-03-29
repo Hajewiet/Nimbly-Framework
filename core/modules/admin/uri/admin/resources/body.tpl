@@ -1,7 +1,7 @@
-<section class="container">
-    <a href="[base-url]/admin/resources/add" class="button">Add Resource</a>
+<section class="nb-container">
+    <a href="[base-url]/admin/resources/add" class="nb-button">Add Resource</a>
     [get-resources]
-    <table>
+    <table class="nb-table">
       <thead>
         <tr>
           <th>Resource</th>

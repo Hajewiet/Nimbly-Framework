@@ -1,5 +1,5 @@
-<section class="container medium">
-    <form>
+<section class="nb-container medium">
+    <form class="nb-form">
         <label>Route:
             <input type="text" maxlength="64" name="route" value="[get data.routes.route]" required />
         </label>
@@ -9,7 +9,7 @@
         <input
             type="submit"
             value="Save"
-            class="button"
+            class="nb-button"
             data-put=".routes/[data.routes.uuid]"
             data-done='{"redirect": "admin/routes", "msg": "Route `[data.routes.route]` updated"}'
         />

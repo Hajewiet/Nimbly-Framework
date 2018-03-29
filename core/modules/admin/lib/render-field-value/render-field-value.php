@@ -1,7 +1,11 @@
 <?php
 
+load_library('get');
+load_library('lookup');
+load_library('base_url');
+
 function render_field_value_sc($params) {
-    load_library('get');
+
     $key = get_variable('field.key');
     $type = get_variable('field.type');
     $value = get_variable('record.' . $key);
@@ -12,17 +16,27 @@ function render_field_value_sc($params) {
     return '? ' . $type;
 }
 
+function render_field_select($value) {
+    $resource = get_variable('field.resource');
+    if (!empty($resource)) {
+        $v = lookup_data($resource, $value, 'name', false);
+    } else {
+        $v = false;
+    }
+    return render_field_text($v);
+}
+
 function render_field_boolean($value) {
     return empty($value)? 'no' : 'yes';
 }
 
-function render_field_text($value) {
+function render_field_text($value, $max_length = 64, $clip = '...') {
     if (empty($value)) {
         return '(empty)';
     }
     $value = trim(strip_tags($value));
-    if (strlen($value) > 30) {
-        $value = substr($value, 0, 30) . '...';
+    if (strlen($value) > $max_length) {
+        $value = substr($value, 0, $max_length - strlen($clip)) . $clip;
     }
     return $value;
 }
@@ -31,7 +45,7 @@ function render_field_image($value) {
     if (empty($value)) {
         return '(empy)';
     }
-    return sprintf('<img src="%s/60">', $value);
+    return sprintf('<img src="%s/img/%s/60?ratio=1">', base_url_sc(), $value);
 }
 
 function render_field_block_text($value) {
@@ -51,6 +65,10 @@ function render_field_date($value) {
 }
 
 function render_field_name($value) {
+    return render_field_text($value);
+}
+
+function render_field_textarea($value) {
     return render_field_text($value);
 }
 

@@ -1,12 +1,6 @@
 <style>
     [set primary-color="#58c8f4"]
-    [run tpl="css/app.css/reset.css.tpl"]
-    [run tpl="css/app.css/region.css.tpl"]
-    [run tpl="css/app.css/grid.css.tpl"]
-    [run tpl="css/app.css/nav.css.tpl"]
-    [run tpl="css/app.css/type.css.tpl"]
-    [run tpl="css/app.css/form.css.tpl"]
-    [run tpl="css/app.css/app.css.tpl"]
+    [run tpl="css/app.css/nimbly.css.tpl"]
     .progress-bar {
         position: relative;
         height: 1rem;

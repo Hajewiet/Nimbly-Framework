@@ -1,0 +1,5 @@
+[module user admin]
+[access feature=list_shortcodes]
+[set page-title="Shortcodes"]
+[set bar-title="Admin | Shortcodes"]
+[html]

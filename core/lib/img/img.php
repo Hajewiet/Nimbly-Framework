@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @doc `[img width=600 caption="main image"]` generates an image placeholder (for prototyping)
+ */
 function img_sc(&$params) {
     $src = get_param_value($params, "src", null);
     if (empty($src)) {

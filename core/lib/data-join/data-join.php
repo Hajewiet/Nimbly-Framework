@@ -3,6 +3,9 @@
 load_library("get");
 load_library("set");
 
+/**
+ * @doc `[data-join a b]` joins data variables data.a and data.b into new array variable named data.join
+ */
 function data_join_sc($params) {
     if (count($params) < 2) {
         return;

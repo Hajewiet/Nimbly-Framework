@@ -1,19 +1,21 @@
 <?php
 
 function thumbnail_sc($params) {
-
     $uuid = get_param_value($params, "uuid", current($params));
-    $height = get_param_value($params, "h", 240) + 0;
+    $mode = get_param_value($params, "mode", "h");
+    $size = get_param_value($params, "size", 240) + 0;
     $ratio = get_param_value($params, "ratio", 0) + 0;
-    return thumbnail_create($uuid, $height, $ratio);
+    return thumbnail_create($uuid, $size, $ratio, $mode);
 }
 
-function thumbnail_create($uuid, $h, $ratio=0) {
+function thumbnail_create($uuid, $size, $ratio=0, $mode='h') {
+
+    $MAX_UPSCALE = 1.0; // @todo: make this dynamic
 
     // 1. Check cache
 
     load_library("data");
-    $file_name = sprintf("%s_%s_%s.jpg", $uuid, $h, str_replace('.', '_', $ratio));
+    $file_name = sprintf("%s_%s%s_%s.jpg", $uuid, $size, $mode, str_replace('.', '_', $ratio));
     $path = sprintf(".tmp/thumb/%s", $file_name);
     $cache_path = $GLOBALS['SYSTEM']['data_base'] . '/' . $path;
 
@@ -45,12 +47,31 @@ function thumbnail_create($uuid, $h, $ratio=0) {
     $asp = $org_w / $org_h;
     $org_x = 0;
     $org_y = 0;
+    $max_w = $org_w * $MAX_UPSCALE; // max enlarging
+    $max_h = $org_h * $MAX_UPSCALE;
 
     //3: Calc thumbnail size given height and aspect ratio
-    if (empty($ratio) || ($ratio < 0) || (abs($asp - $ratio) < 0.01))  {
-        $w = $asp * $h;
-    } else {
-        $w = $ratio * $h;
+    $no_ratio = empty($ratio) || ($ratio < 0) || (abs($asp - $ratio) < 0.01) || $mode === 'f';
+    $a = $no_ratio? $asp : $ratio;
+
+    if ($mode === 'f') {
+        if ($size < $max_w) {
+            $max_w = $size;
+        }
+        if ($size / $ratio < $max_h) {
+            $max_h = $size / $ratio;
+        }
+        $w = $size;
+        $h = $size / $asp;
+    } else if ($mode === 'w')  {
+        $w = $size;
+        $h = $size / $a;
+    } else { // defaults to mode 'h'
+        $h = $size;
+        $w = $a * $size; 
+    } 
+
+    if ($no_ratio === false) {
         if ($ratio > $asp) {
             $new_h = $org_w / $ratio;
             $org_y = ($org_h - $new_h) / 2;
@@ -61,6 +82,18 @@ function thumbnail_create($uuid, $h, $ratio=0) {
             $org_w = $new_w;
         }
     }
+
+    if ($w > $max_w) {
+        $w = $max_w;
+        $h = $w / $a;  
+    }
+
+    if ($h > $max_h) {
+        $h = $max_h;
+        $w = $a * $h;
+    }
+
+
     $thumb_img = imagecreatetruecolor($w, $h);
     imagecopyresampled($thumb_img, $org_img, 0, 0, $org_x, $org_y, $w, $h, $org_w, $org_h);
 

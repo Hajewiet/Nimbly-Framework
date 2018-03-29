@@ -1,5 +1,5 @@
 # deny access to certain file extensions, including PHP files
-<FilesMatch "\.(tpl|inc|php|htaccess)$">
+<FilesMatch "\.(tpl|inc|php|htaccess|md)$">
     deny from all
 </FilesMatch>
 

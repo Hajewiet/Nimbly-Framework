@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @doc '[log text]' adds text to log file in data/.tmp/logs/system.log
+ */
 function log_sc($params) {
     log_system(current($params));
 }

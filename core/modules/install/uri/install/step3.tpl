@@ -10,6 +10,6 @@
 
 
 <div class="button-group">
-    <input type="submit" name="submit" value="Previous" class="button button-outline"  />
-    <input type="submit" name="submit" value="Next" class="button"  />
+    <input type="submit" name="submit" value="Previous" class="nb-button nb-button-outline"  />
+    <input type="submit" name="submit" value="Next" class="nb-button"  />
 </div>

@@ -11,14 +11,13 @@ uploader.init_uploader = function(elem, uid) {
         opts = {"preview":"#preview-" + uid }
     }
     opts['uid'] = uid;
-    elem.after('<input type="file" name="file" id="' + uid + '" class="close">');
+    elem.after('<input type="file" name="file" id="' + uid + '" class="nb-close">');
     opts.file_reader = new FileReader();
     opts.file_reader.onload = function(e) {
         uploader.handle_load(e, opts);
     }
     $('#' + uid).change(function(e) {
         uploader.handle_change(e, opts);
-
     });
 }
 
@@ -28,9 +27,9 @@ uploader.wrap_progress_bar = function(elem, uid) {
         p.find('div.progress-bar-bg,div.progress-bar-text,div.progress-bar').remove();
         elem.unwrap();
     }
-    elem.wrap('<div class="uploader img-wrapper" style="width:' + elem.width() + 'px; height: ' + elem.height() + 'px; line-height: ' + elem.height() + 'px;"></div>');
-    elem.after('<div class="progress-bar-bg close" id="' + uid + '-bg"><div class="progress-bar" id="' + uid + '-bar"></div></div>');
-    elem.after('<div class="progress-bar-text close" id="' + uid + '-msg">Uploading</div>');
+    elem.wrap('<div class="uploader img-wrapper"></div>');
+    elem.after('<div class="progress-bar-bg nb-close" id="' + uid + '-bg"><div class="progress-bar" id="' + uid + '-bar"></div></div>');
+    elem.after('<div class="progress-bar-text nb-close" id="' + uid + '-msg">Uploading</div>');
 }
 
 uploader.handle_change = function(e, opts) {
@@ -55,9 +54,9 @@ uploader.handle_load = function(e, opts) {
 }
 
 uploader.set_progress = function(uid, progress, msg) {
-    $('#' + uid + '-bg').removeClass('close');
-    $('#' + uid + '-bar').removeClass('close').css('width', progress + '%');
-    $('#' + uid + '-msg').removeClass('close').text(msg);
+    $('#' + uid + '-bg').removeClass('nb-close');
+    $('#' + uid + '-bar').removeClass('nb-close').css('width', progress + '%');
+    $('#' + uid + '-msg').removeClass('nb-close').text(msg);
 }
 
 uploader.unique_id = function() {

@@ -1,0 +1,5 @@
+[module user admin]
+[access feature=debug]
+[set page-title="PHP"]
+[set bar-title="Admin | PHP"]
+[html]

@@ -1,4 +1,4 @@
-<section class="container">
+<section class="nb-container">
     <p>
         Unfortunately, you don't have permission to the page you're trying to access.
     </p>

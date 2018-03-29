@@ -1,5 +1,5 @@
 [module user admin forms]
-[access feature=add_[data.resource]]
-[set page-title="Add [resource-name [data.resource]]"]
+[access feature=edit_[data.resource],(any)_[data.resource]]
+[set page-title="Edit [resource-name [data.resource]]"]
 [set bar-title="Admin | Add [resource-name [data.resource]]"]
 [html]

@@ -3,6 +3,10 @@
 global $SYSTEM;
 $SYSTEM['modules']['root'] = '/';
 
+/**
+ * @doc Core functions for finding implementations of uri's, templates and libraries. 
+ */
+
 function find_uri($name, $tpl_name = "index.tpl") {
     $result = find_path($name, 'uri', $tpl_name);
     if ($result == false && count($GLOBALS['SYSTEM']['modules']) == 1) {

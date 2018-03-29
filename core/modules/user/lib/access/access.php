@@ -16,7 +16,7 @@ function access_sc($params) {
     }
 
     $key = get_param_value($params, "key", false);
-    if ($key !== false && access_by_feature($key) === true) {
+    if ($key !== false && access_by_key($key) === true) {
          return;
     }
 

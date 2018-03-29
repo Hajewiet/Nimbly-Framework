@@ -1,4 +1,4 @@
-<section class="container">
+<section class="nb-container">
         <p>
             Unfortunately, the page you were trying to retrieve does not exist.
         </p>

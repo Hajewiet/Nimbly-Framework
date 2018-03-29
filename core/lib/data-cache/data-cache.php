@@ -4,10 +4,9 @@ load_library("data");
 
 $GLOBALS['SYSTEM']['data_cache_base'] = $GLOBALS['SYSTEM']['file_base'] . 'data/.tmp/data-cache/';
 
-function data_cache_sc() {
-
-}
-
+/**
+ * @doc * Save data to cache file
+ */
 function data_cache_save($key, $data) {
     $k = data_sanitize_key($key);
     $v = serialize($data);
@@ -17,6 +16,9 @@ function data_cache_save($key, $data) {
     chmod($file_path, 0640);
 }
 
+/**
+ * @doc * Retrieve data from cache file
+ */
 function data_cache_retrieve($key, $max_age = INF) {
     $k = data_sanitize_key($key);
     $file_path = $GLOBALS['SYSTEM']['data_cache_base'] . $k . '.data';

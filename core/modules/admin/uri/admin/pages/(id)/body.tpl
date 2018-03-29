@@ -1,5 +1,5 @@
-<section class="container medium">
-    <form>
+<section class="nb-container medium">
+    <form class="nb-form">
         <label>URL:
             <input type="text" maxlength="64" name="url" value="[get data.page.url]" required disabled />
         </label>
@@ -9,7 +9,7 @@
         <input
             type="submit"
             value="Save"
-            class="button"
+            class="nb-button"
             data-put=".pages/[data.page.uuid]"
             data-done='{"redirect": "admin/pages", "msg": "Page `[data.page.url]` updated"}'
         />

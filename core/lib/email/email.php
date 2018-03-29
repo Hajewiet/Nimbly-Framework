@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @doc `[email recipient@ema.il subject="test email" tpl="welcome_email"]` sends an email using email template `welcome_email`
+ */
 function email_sc($params) {
 	email(array(
 		'recipient' => get_param_value($params, 'recipient', current($params)),
