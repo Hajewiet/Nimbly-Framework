@@ -64,6 +64,9 @@ msgstr = "If Apache is hosting [app-name] with an alias, please enter it here. O
 msgid = "help_pepper"
 msgstr = "The pepper code is a system wide security code, unique for this installation."
 
+msgid = "pepper_required"
+msgstr = "Please type in a pepper code."
+
 msgid = "htaccess_created_ok"
 msgstr = "Successfully configured main htaccess file."
 

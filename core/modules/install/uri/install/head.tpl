@@ -1,6 +1,6 @@
 <style>
     [set primary-color="#58c8f4"]
-    [run tpl="css/app.css/nimbly.css.tpl"]
+    [run tpl="css/app.css/css/style.css"]
     .progress-bar {
         position: relative;
         height: 1rem;

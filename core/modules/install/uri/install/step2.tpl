@@ -13,7 +13,7 @@
 
 <label>[text Pepper code]
     <input type="text" maxlength="64" name="pepper" value="[sticky pepper default=[salt]]" required  />
-    <span class="form-error close">
+    <span class="form-error nb-close">
         [text pepper_required]
     </span>
 </label>
