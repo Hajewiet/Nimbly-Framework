@@ -20,16 +20,16 @@ The Nimbly system core is designed to provide a minimal set of features, just en
 
 * Routing.
 * Template engine that works with shortcodes between brackets [likethis].
-* HTML5 template.
-* Minimalist CSS framework (based on Milligram)
-* Some JavaScript functions to handle the most essential behaviors like opening and closing elements.
 * Support for responsive and adaptive design.
-* Data management. By default, data is stored in the `data` directory using a custom NoSQL solution, storing resources in JSON files. 
+* Image server.
+* HTML5 template, core CSS and JavaScript functions to handle the most essential behaviors.
 * Inline editing.
+* Lazy image loading with automatic image sizing (considering device ppi).
+* Data management. By default, data is stored in the `data` directory using a custom NoSQL solution, storing resources in JSON files. 
 * JSON api. All data resources are automatically available via a JSON api.
 * User management. Users, roles, groups and access rights.
 * Admin. Screens for handling system configuration.
-* Application layers so you can easily overwrite and extend these core features.
+* Application layers and modules so you can easily overwrite and extend these core features.
 
 
 ## Shortcodes syntax
