@@ -1,0 +1,40 @@
+#top-bar-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 36px;
+    background: $dark;
+    z-index: 1000;
+
+    + div,
+    + section
+    + .nb-container {
+        margin-top: 36px;
+    }
+
+    .nimbly-logo {
+        padding: 8px 20px 8px 5px;
+        height: 36px;
+        width: auto;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .icon {
+        margin: 0;
+    }
+
+    .icon-home {
+        background-image: url('../img/icon-home-white.svg');
+        vertical-align: middle;
+    }
+
+    .icon-edit {
+        background-image: url('../img/icon-edit-white.svg');
+    }
+
+    .icon-gear {
+        background-image: url('../img/icon-gear-white.svg');
+    }
+}

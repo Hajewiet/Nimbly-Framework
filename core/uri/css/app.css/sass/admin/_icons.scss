@@ -1,0 +1,23 @@
+.icon,
+.icon-nav, 
+.icon-gear, 
+.icon-edit {
+    background-size: 24px 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    line-height: 36px;
+    vertical-align: middle;
+}
+
+[data-close], 
+[data-open], 
+[data-toggle], 
+[data-delete], 
+[data-post], 
+[data-put], 
+[data-get] {
+    cursor: pointer;
+}

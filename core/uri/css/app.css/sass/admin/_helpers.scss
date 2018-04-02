@@ -1,0 +1,33 @@
+.float-left { float: left; }
+
+.float-right { float: right; }
+
+.scroll-h { overflow-x: auto; }
+
+.nb-open { display: inherit; }
+
+.nb-close , div.nb-close, li.nb-close, ul.nb-close { display: none; }
+
+.medium-screen .only-sm, .large-screen .only-sm { display: none; }
+
+.small-screen .only-md, .large-screen .only-md { display: none; }
+
+.small-screen .only-lg, .medium-screen .only-lg { display: none; }
+
+.large-screen .only-lg { display: inherit; }
+
+.medium-screen .only-md { display: inherit; }
+
+.small-screen .only-sm { display: inherit; }
+
+.small { font-size: 10px; }
+
+.align-right { text-align: right; }
+
+.align-center, .center { text-align: center; }
+
+.align-left { text-align: left; }
+
+.align-justify { text-align: justify; }
+
+.nb-40 { width: 40%!important; }

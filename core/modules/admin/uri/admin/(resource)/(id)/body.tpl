@@ -1,4 +1,5 @@
 <section class="nb-container medium">
+    <h1>Edit [resource-name [data.resource]]</h1>
     <form autocomplete="false" data-edit-autoenable data-edit-uuid="[data.uuid]" class="nb-form">
         [repeat data.fields]
         <input

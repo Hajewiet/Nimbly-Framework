@@ -1,0 +1,18 @@
+table.nb-table  {
+    border-spacing: 0;
+    width: 100%;
+}
+
+table.nb-table td, table.nb-table th {
+    border-bottom: 1px solid #ddd;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+table.nb-table td:first-child, table.nb-table th:first-child { 
+    padding-left: 0; 
+}
+
+table.nb-table td:last-child, table.nb-table th:last-child { 
+    padding-right: 0; 
+}

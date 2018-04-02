@@ -1,4 +1,5 @@
 <section class="nb-container medium">
+    <h1>Add page</h1>
     <form class="nb-form">
             <label>URL:
                 <input type="text" maxlength="64" name="url"

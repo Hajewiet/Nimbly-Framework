@@ -1,4 +1,5 @@
 <section class="nb-container">
+    <h1>[field-name [data.resource]]</h1>
     [feature-cond features="add_[data.resource],(any)_[data.resource]" tpl=add_button]
     <table class="nb-table">
           <thead>

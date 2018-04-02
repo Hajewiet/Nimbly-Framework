@@ -1,0 +1,113 @@
+p {
+    font-size: 14px;
+}
+
+.nb-img-grid {
+    line-height: 0;
+    -webkit-column-count: 3;
+    -webkit-column-gap: 10px;
+    -moz-column-count: 3;
+    -moz-column-gap: 10px;
+    column-count: 3;
+    column-gap: 10px;
+    text-align: center;
+
+    img {
+        margin-bottom: 10px;
+    }
+}
+
+.small-screen {
+
+    .nb-img-grid {
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2;
+    }
+}
+
+.nb-form {
+
+    input {
+        &[type="text"],
+        &[type="email"],
+        &[type="number"],
+        &[type="password"],
+        &[type="search"],
+        &[type="date"] {
+            font-family: 'helvetica', sans-serif;
+            font-size: 14px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-color: transparent;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            height: 32px;
+            padding: 6px 10px;
+            width: 100%;
+            margin: 5px 0 20px;
+        }
+
+        &[type="submit"] {
+            font-family: 'helvetica', sans-serif;
+            font-size: 14px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            height: 32px;
+            border-radius: 4px;
+            color: #fff;
+            background-color: $green;
+            padding: 0 20px;
+            border: none;
+            margin: 5px 5px 20px 0;
+        }
+
+        &:focus {
+            outline: 0;
+        }
+    }
+
+    label {
+        font-size: 10px;
+        text-transform: uppercase;
+        font-family: 'helvetica', sans-serif;
+        display: block;
+        width: 100%;
+    }
+
+    .label-inline {
+        display: inline-block;
+        font-weight: normal;
+        margin: 0 5px 20px 0;
+    }
+
+    .medium-editor-element {
+        font-family: 'helvetica', sans-serif;
+        font-size: 14px;
+        min-height: 96px;
+        border: 1px solid #ccc;
+        box-shadow: none;
+        background-color: transparent;
+        border-radius: 4px;
+        padding: 6px 10px;
+        width: 100%;
+        margin: 5px 0 20px;
+    }
+
+}
+
+.nb-button {
+    font-family: 'helvetica', sans-serif;
+    font-size: 14px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 4px;
+    color: #fff;
+    background-color: $green;
+    padding: 0 20px;
+    border: none;
+    margin: 5px 5px 10px 0;
+    display: inline-block;
+}
