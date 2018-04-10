@@ -110,13 +110,20 @@ editor.save = function() {
             if (is_img) {
                 payload[field] = $(this).data('img-uuid');
             } else {
-                
+
                 // clean up
                 $("[data-remove]", this).remove();
                 $("[style='']", this).removeAttr('style');
 
-                // store
-                payload[field] = $(this).html();
+                
+                if (tpl === 'plain_text') {
+                    payload[field] = $(this).text();
+                    $(this).html(payload[field]);
+                } else {
+                    payload[field] = $(this).html();
+                }
+
+                
             }
         });
         if (changes) {

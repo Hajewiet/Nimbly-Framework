@@ -39,6 +39,9 @@ function render_block($field, $content, $tpl) {
         render_img($field, $content);
         return;
     }
+    if ($tpl === 'plain_text') {
+        $content = strip_tags($content);
+    }
     set_variable('block-name', $field);
     set_variable('block-content', $content);
     $block_tpl = render_create_template($tpl);
