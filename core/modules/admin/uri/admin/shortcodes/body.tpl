@@ -1,4 +1,5 @@
 <section class="nb-container">
+    <h1>Short codes</h1>
     [get-libraries]
     <table class="nb-table">
       <thead>

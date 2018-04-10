@@ -29,7 +29,8 @@ p {
   height: 32px;
   padding: 6px 10px;
   width: 100%;
-  margin: 5px 0 20px; }
+  margin: 5px 0 20px;
+  vertical-align: top; }
 .nb-form input[type="submit"] {
   font-family: 'helvetica', sans-serif;
   font-size: 14px;
@@ -41,9 +42,27 @@ p {
   background-color: #338e2d;
   padding: 0 20px;
   border: none;
-  margin: 5px 5px 20px 0; }
+  margin: 5px 5px 20px 0;
+  vertical-align: top; }
 .nb-form input:focus {
   outline: 0; }
+.nb-form select {
+  ont-family: 'helvetica', sans-serif;
+  font-size: 14px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 32px;
+  padding: 6px 10px;
+  width: 100%;
+  margin: 5px 0 20px;
+  background-image: url("../img/down.svg");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 10px 5px;
+  vertical-align: top; }
 .nb-form label {
   font-size: 10px;
   text-transform: uppercase;
@@ -286,14 +305,16 @@ p {
 ul.nb-menu {
   margin-bottom: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 0; }
+  padding: 0;
+  font-family: 'helvetica', sans-serif; }
 
 ul.nb-menu.light {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
 
 ul.nb-menu li {
   list-style-type: none;
-  margin: 0; }
+  margin: 0;
+  font-family: 'helvetica', sans-serif; }
 
 ul.nb-menu li a, ul.nb-menu li.caption {
   display: block;
@@ -474,19 +495,21 @@ a.editor.add-img-icon {
 .medium-editor-placeholder:after {
   color: #6b6b6b; }
 
-table.nb-table {
+.nb-table {
   border-spacing: 0;
-  width: 100%; }
-
-table.nb-table td, table.nb-table th {
-  border-bottom: 1px solid #ddd;
-  padding: 12px 15px;
-  text-align: left; }
-
-table.nb-table td:first-child, table.nb-table th:first-child {
-  padding-left: 0; }
-
-table.nb-table td:last-child, table.nb-table th:last-child {
-  padding-right: 0; }
+  width: 100%;
+  font-family: 'helvetica', sans-serif; }
+  .nb-table td,
+  .nb-table th {
+    border-bottom: 1px solid #ddd;
+    padding: 12px 15px;
+    text-align: left;
+    font-family: 'helvetica', sans-serif; }
+    .nb-table td:first-child,
+    .nb-table th:first-child {
+      padding-left: 0; }
+    .nb-table td:last-child,
+    .nb-table th:last-child {
+      padding-right: 0; }
 
 /*# sourceMappingURL=style.css.map */

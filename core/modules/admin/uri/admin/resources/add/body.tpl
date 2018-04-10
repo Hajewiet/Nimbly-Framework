@@ -1,4 +1,5 @@
 <section class="nb-container medium">
+    <h1>Add resource</h1>
     <form class="nb-form">
         <label>Resource Name:
             <input type="text" maxlength="64" name="resource"

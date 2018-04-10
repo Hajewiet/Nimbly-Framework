@@ -46,6 +46,7 @@ p {
             padding: 6px 10px;
             width: 100%;
             margin: 5px 0 20px;
+            vertical-align: top;
         }
 
         &[type="submit"] {
@@ -60,11 +61,31 @@ p {
             padding: 0 20px;
             border: none;
             margin: 5px 5px 20px 0;
+            vertical-align: top;
         }
 
         &:focus {
             outline: 0;
         }
+    }
+
+    select {
+        ont-family: 'helvetica', sans-serif;
+        font-size: 14px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-color: transparent;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        height: 32px;
+        padding: 6px 10px;
+        width: 100%;
+        margin: 5px 0 20px;
+        background-image: url('../img/down.svg');
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+        background-size: 10px 5px;
+        vertical-align: top;
     }
 
     label {

@@ -1,4 +1,5 @@
 <section class="nb-container medium">
+    <h1>Route</h1>
     <form class="nb-form">
         <label>Route:
             <input type="text" maxlength="64" name="route" value="[get data.routes.route]" required />
