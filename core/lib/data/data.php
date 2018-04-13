@@ -323,6 +323,12 @@ function data_filter($data, $filter_str) {
                 continue;
             }
 
+            // pass if value matches negated (e.g permission=!no)
+            if ($v[0] === '!' && isset($record[$k]) && $record[$k] != substr($v, 1)) {
+                continue;
+            }
+
+
             unset($data[$key]);
         }
     }
