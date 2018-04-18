@@ -100,6 +100,13 @@ p {
   margin: 5px 5px 10px 0;
   display: inline-block; }
 
+/* lazy image loading fx */
+img[data-img-uuid] {
+  opacity: 0;
+  transition: opacity 500ms; }
+  img[data-img-uuid].nb-img-loaded {
+    opacity: 1; }
+
 .icon,
 .icon-nav,
 .icon-gear,

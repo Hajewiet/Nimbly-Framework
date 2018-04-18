@@ -385,6 +385,7 @@ function nb_load_image(e, bg=false) {
     if (!nb_in_viewport(e, 200)) {
         return false;
     }
+
     var container = bg? $(e) : $(e).closest('div');
     var max = nb_image_size(container);
     var img_src = full_base_url + '/img/' + uuid + '/' + max + 'w';
@@ -393,19 +394,25 @@ function nb_load_image(e, bg=false) {
         img_src += '?ratio=' + ratio;
     }
     if (!bg && e.src != img_src) {
+        e.onload = nb_image_loaded;
         e.src = img_src;
     } else if (bg) {
         var bg_url = 'url("' + img_src + '")';
         if ($(e).css('background-image') !== bg_url) {
+            e.onload = nb_image_loaded;
             $(e).css('background-image', bg_url);
         }
     }
+}
+
+function nb_image_loaded() {
+    $(this).addClass('nb-img-loaded');
 }
 
 function nb_debounced_viewport_changed() {
     nb_load_images();
 }
 
-$(window).scroll($.debounce(250, nb_debounced_viewport_changed));
-$(window).resize($.debounce(250, nb_debounced_viewport_changed));
+$(window).scroll($.debounce(20, nb_debounced_viewport_changed));
+$(window).resize($.debounce(20, nb_debounced_viewport_changed));
 nb_load_images();

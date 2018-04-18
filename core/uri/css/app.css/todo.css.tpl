@@ -430,7 +430,7 @@ img[data-img-uuid] {
     transition: opacity 500ms;
 }
 
-img[data-img-uuid][src] {
+img[data-img-uuid].nb-img-loaded {
     opacity: 1;
 }
 

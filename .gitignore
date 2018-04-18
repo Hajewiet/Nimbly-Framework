@@ -1,4 +1,5 @@
 /data/.tmp
 /data/users
 /ext/uri/install
+.sass-cache/
 .htaccess
