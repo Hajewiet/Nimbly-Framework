@@ -742,6 +742,9 @@ nb_gallery = {};
 }));
 
 nb_gallery.init = function() {
+    if ($('.nb-gallery').length < 1) {
+        return;
+    }
 	$('<link>')
 	  .appendTo('head')
 	  .attr({

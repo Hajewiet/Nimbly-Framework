@@ -95,15 +95,12 @@ resizer.update_device = function (w) {
     }
 
     set_cookie("vpw", w);
-    //set_cookie("pixel_ratio", window.devicePixelRatio);
 
     if (get_cookie("vpw") !== "" + w) {
         if (window.location.search.indexOf("vpw=") < 0) {
             window.location.href = window.location.href + '?vpw=' + w;
         }
-    } else {
-        window.location.reload();
-    }
+    } 
 }
 
 resizer.on_window_resize = function () {
