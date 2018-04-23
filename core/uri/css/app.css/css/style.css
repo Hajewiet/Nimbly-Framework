@@ -100,7 +100,6 @@ p {
   margin: 5px 5px 10px 0;
   display: inline-block; }
 
-/* lazy image loading fx */
 img[data-img-uuid] {
   opacity: 0;
   transition: opacity 200ms; }
