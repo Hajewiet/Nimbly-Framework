@@ -103,7 +103,7 @@ p {
 /* lazy image loading fx */
 img[data-img-uuid] {
   opacity: 0;
-  transition: opacity 500ms; }
+  transition: opacity 200ms; }
   img[data-img-uuid].nb-img-loaded {
     opacity: 1; }
 
