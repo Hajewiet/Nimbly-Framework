@@ -109,7 +109,7 @@ function render_create_field($resource, $uuid, $field, $tpl_name) {
     if (!is_array($data)) {
         return;
     }
-    $data[$field] = $tpl_name === 'img'? 'img/placeholder.png' : '[ipsum words=10]';
+    $data[$field] = $tpl_name === 'img'? 'img/placeholder.png' : ' ';
     data_create($resource, $uuid, $data);
     return $data[$field];
 }

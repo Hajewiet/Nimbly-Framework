@@ -752,6 +752,7 @@ nb_gallery.init = function() {
 	      rel: 'stylesheet',
 	      href: 'https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css'
 	  });
+
 	nb_gallery.run('.nb-gallery');
 }
 

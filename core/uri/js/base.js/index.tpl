@@ -1,6 +1,6 @@
 [header js]
 var base_url = "[base-url]";
-var full_base_url = window.location.protocol + "//" + window.location.host  + base_url;
+[include [cur-path]/base.js]
+[include [cur-path]/ress.js]
 [include [cur-path]/script.js]
-[include [cur-path]/resize.js]
-[cache type=js]
+[nop cache type=js]
