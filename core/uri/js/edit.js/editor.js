@@ -155,6 +155,7 @@ if ($('[data-edit-field]').length || $('[data-edit-img]').length) {
 
         $('body').on('click', '#edit-button[data-edit-toggle]', function (e) {
             editor.toggle();
+            return false;
         });
 
          $('body').on('click', '#edit-menu [data-edit-on]', function (e) {

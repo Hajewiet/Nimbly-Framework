@@ -14,6 +14,7 @@ p {
 
     img {
         margin-bottom: 10px;
+        max-width: 100%;
     }
 }
 
@@ -35,7 +36,7 @@ p {
         &[type="password"],
         &[type="search"],
         &[type="date"] {
-            font-family: 'helvetica', sans-serif;
+            font-family: $text;
             font-size: 14px;
             -webkit-appearance: none;
             -moz-appearance: none;
@@ -50,7 +51,7 @@ p {
         }
 
         &[type="submit"] {
-            font-family: 'helvetica', sans-serif;
+            font-family: $text;
             font-size: 14px;
             -webkit-appearance: none;
             -moz-appearance: none;
@@ -70,7 +71,7 @@ p {
     }
 
     select {
-        ont-family: 'helvetica', sans-serif;
+        ont-family: $text;
         font-size: 14px;
         -webkit-appearance: none;
         -moz-appearance: none;
@@ -89,9 +90,9 @@ p {
     }
 
     label {
-        font-size: 10px;
+        font-size: 11px;
         text-transform: uppercase;
-        font-family: 'helvetica', sans-serif;
+        font-family: $text;
         display: block;
         width: 100%;
     }
@@ -103,7 +104,7 @@ p {
     }
 
     .medium-editor-element {
-        font-family: 'helvetica', sans-serif;
+        font-family: $text;
         font-size: 14px;
         min-height: 96px;
         border: 1px solid #ccc;
@@ -115,10 +116,21 @@ p {
         margin: 5px 0 20px;
     }
 
+    .editor {
+        &.img-wrapper {
+            margin: 5px 0 20px;
+
+            img {
+                max-width: 400px;
+                max-height: 400px;
+            }
+        }
+    }
+
 }
 
 .nb-button {
-    font-family: 'helvetica', sans-serif;
+    font-family: $text;
     font-size: 14px;
     -webkit-appearance: none;
     -moz-appearance: none;

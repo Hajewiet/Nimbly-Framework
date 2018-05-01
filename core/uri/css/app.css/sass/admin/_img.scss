@@ -1,8 +1,10 @@
+/* lazy image loading fx */
+
 img[data-img-uuid] {
     opacity: 0;
     transition: opacity 200ms;
 
     &.nb-img-loaded {
-        opacity: 1;
-    }
+    	opacity: 1;
+	}
 }

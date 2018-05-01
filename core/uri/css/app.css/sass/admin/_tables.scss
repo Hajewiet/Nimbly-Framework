@@ -1,14 +1,14 @@
 .nb-table  {
     border-spacing: 0;
     width: 100%;
-    font-family: 'helvetica', sans-serif;
+    font-family: $text;
     
     td,
     th {
         border-bottom: 1px solid #ddd;
         padding: 12px 15px;
         text-align: left;
-        font-family: 'helvetica', sans-serif;
+        font-family: $text;
 
         &:first-child {
             padding-left: 0; 
