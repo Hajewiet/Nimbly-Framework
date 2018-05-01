@@ -7,7 +7,7 @@
 router_deny();
 
 $parts = $GLOBALS['SYSTEM']['uri_parts'];
-if (count($parts) < 2 || count($parts) > 3 || $parts[0] !== 'img') {
+if (count($parts) < 2 || $parts[0] !== 'img') {
     return;
 }
 $uuid = $parts[1];
@@ -15,7 +15,7 @@ load_library("data");
 if (!data_exists(".files", $uuid)) {
     return;
 }
-$size = $parts[2] ?? 240;
+$size = $parts[count($parts) - 1] ?? 240;
 $ratio = get_variable("ratio", 0);
 $m = substr($size, -1);
 if ($m === 'f' || $m === 'c') { // fit, crop

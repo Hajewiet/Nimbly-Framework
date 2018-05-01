@@ -18,7 +18,7 @@ editor.enable = function() {
     $('#edit-menu [data-edit-on').addClass("nb-close");
     $('#edit-menu [data-edit-off').removeClass("nb-close");
     $('#edit-menu [data-edit-save').removeClass("nb-close");
-    $('#edit-button[data-edit-toggle] .nb-button').addClass("active");
+    $('#edit-button[data-edit-toggle] a').addClass("active");
     if (editor.editors.length === 0) {
         $('[data-edit-field]').each(function(ix) {
             btns = $(this).data("edit-buttons");
@@ -60,7 +60,7 @@ editor.disable = function() {
     $('#edit-menu [data-edit-on]').removeClass("nb-close");
     $('#edit-menu [data-edit-off]').addClass("nb-close");
     $('#edit-menu [data-edit-save]').addClass("nb-close");
-    $('#edit-button[data-edit-toggle] .nb-button').removeClass("active");
+    $('#edit-button[data-edit-toggle] a').removeClass("active");
     if (editor.timer) {
         clearInterval(editor.timer);
     }
@@ -154,8 +154,8 @@ if ($('[data-edit-field]').length || $('[data-edit-img]').length) {
         });
 
         $('body').on('click', '#edit-button[data-edit-toggle]', function (e) {
+            e.preventDefault();
             editor.toggle();
-            return false;
         });
 
          $('body').on('click', '#edit-menu [data-edit-on]', function (e) {
