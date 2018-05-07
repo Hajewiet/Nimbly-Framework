@@ -22,8 +22,8 @@ function json_input($create_uuid = true, $pk_field = 'pk') {
     $clean_data = strip_tags($data, "<h1><h2><h3><h4><h5><h6><b><strong><a><i><p><blockquote><ol><ul><li><br><img>");
     $result = json_decode($clean_data, true);
     if ($create_uuid && empty($result['uuid'])) {
-        if (!empty($result[$result[$pk_field]])) {
-            $result['uuid'] = md5($result[$result[$pk_field]]);
+        if (!empty($result[$pk_field])) {
+            $result['uuid'] = md5($result[$pk_field]);
         } else {
             load_library('uuid');
             $result['uuid'] = uuid_sc();

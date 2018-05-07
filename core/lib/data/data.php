@@ -409,3 +409,13 @@ function data_exclude($records, $key, $value) {
     }
     return $records;
 }
+
+/*
+ * Replace special / invalid characters
+ */
+function data_sanitize_key($key, $repl = '^') {
+    $special_chars = array("?", "[", "]", "/", "\\", "=", "<", ">", ":", ";",
+        ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}");
+    $result = str_replace($special_chars, $repl, $key);
+    return $result;
+}
