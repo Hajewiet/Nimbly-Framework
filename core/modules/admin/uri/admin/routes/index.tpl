@@ -1,5 +1,0 @@
-[module user admin]
-[access feature=list_routes]
-[set page-title="Routes"]
-[set bar-title="Admin | Routes"]
-[html]
