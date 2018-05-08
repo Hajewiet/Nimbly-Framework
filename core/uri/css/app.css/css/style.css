@@ -316,6 +316,7 @@ img[data-img-uuid] {
   right: 0;
   height: 36px;
   background: #6b6b6b;
+  padding: 0 30px;
   z-index: 1000; }
   #top-bar-fixed + div,
   #top-bar-fixed + section
