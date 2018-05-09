@@ -1,8 +1,6 @@
 <ul class="nb-menu light">
     [set admin-menu-item=]
     [admin-menu-item]
-    <li><a href="[base-url]/admin/pages">Pages</a></li>
-    <li><a href="[base-url]/admin/.routes">Routes</a></li>
     <li><a href="[base-url]/admin/resources">Resources</a></li>
     <li><a href="[base-url]/admin/debug">Debug</a></li>
 </ul>
