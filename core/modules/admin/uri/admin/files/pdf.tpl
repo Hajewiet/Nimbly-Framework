@@ -1,0 +1,1 @@
+<span class="nb-icon nb-icon-pdf">(PDF)</span>

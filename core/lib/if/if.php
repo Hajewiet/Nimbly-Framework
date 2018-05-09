@@ -9,12 +9,15 @@
 function if_sc($params) {
     $condition = array();
     $negate = false;
+    $or = false;
     $action = array();
     foreach ($params as $key => $value) {
         if ($key === "tpl" || $key === "echo" || $key === "redirect") {
             $action[$key] = $value;
         } else if ($key === "not") {
             $negate = true;
+        } else if ($key === "or") {
+            $or = true;
         } else {
             $condition[$key] = $value;
         }
@@ -22,11 +25,15 @@ function if_sc($params) {
     if (empty($action)) {
         return;
     }
-    $pass = true;
+    $pass = !$or;
     load_library("get");
     foreach ($condition as $key => $value) {
         //loop through and test all conditions
-        if (if_condition($key, $value, $negate) !== true) {
+        $b = if_condition($key, $value, $negate);
+        if ($or === true && $b) {
+            $pass = true;
+            break;
+        } else if ($or !== true && $b !== true) {
             $pass = false;
             break;
         }
