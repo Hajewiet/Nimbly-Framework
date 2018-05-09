@@ -43,11 +43,12 @@ $routes = [
     ["route" => "api/v1/(resource)", "order" => 500],
     ["route" => "api/v1/(resource)/(id)", "order" => 200],
     ["route" => "api/v1/.pages/(id)", "order" => 200],
+    ["route" => "api/v1/.files/(id)", "order" => 200],
     ["route" => "admin/(resource)", "order" => 400],
     ["route" => "admin/(resource)/(id)", "order" => 500],
     ["route" => "admin/(resource)/add", "order" => 300],
     ["route" => "admin/pages/(id)", "order" => 200],
-    ["route" => "admin/routes/(id)", "order" => 200],
+    ["route" => "admin/files/(id)", "order" => 200],
     ["route" => "img/(id)", "order" => 500]
 ];
 

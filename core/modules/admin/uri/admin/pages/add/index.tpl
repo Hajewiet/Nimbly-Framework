@@ -1,5 +1,4 @@
 [module user admin forms]
-[access feature=add_pages]
+[access feature=add_pages,(any)_pages]
 [set page-title="Add Page"]
-[set bar-title="Admin | Add Page"]
 [html]

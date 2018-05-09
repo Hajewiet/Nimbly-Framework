@@ -135,6 +135,20 @@ img[data-img-uuid] {
   img[data-img-uuid].nb-img-loaded {
     opacity: 1; }
 
+#nb-single-file-preview {
+  display: inline-block; }
+  #nb-single-file-preview .uploader.img-wrapper {
+    min-width: 200px;
+    min-height: 20px; }
+  #nb-single-file-preview .progress-bar-text {
+    top: 0;
+    line-height: 24px;
+    color: #111; }
+  #nb-single-file-preview .progress-bar-bg {
+    top: 0; }
+  #nb-single-file-preview img {
+    display: none; }
+
 .icon,
 .icon-nav,
 .icon-gear,

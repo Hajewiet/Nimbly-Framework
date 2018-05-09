@@ -8,3 +8,28 @@ img[data-img-uuid] {
     	opacity: 1;
 	}
 }
+
+#nb-single-file-preview {
+
+	display: inline-block;
+
+	& .uploader.img-wrapper {
+		min-width: 200px;
+    	min-height: 20px;
+	}
+
+	& .progress-bar-text {
+		top: 0;
+		line-height: 24px;
+		color: #111;
+	}
+
+	& .progress-bar-bg {
+		top: 0;
+	}
+
+	img { display: none; }
+
+
+
+}
