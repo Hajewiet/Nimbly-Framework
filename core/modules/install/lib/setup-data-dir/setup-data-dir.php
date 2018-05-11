@@ -2,10 +2,8 @@
 
 function setup_data_dir_sc() {
     $result = true;
-    $dirs = array('data', 'ext', 'contrib', 'ext/static', 'ext/lib', 'ext/modules',
-        'ext/tpl', 'ext/uri', 'contrib/static', 'contrib/lib',
-        'contrib/uri', 'contrib/tpl', 'contrib/modules', 'data/.tmp', 'data/.tmp/cache',
-        'data/.tmp/logs');
+    $dirs = array('data', 'ext', 'ext/static', 'ext/lib', 'ext/modules',
+        'ext/tpl', 'ext/uri', 'data/.tmp', 'data/.tmp/cache', 'data/.tmp/logs');
     foreach ($dirs as $dir) {
         if (empty($result)) {
             break;
@@ -20,13 +18,13 @@ function setup_data_dir_sc() {
 }
 
 function setup_htaccess_files() {
-    $dirs_deny = array('data', 'ext', 'contrib', 'core');
+    $dirs_deny = array('data', 'ext', 'core');
     $src_path = realpath(dirname(__FILE__));
     $tgt_path = $GLOBALS['SYSTEM']['file_base'];
     foreach ($dirs_deny as $dir) {
         copy($src_path . '/deny.htaccess', $tgt_path . $dir . '/.htaccess');
     }
-    $dirs_allow = array('data/.tmp/cache', 'ext/static', 'contrib/static', 'core/static');
+    $dirs_allow = array('data/.tmp/cache', 'ext/static', 'core/static');
     foreach ($dirs_allow as $dir) {
         copy($src_path . '/allow.htaccess', $tgt_path . $dir . '/.htaccess');
     }

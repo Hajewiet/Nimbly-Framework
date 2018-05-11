@@ -380,6 +380,13 @@ function data_meta($resource, $items = null) {
 }
 
 /*
+ * Create a new resource 
+ */
+function data_create_resource($resource, $meta) {
+    return data_exists($resource, ".meta") || data_create($resource, ".meta", $meta);
+}
+
+/*
  * Build meta data by inspecting the entities (not ideal)
  */
 function _data_meta_build($items) {

@@ -73,10 +73,6 @@ RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
 RewriteCond ext/static/%1 -F
 RewriteRule ^ ext/static/%1 \[L]
 
-# rewrite: use CONTRIB static if available for the requested file
-RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
-RewriteCond contrib/static/%1 -F
-RewriteRule ^ contrib/static/%1 \[L]
 
 # rewrite: use CORE static if availble for the requested file
 RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
@@ -107,5 +103,5 @@ RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /\[^\ ]+/.tmp/cache/.*\._cached_\..*($|\
 RewriteRule ^ index.php \[L]
 
 # rewrite: don't allow a direct request to a static file folder (redirect to index.php)
-RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /\[^\ ]+/(ext|contrib|core)/static/.*($|\ ) \[NC]
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /\[^\ ]+/(ext|core)/static/.*($|\ ) \[NC]
 RewriteRule ^ index.php \[L]
