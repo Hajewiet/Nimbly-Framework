@@ -10,7 +10,7 @@ function reverse_lookup_sc($params) {
     $resource = get_param_value($params, "resource", current($params));
     $value = get_param_value($params, "value", next($params));
     $key = get_param_value($params, "key", next($params));
-    return reverse_lookup_data($resource, $value, $key);
+    return lookup_data($resource, $value, $key);
 }
 
 function reverse_lookup_data($resource, $value, $key) {
@@ -28,5 +28,4 @@ function reverse_lookup_data($resource, $value, $key) {
             return $uuid;
         }
     }
-    return get_param_value($params, "default", "");
 }

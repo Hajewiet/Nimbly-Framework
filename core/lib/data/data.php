@@ -306,30 +306,39 @@ function data_filter($data, $filter_str) {
         $filters[$parts[0]] = $parts[1];
     }
     foreach ($data as $key => $record) {
-        foreach ($filters as $k => $v) {
+        foreach ($filters as $k => $val) {
+            $vs = explode('||', $val);
+            $pass = false;
+            foreach ($vs as $v) {
 
-            // pass if value exists
-            if ($v === '(exists)' && isset($record[$k])) {
-                continue;
+                // pass if value exists
+                if ($v === '(exists)' && isset($record[$k])) {
+                    $pass = true;
+                    break;
+                }
+
+                // pass if value is numeric
+                if ($v === '(num)' && isset($record[$k]) && is_numeric($record[$k])) {
+                    $pass = true;
+                    break;
+                }
+
+                // pass if value matches (e.g. permission=yes)
+                if (isset($record[$k]) && $record[$k] == $v) {
+                    $pass = true;
+                    break;
+                }
+
+                // pass if value matches negated (e.g permission=!no)
+                if ($v[0] === '!' && isset($record[$k]) && $record[$k] != substr($v, 1)) {
+                    $pass = true;
+                    break;
+                }
             }
 
-            // pass if value is numeric
-            if ($v === '(num)' && isset($record[$k]) && is_numeric($record[$k])) {
-                continue;
+            if (!$pass) {
+                unset($data[$key]);
             }
-
-            // pass if value matches (e.g. permission=yes)
-            if (isset($record[$k]) && $record[$k] == $v) {
-                continue;
-            }
-
-            // pass if value matches negated (e.g permission=!no)
-            if ($v[0] === '!' && isset($record[$k]) && $record[$k] != substr($v, 1)) {
-                continue;
-            }
-
-
-            unset($data[$key]);
         }
     }
     return $data;

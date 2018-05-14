@@ -14,5 +14,5 @@
           </tbody>
     </table>
     [if repeat.limit=yes echo="<p>etc.</p>"]
-    [if data.records=(empty) echo="<p>No [data.resource] exist yet</p>"]
+    [if data.records=(empty) echo="<p>No [data.resource] items yet.</p>"]
 </section>
