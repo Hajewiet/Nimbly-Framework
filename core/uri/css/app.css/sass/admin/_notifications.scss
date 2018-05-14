@@ -1,0 +1,10 @@
+.nb-callout,
+.nb-notification {
+    position: absolute;
+    height: 40px;
+    background: #fffdcf;
+    padding: 10px;
+    box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.3);
+    width: calc(100vw - 40px);
+    margin: 20px;
+}
