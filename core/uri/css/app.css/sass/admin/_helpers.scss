@@ -31,3 +31,10 @@
 .align-justify { text-align: justify; }
 
 .nb-40 { width: 40%!important; }
+
+.nb-obfs {
+	direction: rtl;
+	span, i, b, small, strong {
+		display: none;
+	}
+}

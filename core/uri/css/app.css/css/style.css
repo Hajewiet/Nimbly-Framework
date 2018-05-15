@@ -126,7 +126,8 @@ p {
   padding: 0 20px;
   border: none;
   margin: 5px 5px 10px 0;
-  display: inline-block; }
+  display: inline-block;
+  text-decoration: none; }
 
 /* lazy image loading fx */
 img[data-img-uuid] {
@@ -221,6 +222,21 @@ img[data-img-uuid] {
 
 .nb-40 {
   width: 40% !important; }
+
+.nb-obfs {
+  direction: rtl; }
+  .nb-obfs span, .nb-obfs i, .nb-obfs b, .nb-obfs small, .nb-obfs strong {
+    display: none; }
+
+.nb-callout,
+.nb-notification {
+  position: absolute;
+  height: 40px;
+  background: #fffdcf;
+  padding: 10px;
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
+  width: calc(100vw - 40px);
+  margin: 20px; }
 
 #modal {
   position: fixed;

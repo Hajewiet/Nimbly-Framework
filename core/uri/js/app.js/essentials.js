@@ -54,6 +54,14 @@ $('[data-link]').click(function () {
     window.location.href = $(this).data('link');
 });
 
+/*  Add click event to elements with a data-mailto */
+$('[data-mailto]').click(function () {
+    $lnk = $(this).clone();
+    $lnk.find('span span,i,b,strong,small').remove();
+    window.location.href = 'mailto:' + $lnk.text();
+    return false;
+});
+
 /*  Add click event to a elements with a data-submit */
 $('a[data-submit],button[data-submit]').on("click", (function (e) {
     e.preventDefault();
