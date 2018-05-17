@@ -410,6 +410,7 @@ function nb_load_image(e, bg=false) {
     if (ratio) {
         img_src += '?ratio=' + ratio;
     } 
+
     if (!bg && e.src != img_src) {
         e.onload = nb_image_loaded;
         e.src = img_src;

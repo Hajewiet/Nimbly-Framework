@@ -48,6 +48,10 @@ function render_field_image($value) {
     return sprintf('<img src="%s/img/%s/60?ratio=1">', base_url_sc(), $value);
 }
 
+function render_field_gallery($value) {
+    return '';
+}
+
 function render_field_block_text($value) {
     return render_field_text($value);
 }

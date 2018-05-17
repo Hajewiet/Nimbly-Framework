@@ -58,7 +58,7 @@ function files_id_put($resource=".files_meta", $uuid) { // update one
 function files_id_delete($resource=".files_meta", $uuid) { // delete one
     if (data_delete($resource, $uuid)) {
         data_delete(".files", $uuid);
-        return json_result(array('message' => 'RESOURCE_DELETED', 'count' => 1));
+        return json_result(array('message' => 'FILE RESOURCE_DELETED', 'count' => 1));
     }
-    return json_result(array('message' => 'RESOURCE_DELETE_FAILED'), 500);
+    return json_result(array('message' => 'FILE RESOURCE_DELETE_FAILED'), 500);
 }

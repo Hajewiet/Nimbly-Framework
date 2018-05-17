@@ -7,7 +7,8 @@ load_library("get");
 
 function api_method_switch($func_prefix, $resource = null, $uuid = null) {
     $method = strtolower($_SERVER['REQUEST_METHOD']);
-    $access_feature = sprintf("api_%s_%s,api_(any)_%s", $method, $resource ?? $func_prefix, $resource ?? '(any)');
+    $perm = $resource ?? $func_prefix;
+    $access_feature = sprintf("api_%s_%s,api_(any)_%s,api_(any)_(any)", $method, $perm, $perm);
     if (!api_access($access_feature)) {
         return json_result(array('message' => 'ACCESS_DENIED'), 403);
     }

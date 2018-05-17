@@ -186,6 +186,16 @@ if ($('[data-edit-field]').length || $('[data-edit-img]').length) {
             }
         });
 
+        $('body').on('click', 'a[data-clear-img]', function(e) {
+            var $img = $(this).siblings('img:first');
+            $img.data('edit-changed', true);
+            $img.data('img-uuid', '');
+            $img.attr('src', base_url + '/img/placeholder.png');
+            $img.data('empty', true);
+            $(this).addClass('nb-close');
+            e.preventDefault();
+        });
+
         if ($('form[data-edit-autoenable]').length > 0) {
             editor.autoenabled = true;
             editor.enable();
@@ -265,6 +275,13 @@ editor.enable_img = function(elem, ix) {
     elem.wrap('<div class="editor img-wrapper"></div>');
     var resource_uuid = elem.closest("[data-edit-uuid]").data("edit-uuid");
     var img_uuid = elem.data('edit-img');
+    var is_empty = elem.data('empty');
+    if (is_empty) {
+        elem.parent().append('<a href="#" class="clear-img-icon nb-close" data-clear-img>❌</a>');
+    } else {
+        elem.parent().append('<a href="#" class="clear-img-icon" data-clear-img>❌</a>');
+    }
+    
     elem.parent().append('<a href="#" class="edit-img-icon" data-modal=\'{"url": "img-select", "uid": "' + img_uuid + '", "resource_uuid": "' + resource_uuid + '"}\'>...</a>');
 }
 
@@ -329,6 +346,10 @@ editor.handle_click = function(elem, event) {
     wrapper.addClass('editor-active');
 }
 
+
+
+
+
 // handle result from image select modal dialog
 $(document).on('data-select', function(e, o) {
     if (editor.enabled === false) {
@@ -355,6 +376,8 @@ $(document).on('data-select', function(e, o) {
         img.attr('src', base_url + '/img/' + o.uuid + '/medium');
         img.data('edit-changed', true);
         img.data('img-uuid', o.uuid);
+        img.data('empty', false);
+        img.siblings('.clear-img-icon').removeClass('nb-close');
         editor.inputs++;
     }
 });
@@ -383,7 +406,7 @@ $(document).mousedown(function(event) {
         return;
     }
 
-    if ($(event.target).closest('[data-edit-field],[data-edit-img],.editor,#edit-menu,#edit-button,#top-bar-fixed,#modal,button.medium-editor-action,.medium-editor-toolbar').length) {
+    if ($(event.target).closest('[data-edit-field],[data-edit-img],[data-clear-img],.editor,#edit-menu,#edit-button,#top-bar-fixed,#modal,button.medium-editor-action,.medium-editor-toolbar').length) {
         editor.handle_click($(event.target), event);
         return;
     }

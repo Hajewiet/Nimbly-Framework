@@ -117,6 +117,7 @@ p {
     }
 
     .editor {
+
         &.img-wrapper {
             margin: 5px 0 20px;
 
@@ -124,6 +125,13 @@ p {
                 max-width: 400px;
                 max-height: 400px;
             }
+        }
+    }
+
+    .nb-gallery-field {
+        margin: 5px 0px 20px 0px;
+        .editor.img-wrapper {
+            margin: 0;
         }
     }
 

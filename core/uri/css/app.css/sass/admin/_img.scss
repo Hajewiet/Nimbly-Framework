@@ -29,7 +29,15 @@ img[data-img-uuid] {
 	}
 
 	img { display: none; }
+}
 
-
-
+.nb-gallery-field {
+	.small-screen & {
+		text-align: center;
+	}
+	
+	img, .nb-form & .editor.img-wrapper img {
+		max-width: 150px;
+		max-height: 150px;
+	}
 }

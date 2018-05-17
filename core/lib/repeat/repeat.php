@@ -16,13 +16,20 @@ function repeat_sc($params) {
 
     $data = get_variable($data_id);
 
-    if (!is_array($data) && is_string($data)) {
+    if (get_param_value($params, "num", false) !== false) {
+        $max = intval(get_param_value($params, "num", 0));
+        $data = [];
+        for ($i = 1; $i <= $max; $i++) {
+            $data[$i] = $i;
+        }
+    } else if (!is_array($data) && is_string($data)) {
         if (get_param_value($params, "csv", false) !== false) {
             $data = array_map('trim', explode(',', $data));
         } else {
             $data = array($data);
         }
     }
+
     if (empty($data) || !is_array($data)) {
         $empty = get_param_value($params, "empty", "empty");
         $empty_tpl = find_template($empty, $tpl_dir);

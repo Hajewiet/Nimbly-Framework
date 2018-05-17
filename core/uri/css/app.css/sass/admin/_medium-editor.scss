@@ -8,13 +8,14 @@
     overflow: hidden;
     background: #eee;
     position: relative;
+    max-width: 100%;
 }
 
 .editor.img-wrapper {
     background: inherit;
     line-height: 0;
-    min-width: 30px;
-    min-height: 30px;
+    min-width: 80px;
+    min-height: 80px;
 }
 
 .uploader.img-wrapper img {
@@ -54,7 +55,7 @@
 
 .nb-img-grid[data-select] img.selected { border: 1px solid $dark;  }
 
-a.edit-img-icon {
+a.edit-img-icon, a.clear-img-icon {
     position: absolute;
     right: 0;
     bottom: 0;
@@ -67,6 +68,11 @@ a.edit-img-icon {
     text-decoration: none;
     text-align: center;
     font-weight: 700;
+}
+
+a.clear-img-icon {
+  bottom: 32px;
+  line-height: 30px;
 }
 
 a.editor.add-img-icon {
