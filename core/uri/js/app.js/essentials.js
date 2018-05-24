@@ -49,6 +49,10 @@ $('body').on('click', '[data-active]', function () {
     $(tgt).addClass("active");
 });
 
+$('body').on('click', 'a[href="#"]', function (e) {
+    e.preventDefault();
+});
+
 /*  Add click event to elements with a data-link */
 $('[data-link]').click(function () {
     window.location.href = $(this).data('link');
@@ -382,7 +386,7 @@ function nb_image_box(e, mf=1.0, suffix='f') {
     return max_w + 'x' + max_h + suffix;
 }
 
-function nb_load_image(e, bg=false) {
+function nb_load_image(e, bg=false, cb=null) {
     var uuid = $(e).data('img-uuid') || $(e).data('bgimg-uuid');
     if (!uuid) {
         return;
@@ -412,12 +416,12 @@ function nb_load_image(e, bg=false) {
     } 
 
     if (!bg && e.src != img_src) {
-        e.onload = nb_image_loaded;
+        e.onload = cb || nb_image_loaded;
         e.src = img_src;
     } else if (bg) {
         var bg_url = 'url("' + img_src + '")';
         if ($(e).css('background-image') !== bg_url) {
-            e.onload = nb_image_loaded;
+            e.onload = cb || nb_image_loaded;
             $(e).css('background-image', bg_url);
         }
     }
@@ -425,6 +429,50 @@ function nb_load_image(e, bg=false) {
 
 function nb_image_loaded() {
     $(this).addClass('nb-img-loaded');
+}
+
+/*
+ * Replace image with another
+ */
+function nb_swap_image($img, uuid, bgimg=false) {
+    var old_uuid = $img.data('img-uuid');
+    if (old_uuid === uuid) {
+        return;
+    }
+    var w = $img.width();
+    var h = $img.height();
+
+    // 1. get or create container
+    var $parent = $img.parent('figure', 'div');
+    if ($parent.length === 0) {
+        $img.wrap('<figure></figure>');
+        $parent = $img.parent('figure');
+    }
+
+    // 2. add background and throbber to container
+    $parent.css("position", "relative");
+    $img.after('<div class="nb-throbber"></div>');
+    $img.after('<div class="nb-bg"></div>');
+    var $throbber = $parent.find("div.nb-throbber");
+    var $bg = $parent.find("div.nb-bg");
+    var y = h / 2 - 32 + $img.position().top;
+    var x = w / 2 - 16 + $img.position().left;
+    $bg.css({"position": "absolute", 
+        "width": w, "height": h, "background-color": "black", 
+        "top": $img.position().top, "left": $img.position().left,
+        "opacity": 0 });
+    $throbber.css({"position": "absolute", "top": y, "left": x});
+
+    // 3. smoothly load new image
+    $img.data('img-uuid', uuid); 
+    $bg.fadeTo(200, '0.2', function() {
+        nb_load_image($img[0], bgimg, function() {
+            $bg.fadeTo(200, '0.0', function() {
+                $parent.find('.nb-bg, .nb-throbber').remove();
+            });
+        });
+    });
+    
 }
 
 function nb_debounced_viewport_changed() {
