@@ -22,9 +22,6 @@ msgstr "A session is required to continue, but could not be created"
 msgid "require_php7"
 msgstr "You need PHP version 7 or higher to continue"
 
-msgid "require_ext_mcrypt"
-msgstr "PHP extension <strong>mcrypt</strong> is required but not enabled. Try:<br />sudo apt-get install php5-mcrypt"
-
 msgid "require_ext_session"
 msgstr "PHP extension <strong>session</strong> is required but not enabled."
 

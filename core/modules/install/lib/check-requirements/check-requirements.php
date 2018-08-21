@@ -17,11 +17,6 @@ function check_requirements_sc($params) {
 
     $ext = get_loaded_extensions();
 
-    if (!in_array("mcrypt", $ext)) {
-        set_variable("require_msg", "require_ext_mcrypt");
-        return;
-    }
-
     if (!in_array("session", $ext)) {
         set_variable("require_msg", "require_ext_session");
         return;
