@@ -17,8 +17,9 @@ RUN chmod 755 /*.sh
 RUN usermod -u 1000 www-data
 RUN groupmod -g 1000 www-data
 RUN mkdir /var/www/nimbly
-RUN mkdir /var/www/nimbly/data
-RUN chown -R www-data:www-data /var/www/nimbly/data
+RUN mkdir /var/www/nimbly/ext
+RUN mkdir /var/www/nimbly/ext/data
+RUN chown -R www-data:www-data /var/www/nimbly/ext/data
 
 # Add docker ports and volumes
 EXPOSE 80

@@ -18,17 +18,17 @@ Nimbly core is written in plain (vanilla) PHP 7 with Apache as web host. Coding 
 ## What it does
 The Nimbly system core is designed to provide a minimal set of features, just enough to get started building your app. It contains:
 
-* Routing.
 * Template engine that works with shortcodes between brackets [likethis].
+* Routing.
+* Data management. By default, data is stored in the `ext/data` directory using a custom NoSQL solution, storing resources in JSON files. 
+* JSON api. All data resources are automatically available via a JSON api.
+* User management. Users, roles, groups and access rights.
+* Admin. Screens for handling system configuration.
 * Support for responsive and adaptive design.
 * Image server.
 * HTML5 template, core CSS and JavaScript functions to handle the most essential behaviors.
 * Inline editing.
 * Lazy image loading with automatic image sizing (considering device ppi).
-* Data management. By default, data is stored in the `data` directory using a custom NoSQL solution, storing resources in JSON files. 
-* JSON api. All data resources are automatically available via a JSON api.
-* User management. Users, roles, groups and access rights.
-* Admin. Screens for handling system configuration.
 * Application layers and modules so you can easily overwrite and extend these core features.
 
 
@@ -59,13 +59,10 @@ Library shortcodes can take parameters [somename param1=value1 param2=value2 par
 
 
 ## Layers
-There are three application layers: core, contrib and ext.
+There are two application layers: core and ext.
 
 __core__
 System core providing basic features like routing, template engine and data storage. The core should not be changed. 
-
-__contrib__
-Reserved for code (normally modules) by others or for sharing modules between projects.
 
 __ext__
 Extension layer. All your custom code goes in this layer. You can extend the core with custom features or overwrite any core feature. To overwrite a core route, template or library with your own version, just place it under the same path.
@@ -109,9 +106,9 @@ Installation
 ============
 
 ## Requirements
-* PHP 7.0
-* Apache 2.0 or later
-* PHP extensions mbstring, php-mcrypt gd and gmp.
+* PHP 7+
+* Apache 2+
+* PHP extensions mbstring, gd and gmp.
 * Apache extensions: rewrite
 
 ## Installation
