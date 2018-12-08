@@ -160,18 +160,19 @@ img[data-img-uuid] {
   max-width: 150px;
   max-height: 150px; }
 
-.icon,
-.icon-nav,
-.icon-gear,
-.icon-edit {
+.icon, .icon-nav, .icon-gear, .icon-edit {
   background-size: 24px 24px;
   background-position: center;
   background-repeat: no-repeat;
   width: 32px;
   height: 32px;
   display: inline-block;
-  line-height: 36px;
-  vertical-align: middle; }
+  line-height: 36px; }
+  .large-screen .icon,
+  .large-screen .icon-nav,
+  .large-screen .icon-gear,
+  .large-screen .icon-edit {
+    padding: 0px 20px; }
 
 [data-close],
 [data-open],
@@ -330,10 +331,9 @@ img[data-img-uuid] {
 .small-screen #modal-content {
   min-width: 100%; }
 
-#off-left-panel,
-#off-right-panel {
+#off-left-panel, #off-right-panel {
   position: fixed;
-  z-index: 1;
+  z-index: 1000;
   top: 0px;
   left: 0;
   bottom: 0;
@@ -343,24 +343,18 @@ img[data-img-uuid] {
   transition-timing-function: ease-in-out;
   width: 0;
   display: block; }
-
-.user #off-left-panel,
-.user #off-right-panel {
-  top: 36px;
-  z-index: 1000; }
+  .logged-in #off-left-panel, .admin-page #off-left-panel,
+  .logged-in #off-right-panel, .admin-page #off-right-panel {
+    top: 40px; }
+  #off-left-panel.nb-open, #off-right-panel.nb-open {
+    width: 300px; }
+  #off-left-panel.nb-close, #off-right-panel.nb-close {
+    width: 0;
+    display: block; }
 
 #off-right-panel {
   right: 0;
   left: auto; }
-
-#off-left-panel.nb-open,
-#off-right-panel.nb-open {
-  width: 300px; }
-
-#off-left-panel.nb-close,
-#off-right-panel.nb-close {
-  width: 0;
-  display: block; }
 
 #page-wrapper {
   position: relative;
@@ -384,34 +378,41 @@ img[data-img-uuid] {
     padding: 20px 0;
     font-size: 24px; }
 
+.admin-page body {
+  background: #fff !important; }
+.admin-page section {
+  max-width: 940px;
+  padding: 20px; }
+
 #top-bar-fixed {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 36px;
+  height: 40px;
   background: #6b6b6b;
-  padding: 0 30px;
   z-index: 1000; }
   #top-bar-fixed + div,
   #top-bar-fixed + section
   + .nb-container {
     margin-top: 36px; }
   #top-bar-fixed .nimbly-logo {
-    padding: 8px 20px 8px 5px;
-    height: 36px;
-    width: auto;
+    height: 24px;
     display: inline-block;
-    vertical-align: middle; }
+    vertical-align: top;
+    margin-top: 10px; }
   #top-bar-fixed .icon {
-    margin: 0; }
+    margin: 0;
+    margin-top: 4px; }
+    #top-bar-fixed .icon:hover {
+      opacity: .6; }
   #top-bar-fixed .icon-home {
-    background-image: url("../img/icon-home-white.svg");
-    vertical-align: middle; }
+    background-image: url("../img/icon-home-white.svg"); }
   #top-bar-fixed .icon-edit {
     background-image: url("../img/icon-edit-white.svg"); }
   #top-bar-fixed .icon-gear {
-    background-image: url("../img/icon-gear-white.svg"); }
+    background-image: url("../img/icon-gear-white.svg");
+    background-size: 22px 22px; }
 
 ul.nb-menu {
   margin-bottom: 0;

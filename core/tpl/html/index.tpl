@@ -1,11 +1,11 @@
+[module user]
 [set app-name="Nimbly Framework"]
 [set site-name=[app-name]]
 [set language=en]
 [set body-classes=]
-[set html-classes=]
+[set html-classes="[logged-in]"]
 [set page-title=Home]
 [set head=]
-[module user]
 [init]
 <!doctype html>
 <html class="[html-classes]" lang="[language]">

@@ -9,7 +9,10 @@
     height: 32px;
     display: inline-block;
     line-height: 36px;
-    vertical-align: middle;
+
+    .large-screen & {
+    	padding: 0px 20px;
+    }
 }
 
 [data-close], 

@@ -3,9 +3,8 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 36px;
+    height: 40px;
     background: $dark;
-    padding: 0 30px;
     z-index: 1000;
 
     + div,
@@ -15,20 +14,22 @@
     }
 
     .nimbly-logo {
-        padding: 8px 20px 8px 5px;
-        height: 36px;
-        width: auto;
+        height: 24px;
         display: inline-block;
-        vertical-align: middle;
+        vertical-align: top;
+        margin-top: 10px;
     }
 
     .icon {
         margin: 0;
+        margin-top: 4px;
+        &:hover {
+            opacity: .6;
+        }
     }
 
     .icon-home {
         background-image: url('../img/icon-home-white.svg');
-        vertical-align: middle;
     }
 
     .icon-edit {
@@ -37,5 +38,6 @@
 
     .icon-gear {
         background-image: url('../img/icon-gear-white.svg');
+        background-size: 22px 22px;
     }
 }

@@ -1,7 +1,7 @@
 #off-left-panel, 
 #off-right-panel {
     position: fixed;
-    z-index: 1;
+    z-index: 1000;
     top: 0px;
     left: 0;
     bottom: 0;
@@ -11,36 +11,24 @@
     transition-timing-function: ease-in-out;
     width: 0;
     display: block;
-}
 
-.user {
-    #off-left-panel, 
-    #off-right-panel {
-        top: 36px;
-        z-index: 1000;
+    .logged-in &, .admin-page & {
+        top: 40px;
+    }
+
+    &.nb-open { 
+        width: 300px;
+    }
+
+    &.nb-close { 
+        width: 0;
+        display: block;
     }
 }
 
 #off-right-panel {
     right: 0;
     left: auto;
-}
-
-#off-left-panel,
-#off-right-panel {
-
-    &.nb-open { 
-        width: 300px;
-    }
-}
-
-#off-left-panel,
-#off-right-panel {
-
-    &.nb-close { 
-        width: 0;
-        display: block;
-    }
 }
 
 #page-wrapper {
