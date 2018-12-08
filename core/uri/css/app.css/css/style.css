@@ -281,7 +281,7 @@ img[data-img-uuid] {
   background: #fffdcf;
   padding: 10px;
   box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
-  width: calc(100vw - 40px);
+  width: calc(100vw - 80px);
   margin: 20px; }
 
 #modal {
