@@ -14,7 +14,7 @@
     .progress-meter {
         position: absolute;
         height: 1rem;
-        background-color: [primary-color];
+        background-color: #338e2d;
     }
 
 </style>

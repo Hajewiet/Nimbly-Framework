@@ -21,12 +21,12 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 
 /*
  * 2. Locate and include the "find" library
- * The search order is: 1) EXT, 2) CONTRIB and 3) CORE.
+ * The search order is: 1) EXT, 2) CORE.
  * Use the load_library function to load the "run" library
  * and execute the requested uri with the function run_uri.
  */
 
-$SYSTEM['env_paths'] = array('ext', 'contrib', 'core');
+$SYSTEM['env_paths'] = array('ext', 'core');
 foreach ($SYSTEM['env_paths'] as $env_path) {
     $path = $SYSTEM['file_base'] . $env_path . '/lib/find/find.php';
     if (file_exists($path)) {

@@ -10,6 +10,5 @@
 
 
 <div class="button-group">
-    <input type="submit" name="submit" value="Previous" class="nb-button nb-button-outline"  />
-    <input type="submit" name="submit" value="Next" class="nb-button"  />
+    <a href="[base-url]/login" class="nb-button" >Next</a>
 </div>

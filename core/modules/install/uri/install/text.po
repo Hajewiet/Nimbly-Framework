@@ -77,4 +77,4 @@ msgid = "user_created_fail"
 msgstr = "Could not create admin account. Please review file writing permissions to data directory."
 
 msgid = "step3_proceed"
-msgstr = "Click Next to continue to the login screen."
+msgstr = "Click Next to continue."

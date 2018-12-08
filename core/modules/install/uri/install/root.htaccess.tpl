@@ -60,8 +60,8 @@ RewriteBase /[get sticky.rewritebase]
 
 # rewrite: use cache if available for the requested file
 RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
-RewriteCond data/.tmp/cache/%1 -F
-RewriteRule ^ data/.tmp/cache/%1 \[L]
+RewriteCond ext/data/.tmp/cache/%1 -F
+RewriteRule ^ ext/data/.tmp/cache/%1 \[L]
 
 # rewrite: use cache if available for the requested uri
 RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)

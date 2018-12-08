@@ -2,8 +2,8 @@
 
 function setup_data_dir_sc() {
     $result = true;
-    $dirs = array('data', 'ext', 'ext/static', 'ext/lib', 'ext/modules',
-        'ext/tpl', 'ext/uri', 'data/.tmp', 'data/.tmp/cache', 'data/.tmp/logs');
+    $dirs = array('ext', 'ext/data', 'ext/static', 'ext/lib', 'ext/modules',
+        'ext/tpl', 'ext/uri', 'ext/data/.tmp', 'ext/data/.tmp/cache', 'ext/data/.tmp/logs');
     foreach ($dirs as $dir) {
         if (empty($result)) {
             break;
