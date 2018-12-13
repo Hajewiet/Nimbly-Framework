@@ -48,7 +48,7 @@ AddOutputFilterByType DEFLATE application/x-javascript
 # cache control headers
 <ifModule mod_headers.c>
     # 480 weeks
-    <filesMatch ".(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$">
+    <filesMatch ".(ico|pdf|webm|mp4|jpg|jpeg|png|gif|js|css|svg)$">
     Header set Cache-Control "max-age=290304000, public"
     </filesMatch>
 </ifModule>
@@ -59,25 +59,26 @@ RewriteEngine on
 RewriteBase /[get sticky.rewritebase]
 
 # rewrite: use cache if available for the requested file
+RewriteCond %{REQUEST_URI} !\.(ico|pdf|webm|mp4|jpg|jpeg|png|gif)$
 RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
 RewriteCond ext/data/.tmp/cache/%1 -F
-RewriteRule ^ ext/data/.tmp/cache/%1 \[L]
+RewriteRule ^ ext/data/.tmp/cache/%1 \[END]
 
 # rewrite: use cache if available for the requested uri
 RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
 RewriteCond data/.tmp/cache/%1._cached_.html -F
-RewriteRule ^ data/.tmp/cache/%1._cached_.html \[L]
+RewriteRule ^ data/.tmp/cache/%1._cached_.html \[END]
 
 # rewrite: use EXT static if available for the requested file
 RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
 RewriteCond ext/static/%1 -F
-RewriteRule ^ ext/static/%1 \[L]
+RewriteRule ^ ext/static/%1 \[END]
 
 
 # rewrite: use CORE static if availble for the requested file
 RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
 RewriteCond core/static/%1 -F
-RewriteRule ^ core/static/%1 \[L]
+RewriteRule ^ core/static/%1 \[END]
 
 # finally, fallback to PHP to handle the request.
 php_flag register_globals off
@@ -93,15 +94,15 @@ php_value session.cookie_lifetime 14400
 
 # rewrite: redirect anything that is not a file to index.php
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^ index.php \[L]
+RewriteRule ^ index.php \[END]
 
 #rewrite: redirect any attempt to access a hidden file/dir (starting with a .) to index.php
-RewriteRule ^\..*$ index.php \[L]
+RewriteRule ^\..*$ index.php \[END]
 
 # rewrite: don't allow a direct request to a cache file (redirect to index.php)
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /\[^\ ]+/.tmp/cache/.*\._cached_\..*($|\ ) \[NC]
-RewriteRule ^ index.php \[L]
+RewriteRule ^ index.php \[END]
 
 # rewrite: don't allow a direct request to a static file folder (redirect to index.php)
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /\[^\ ]+/(ext|core)/static/.*($|\ ) \[NC]
-RewriteRule ^ index.php \[L]
+RewriteRule ^ index.php \[END]

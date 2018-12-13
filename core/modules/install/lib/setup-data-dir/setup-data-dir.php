@@ -18,13 +18,13 @@ function setup_data_dir_sc() {
 }
 
 function setup_htaccess_files() {
-    $dirs_deny = array('data', 'ext', 'core');
+    $dirs_deny = array('ext', 'core');
     $src_path = realpath(dirname(__FILE__));
     $tgt_path = $GLOBALS['SYSTEM']['file_base'];
     foreach ($dirs_deny as $dir) {
         copy($src_path . '/deny.htaccess', $tgt_path . $dir . '/.htaccess');
     }
-    $dirs_allow = array('data/.tmp/cache', 'ext/static', 'core/static');
+    $dirs_allow = array('ext/data/.tmp/cache', 'ext/static', 'core/static');
     foreach ($dirs_allow as $dir) {
         copy($src_path . '/allow.htaccess', $tgt_path . $dir . '/.htaccess');
     }
