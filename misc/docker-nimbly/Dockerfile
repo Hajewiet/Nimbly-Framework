@@ -19,7 +19,7 @@ RUN groupmod -g 1000 www-data
 RUN mkdir /var/www/nimbly
 RUN mkdir /var/www/nimbly/ext
 RUN mkdir /var/www/nimbly/ext/data
-RUN chown -R www-data:www-data /var/www/nimbly/ext/data
+RUN chown -R www-data:www-data /var/www/nimbly/ext/
 
 # Add docker ports and volumes
 EXPOSE 80
