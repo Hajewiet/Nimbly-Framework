@@ -27,7 +27,11 @@ function session_sc() {
     }
 
     //3. remove and restart session if it does not validate
-    if (empty($_SESSION['modified']) || empty($_SESSION['created']) || $GLOBALS['SYSTEM']['request_time'] >= $_SESSION['modified'] + $GLOBALS['SYSTEM']['session_lifetime']) {
+    if (empty($_SESSION['modified']) 
+        || empty($_SESSION['created']) 
+        || empty($_SESSION['pepper'])
+        || $_SESSION['pepper'] != $_SERVER['PEPPER']
+        || $GLOBALS['SYSTEM']['request_time'] >= $_SESSION['modified'] + $GLOBALS['SYSTEM']['session_lifetime']) {
         session_unset();
         session_destroy();
         session_start();
@@ -57,6 +61,7 @@ function session_initialize() {
     $_SESSION['key'] = md5(uniqid(rand(), true));
     $_SESSION['roles'] = array("anonymous" => true);
     $_SESSION['features'] = array();
+    $_SESSION['pepper'] = $_SERVER['PEPPER'];
 }
 
 function session_cleanup_files() {
