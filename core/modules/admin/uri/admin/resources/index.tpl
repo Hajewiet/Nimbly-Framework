@@ -2,4 +2,5 @@
 [access feature=list_resources]
 [set page-title="Resources"]
 [set bar-title="Admin | Resources"]
+[set html-classes="admin-page" append]
 [html]

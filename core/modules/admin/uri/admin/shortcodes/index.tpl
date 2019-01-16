@@ -2,4 +2,5 @@
 [access feature=list_shortcodes]
 [set page-title="Shortcodes"]
 [set bar-title="Admin | Shortcodes"]
+[set html-classes="admin-page" append]
 [html]
