@@ -30,7 +30,7 @@ function session_sc() {
     if (empty($_SESSION['modified']) 
         || empty($_SESSION['created']) 
         || empty($_SESSION['pepper'])
-        || $_SESSION['pepper'] != $_SERVER['PEPPER']
+        || $_SESSION['pepper'] != ($_SERVER['PEPPER'] ?? '(none)')
         || $GLOBALS['SYSTEM']['request_time'] >= $_SESSION['modified'] + $GLOBALS['SYSTEM']['session_lifetime']) {
         session_unset();
         session_destroy();
@@ -61,7 +61,7 @@ function session_initialize() {
     $_SESSION['key'] = md5(uniqid(rand(), true));
     $_SESSION['roles'] = array("anonymous" => true);
     $_SESSION['features'] = array();
-    $_SESSION['pepper'] = $_SERVER['PEPPER'];
+    $_SESSION['pepper'] = $_SERVER['PEPPER'] ?? '(none)';
 }
 
 function session_cleanup_files() {
