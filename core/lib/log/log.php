@@ -11,7 +11,7 @@ function log_system($str) {
     if (is_array($str)) {
         $str = print_r($str, true);
     }
-    $path = $GLOBALS['SYSTEM']['file_base'] . 'data/.tmp/logs';
+    $path = $GLOBALS['SYSTEM']['file_base'] . 'ext/data/.tmp/logs';
     $file = $path . '/system.log';
     $msg = PHP_EOL . date("c") . ' ' . $str . PHP_EOL;
     if (file_exists($file)) {
