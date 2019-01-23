@@ -10,9 +10,7 @@
 <!doctype html>
 <html class="[html-classes]" lang="[language]">
     <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        [meta]
         <title>[page-title] | [site-name]</title>
         [stylesheets]
         [head]
