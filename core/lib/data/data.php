@@ -103,6 +103,8 @@ function data_read($resource, $uuid = null, $field = null) {
         }
         return null;
     }
+    $result['_modified'] = filemtime($file);
+    $result['_created'] = filectime($file);
     return $result;
 }
 
