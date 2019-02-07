@@ -97,6 +97,7 @@ uploader.upload_file = function(opts, file) {
 }
 
 $('body').on('click', '[data-upload]', function(e) {
+    e.preventDefault();
     var uid = uploader.unique_id();
     uploader.init_uploader($(this), uid);
     var r = $('#' + uid).click();
