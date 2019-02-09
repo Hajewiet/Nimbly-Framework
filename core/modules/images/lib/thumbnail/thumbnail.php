@@ -8,6 +8,20 @@ function thumbnail_sc($params) {
     return thumbnail_create($uuid, $size, $ratio, $mode);
 }
 
+function thumbnail_sharpen($img) {
+    static $sharpen = false;
+    static $divisor = false;
+    if (!$sharpen || !$divisor) {
+        $sharpen = array(
+            array(-1, -1, -1),
+            array(-1, 20, -1),
+            array(-1, -1, -1),
+        );
+        $divisor = array_sum(array_map('array_sum', $sharpen));
+    }
+    imageconvolution($img, $sharpen, $divisor, 0);
+}
+
 function thumbnail_create($uuid, $size, $ratio=0, $mode='h') {
 
     $MAX_UPSCALE = 1.0; // @todo: make this dynamic
@@ -96,6 +110,8 @@ function thumbnail_create($uuid, $size, $ratio=0, $mode='h') {
 
     $thumb_img = imagecreatetruecolor($w, $h);
     imagecopyresampled($thumb_img, $org_img, 0, 0, $org_x, $org_y, $w, $h, $org_w, $org_h);
+
+    thumbnail_sharpen($thumb_img);
 
     //4: save image to cache
 
