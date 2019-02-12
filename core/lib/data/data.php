@@ -172,7 +172,6 @@ function data_update($resource, $uuid, $data_update_ls) {
     }
     
     // additional handling if PK field changed
-    load_library('log');
     $pk_field =  $data_update_ls['pk-field-name'] ?? false;
     if ($pk_field) {
         $pk_value = $data_update_ls[$pk_field] ?? false;
@@ -182,6 +181,11 @@ function data_update($resource, $uuid, $data_update_ls) {
         }
         $data_merged_ls['uuid'] = $uuid;
     }
+
+    // add _modified_by info
+    load_library('md5');
+    load_library('username', 'user');
+    $data_merged_ls['_modified_by'] = md5_uuid(username_get());
 
     if (data_create($resource, $uuid, $data_merged_ls)) {
         return $data_merged_ls;
@@ -220,6 +224,11 @@ function data_create($resource, $uuid, $data_ls) {
         return file_exists($dir);
     }
     $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . $uuid;
+    if (!isset($data_ls['_created_by'])) {
+        load_library('md5');
+        load_library('username', 'user');
+        $data_ls['_created_by'] = md5_uuid(username_get());
+    }
     $json_data = json_encode($data_ls, JSON_UNESCAPED_UNICODE);
     return @file_put_contents($file, $json_data) !== false;
 }
