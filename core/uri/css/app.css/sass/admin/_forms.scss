@@ -95,6 +95,10 @@ p {
         font-family: $text;
         display: block;
         width: 100%;
+
+        &.nb-close {
+            display: none;
+        }
     }
 
     .label-inline {

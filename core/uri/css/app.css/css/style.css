@@ -92,6 +92,8 @@ p {
   font-family: "Roboto", sans-serif;
   display: block;
   width: 100%; }
+  .nb-form label.nb-close {
+    display: none; }
 .nb-form .label-inline {
   display: inline-block;
   font-weight: normal;
