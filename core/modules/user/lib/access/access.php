@@ -21,9 +21,11 @@ function access_sc($params) {
     }
 
     /* access denied */
+    access_denied(get_param_value($params, "redirect"); 
+}
 
-    $redirect_url = get_param_value($params, "redirect", "errors/403");
-    run_library("redirect");
+function access_denied($redirect_url = 'errors/403') {
+    load_library("redirect");
     redirect($redirect_url);
 }
 

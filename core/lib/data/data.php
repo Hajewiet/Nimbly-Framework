@@ -180,6 +180,9 @@ function data_update($resource, $uuid, $data_update_ls) {
             return false;
         }
         $data_merged_ls['uuid'] = $uuid;
+        if ($data_merged_ls['_fkrefs']) {
+            // update fks for all references
+        } 
     }
 
     // add _modified_by info
@@ -445,4 +448,18 @@ function data_sanitize_key($key, $repl = '^') {
         ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}");
     $result = str_replace($special_chars, $repl, $key);
     return $result;
+}
+
+function data_field_contains($object, $field_name, $val) {
+    if (empty($object[$field_name])) {
+        return false;
+    }
+    $field_value = $object[$field_name];
+    if ($field_Value === $val) {
+        return true;
+    }
+    if (is_array($field_value) && in_array($val, $field_value)) {
+        return true;
+    }
+    return false;
 }
