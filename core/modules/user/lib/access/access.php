@@ -21,7 +21,7 @@ function access_sc($params) {
     }
 
     /* access denied */
-    access_denied(get_param_value($params, "redirect"); 
+    access_denied(get_param_value($params, "redirect")); 
 }
 
 function access_denied($redirect_url = 'errors/403') {
