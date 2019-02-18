@@ -2,18 +2,10 @@
 
 function exif_get($file) {
     $result = array();
-
     $result['exif_pretty'] = "n/a";
     $result['exif_all'] = array();
-
-    //get exif data (if any) (and exif is enabled)
-    $raw_exif = false;
-    if (function_exists("exif_read_data")) {
-        $raw_exif = exif_read_data($f_to, 'ANY_TAG', true);
-    }
-
+    $raw_exif = exif_read_data($file, 'ANY_TAG', true);
     if ($raw_exif !== false) {
-
         $white_list = array(
             "IFD0" => array("Make", "Model", "Software", "DateTime"),
             "EXIF" => array("ExposureTime", "FNumber", "ISOSpeedRatings", "DateTimeOriginal", "ShutterSpeedValue", "ApertureValue", "FocalLength")
@@ -29,14 +21,12 @@ function exif_get($file) {
                 $result['exif_all'][$key][$sub_key] = $raw_exif[$key][$sub_key];
             }
         }
-
         $result['exif_pretty'] = exif_pretty($result['exif_all']);
         $exif_date = exif_date($result['exif_all'], "Y-m-d");
         if (!empty($exif_date)) {
             $result['date'] = $exif_date;
         }
     }
-
     return $result;
 }
 

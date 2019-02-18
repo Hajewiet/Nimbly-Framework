@@ -31,7 +31,7 @@ function files_post() { // create a new file and it's meta data
     if (exif_imagetype($from) === IMAGETYPE_JPEG) {
         load_library("exif", "images");
         $exif_data = exif_get($from);
-        $meta_data = array_merge($meta, $exif_data);
+        $meta = array_merge($meta, $exif_data);
     }
     if (data_create('.files_meta', $uuid, $meta) && move_uploaded_file($from, $dir . $uuid) === true) {
         return json_result(array("files" => $meta, 'count' => 1, 'message' => 'RESOURCE_CREATED'), 201);
