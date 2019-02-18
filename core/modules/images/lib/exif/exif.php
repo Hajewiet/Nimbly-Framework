@@ -1,5 +1,25 @@
 <?php
 
+function exif_sc($params) {
+    load_library('data');
+    $author = get_param_value($params, 'author');
+    $img_uuid = get_param_value($params, 'uuid', current($params));
+    if ($author) {
+        load_library('md5');
+        $author_uuid = md5_uuid($author);
+        $meta = data_read('.files_meta/' . $author_uuid, $img_uuid);
+    } else {
+        $meta = data_read('.files_meta', $img_uuid);
+    }
+    if (emtpy($meta['exif_pretty'])) {
+        return '';
+    }
+    if ($meta['exif_pretty'] === 'n/a') {
+        return '';
+    }
+    return $meta['exif_pretty'];
+}
+
 function exif_get($file) {
     $result = array();
     $result['exif_pretty'] = "n/a";
