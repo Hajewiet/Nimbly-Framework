@@ -8,6 +8,7 @@ editor.timer = null;
 editor.active = null;
 editor.autoenabled = false;
 editor.modal_uuid = null;
+editor.autosave = true;
 
 editor.enable = function() {
     if (editor.enabled === true) {
@@ -38,7 +39,10 @@ editor.enable = function() {
     $('[data-edit-img]').each(function(ix) {
         editor.enable_img($(this), ix);
     });
-    editor.timer = setInterval(editor.save, 10000);
+    if (editor.autosave === true) {
+        editor.timer = setInterval(editor.save, 10000);
+    }
+    $(document).trigger('editor', {"enabled": true});
 }
 
 editor.disable = function() {
@@ -65,6 +69,7 @@ editor.disable = function() {
         clearInterval(editor.timer);
     }
     editor.save();
+    $(document).trigger('editor', {"enabled": false});
 }
 
 editor.toggle = function() {
@@ -128,6 +133,7 @@ editor.save = function() {
         });
         if (changes) {
             api({ method: 'put', url: resource + '/' + uuid, payload: JSON.stringify(payload), done: {notification: "Saved"} });
+            $(document).trigger('editor', {"saved": true});
         }
      });
 }
