@@ -250,7 +250,7 @@ a.editor.add-img-icon { position: absolute; width: 30px; height: 30px; left: -30
 
 .medium-editor-placeholder:after { color: #6b6b6b; }
 
-.nb-table { border-spacing: 0; width: 100%; font-family: "Roboto", sans-serif; }
+.nb-table { border-spacing: 0; width: 100%; font-family: "Roboto", sans-serif; margin-bottom: 30px; }
 
 .nb-table td, .nb-table th { border-bottom: 1px solid #ddd; padding: 12px 15px; text-align: left; vertical-align: top; font-family: "Roboto", sans-serif; }
 
