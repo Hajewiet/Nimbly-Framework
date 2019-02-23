@@ -6,12 +6,11 @@
       <thead>
         <tr>
           <th>Resource</th>
-          <th>#</th>
+          <th>Instances</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-
         <tr data-uuid="pages">
           <td colspan='3'><a href="[base-url]/admin/pages">pages</a></td>
         </tr>
