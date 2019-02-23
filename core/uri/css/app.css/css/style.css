@@ -255,4 +255,6 @@ a.editor.add-img-icon { position: absolute; width: 30px; height: 30px; left: -30
 .nb-table td:first-child, .nb-table th:first-child { padding-left: 0; }
 
 .nb-table td:last-child, .nb-table th:last-child { padding-right: 0; }
+
+.nb-table td img, .nb-table th img { display: block; }
 /*# sourceMappingURL=style.css.map */

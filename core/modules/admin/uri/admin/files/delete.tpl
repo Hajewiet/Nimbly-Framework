@@ -1,4 +1,4 @@
-<a
+<a class="nb-button delete"
     data-confirm="File `[get item.name]` will be deleted! Are you sure?"
     data-delete=".files/[item.uuid]"
     data-done='{
