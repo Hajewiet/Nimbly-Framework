@@ -1,4 +1,4 @@
-<a
+<a class="nb-button delete"
     data-confirm="[resource-name [data.resource]] `[render-field-name]` will be deleted! Are you sure?"
     data-delete="[data.resource]/[uuid]"
     data-done='{

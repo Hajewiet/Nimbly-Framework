@@ -22,7 +22,7 @@ p { font-size: 14px; }
 
 .nb-form input:focus { outline: 0; }
 
-.nb-form select { ont-family: "Roboto", sans-serif; font-size: 14px; -webkit-appearance: none; -moz-appearance: none; background-color: transparent; border: 1px solid #ccc; border-radius: 4px; height: 32px; padding: 6px 10px; width: 100%; margin: 5px 0 20px; background-image: url("../img/down.svg"); background-repeat: no-repeat; background-position: right 15px center; background-size: 10px 5px; vertical-align: top; }
+.nb-form select { font-family: "Roboto", sans-serif; font-size: 14px; -webkit-appearance: none; -moz-appearance: none; background-color: transparent; border: 1px solid #ccc; border-radius: 4px; height: 32px; padding: 6px 10px; width: 100%; margin: 5px 0 20px; background-image: url("../img/down.svg"); background-repeat: no-repeat; background-position: right 15px center; background-size: 10px 5px; vertical-align: top; }
 
 .nb-form label { font-size: 11px; text-transform: uppercase; font-family: "Roboto", sans-serif; display: block; width: 100%; }
 
@@ -41,6 +41,8 @@ p { font-size: 14px; }
 .nb-form .nb-gallery-field .editor.img-wrapper { margin: 0; }
 
 .nb-button { font-family: "Roboto", sans-serif; font-size: 14px; -webkit-appearance: none; -moz-appearance: none; height: 32px; line-height: 32px; border-radius: 4px; color: #fff; background-color: #338e2d; padding: 0 20px; border: none; margin: 5px 5px 10px 0; display: inline-block; text-decoration: none; }
+
+.nb-button.nb-delete { background-color: #e00b0b; }
 
 /* lazy image loading fx */
 img[data-img-uuid] { opacity: 0; -webkit-transition: opacity 200ms; transition: opacity 200ms; }
@@ -248,7 +250,7 @@ a.editor.add-img-icon { position: absolute; width: 30px; height: 30px; left: -30
 
 .nb-table { border-spacing: 0; width: 100%; font-family: "Roboto", sans-serif; }
 
-.nb-table td, .nb-table th { border-bottom: 1px solid #ddd; padding: 12px 15px; text-align: left; font-family: "Roboto", sans-serif; }
+.nb-table td, .nb-table th { border-bottom: 1px solid #ddd; padding: 12px 15px; text-align: left; vertical-align: top; font-family: "Roboto", sans-serif; }
 
 .nb-table td:first-child, .nb-table th:first-child { padding-left: 0; }
 
