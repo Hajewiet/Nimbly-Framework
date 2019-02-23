@@ -42,7 +42,7 @@ p { font-size: 14px; }
 
 .nb-button { font-family: "Roboto", sans-serif; font-size: 14px; -webkit-appearance: none; -moz-appearance: none; height: 32px; line-height: 32px; border-radius: 4px; color: #fff; background-color: #338e2d; padding: 0 20px; border: none; margin: 5px 5px 10px 0; display: inline-block; text-decoration: none; }
 
-.nb-button.nb-delete { background-color: #e00b0b; }
+.nb-button.delete { background-color: #e00b0b; }
 
 /* lazy image loading fx */
 img[data-img-uuid] { opacity: 0; -webkit-transition: opacity 200ms; transition: opacity 200ms; }
