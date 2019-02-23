@@ -2,7 +2,7 @@
       <td><a href="[base-url]/admin/[item.name]">[item.name]</a></td>
       <td>[get item.count echo]</td>
       <td>
-            <a
+            <a class="nb-button delete"
                 data-confirm="All [item.count] [item.name] will be deleted! Are you sure?"
                 data-delete="[item.name]"
                 data-done='{
