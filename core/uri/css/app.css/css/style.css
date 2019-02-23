@@ -165,7 +165,7 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 #nimblybar .icon-gear { background-image: url("../img/icon-gear-white.svg"); background-size: 22px 22px; }
 
-#nimblybar .nimbly-logo { position: fixed; z-index: 2000; bottom: 3px; right: 3px; height: 24px; width: auto; -webkit-transform: rotate(90deg); transform: rotate(90deg); }
+#nimblybar .nimbly-logo { position: fixed; z-index: 2000; bottom: 40px; right: -20px; height: 24px; width: auto; -webkit-transform: rotate(90deg); transform: rotate(90deg); }
 
 ul.nb-menu { margin-bottom: 0; border-bottom: 1px solid rgba(0, 0, 0, 0.2); padding: 0; font-family: 'helvetica', sans-serif; }
 
