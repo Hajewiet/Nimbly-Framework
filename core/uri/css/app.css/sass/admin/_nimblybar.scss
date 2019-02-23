@@ -20,4 +20,14 @@
         background-image: url('../img/icon-gear-white.svg');
         background-size: 22px 22px;
     }
+
+    .nimbly-logo {
+        position: fixed;
+        z-index: 2000;
+        bottom: 3px;
+        right: 3px;
+        height: 24px;
+        width: auto;
+        transform: rotate(90deg);
+    }
 }
