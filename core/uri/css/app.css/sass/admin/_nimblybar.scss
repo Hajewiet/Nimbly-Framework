@@ -1,0 +1,23 @@
+#nimblybar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 30px;
+    background: $blue;
+    z-index: 1000;
+
+    .icon {
+        margin: 0;
+        margin-top: 4px;
+    }
+
+    .icon-edit {
+        background-image: url('../img/icon-edit-white.svg');
+    }
+
+    .icon-gear {
+        background-image: url('../img/icon-gear-white.svg');
+        background-size: 22px 22px;
+    }
+}

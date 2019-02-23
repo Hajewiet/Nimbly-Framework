@@ -1,6 +1,5 @@
 [contenteditable=true], .editor.img-wrapper {
-  box-shadow: 0 0 0 1px rgba( $dark, .2 );
-  background-color: rgba( $dark, .1 );
+  background-color: $light-green;
 }
 
 .uploader.img-wrapper, .editor.img-wrapper {
@@ -44,7 +43,7 @@
 }
 
 .progress-bar-bg .progress-bar {
-    background: $dark;
+    background: $green;
     top: 0;
     width: 0%;
     opacity: 1;
@@ -52,7 +51,6 @@
 }
 
 .nb-img-grid[data-select] img { border: 1px solid transparent; }
-
 .nb-img-grid[data-select] img.selected { border: 1px solid $dark;  }
 
 a.edit-img-icon, a.clear-img-icon {
