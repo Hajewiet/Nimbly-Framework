@@ -44,6 +44,8 @@ p { font-size: 14px; }
 
 .nb-button.delete { background-color: #e00b0b; }
 
+td .nb-button, th .nb-button { margin: 0 5px 0 0; }
+
 /* lazy image loading fx */
 img[data-img-uuid] { opacity: 0; -webkit-transition: opacity 200ms; transition: opacity 200ms; }
 
