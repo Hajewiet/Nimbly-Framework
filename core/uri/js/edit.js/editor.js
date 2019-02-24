@@ -10,12 +10,19 @@ editor.autoenabled = false;
 editor.modal_uuid = null;
 editor.autosave = true;
 
-editor.enable = function() {
+editor.enable = function(e) {
     if (editor.enabled === true) {
         return;
     }
+    var $scope = false;
+    if (e) {
+        $tgt = $(e.target);
+        $parent = $tgt.closest('[data-edit-uuid]');
+        if ($parent && $parent.attr('data-edit-scope') !== undefined) {
+            $scope = $parent; 
+        }
+    }
     editor.enabled = true;
-    $("[data-edit-field]").attr("contenteditable", true);
     $('#edit-menu [data-edit-on').addClass("nb-close");
     $('#edit-menu [data-edit-off').removeClass("nb-close");
     $('#edit-menu [data-edit-save').removeClass("nb-close");
@@ -23,6 +30,10 @@ editor.enable = function() {
     if (editor.editors.length === 0) {
         $('[data-edit-field]').each(function(ix) {
             btns = $(this).data("edit-buttons");
+            if (!editor._in_scope($scope, this)) {
+                return
+            }
+            $(this).attr('contenteditable', true);
             if (!btns) {
                 return;
             }
@@ -37,12 +48,15 @@ editor.enable = function() {
         });
     }
     $('[data-edit-img]').each(function(ix) {
+        if (!editor._in_scope($scope, this)) {
+           return;
+        }
         editor.enable_img($(this), ix);
     });
     if (editor.autosave === true) {
         editor.timer = setInterval(editor.save, 10000);
     }
-    $(document).trigger('editor', {"enabled": true});
+    $(document).trigger('editor', {"enabled": true, "scope": $scope});
 }
 
 editor.disable = function() {
@@ -72,11 +86,11 @@ editor.disable = function() {
     $(document).trigger('editor', {"enabled": false});
 }
 
-editor.toggle = function() {
+editor.toggle = function(e) {
     if (editor.enabled) {
         editor.disable();
     } else {
-        editor.enable();
+        editor.enable(e);
     }
 }
 
@@ -142,7 +156,18 @@ editor.save = function() {
      });
 }
 
-if ($('[data-edit-field]').length || $('[data-edit-img]').length) {
+editor._in_scope = function($scope, elem) {
+    if (!$scope) {
+        return true;
+    }
+    var $elem_scope = $(elem).closest('[data-edit-uuid]');
+    if (!$elem_scope) {
+        return false;
+    }
+    return $scope[0] === $elem_scope[0];
+}
+
+if ($('[data-edit-field]').length || $('[data-edit-img]').length || $('[data-edit-wysiwyg].').length) {
 
     // load medium editor style sheet
     $("head").append("<link>");
@@ -160,17 +185,17 @@ if ($('[data-edit-field]').length || $('[data-edit-img]').length) {
     $script.ready('medium', function() {
 
         $('body').on('dblclick', '[data-edit-field],[data-edit-img]', function(e) {
-            editor.enable();
+            editor.enable(e);
         });
 
         $('body').on('click', '#edit-button[data-edit-toggle]', function (e) {
             e.preventDefault();
-            editor.toggle();
+            editor.toggle(e);
         });
 
          $('body').on('click', '#edit-menu [data-edit-on]', function (e) {
             e.preventDefault();
-            editor.enable();
+            editor.enable(e);
         });
 
         $('body').on('click', '#edit-menu [data-edit-off]', function (e) {
@@ -215,6 +240,21 @@ if ($('[data-edit-field]').length || $('[data-edit-img]').length) {
             $('#edit-menu [data-edit-off').addClass("nb-close");
             $('#edit-menu [data-edit-save').addClass("nb-close");
         }
+
+        $('[data-edit-wysiwyg').each(function() {
+            var btns = $(this).data("edit-buttons");
+            var placeholder = $(this).attr('placeholder') || false;
+            if (!btns) {
+                btns = "bold,italic,anchor";
+            }
+            btns = btns.split(',');
+            var e = new MediumEditor($(this), {
+                toolbar: {
+                    buttons: btns,
+                },
+                placeholder: placeholder
+            });
+        })
 
     });
 
@@ -408,6 +448,10 @@ $(document).mousedown(function(event) {
         return;
     }
 
+    if (editor.autoenabled) {
+        return;
+    }
+
     if(event.target === $('html')[0] && event.clientX >= document.documentElement.offsetWidth) {
         return; // mouse down on a scroll bar
     }
@@ -418,10 +462,6 @@ $(document).mousedown(function(event) {
 
     if ($(event.target).closest('[data-edit-field],[data-edit-img],[data-clear-img],.editor,#edit-menu,#edit-button,#top-bar-fixed,#modal,button.medium-editor-action,.medium-editor-toolbar').length) {
         editor.handle_click($(event.target), event);
-        return;
-    }
-
-    if (editor.autoenabled) {
         return;
     }
 
