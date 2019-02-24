@@ -167,7 +167,7 @@ editor._in_scope = function($scope, elem) {
     return $scope[0] === $elem_scope[0];
 }
 
-if ($('[data-edit-field]').length || $('[data-edit-img]').length || $('[data-edit-wysiwyg].').length) {
+if ($('[data-edit-field]').length || $('[data-edit-img]').length || $('[data-edit-wysiwyg]').length) {
 
     // load medium editor style sheet
     $("head").append("<link>");
