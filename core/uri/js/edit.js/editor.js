@@ -117,7 +117,7 @@ editor.save = function() {
         if (!changed) {
           return;
         }
-        var $parent = $(this).closest('[data-edit-uuid');
+        var $parent = $(this).closest('[data-edit-uuid]');
         if ($parent.data('edit-uuid') != uuid) {
           return;
         }
