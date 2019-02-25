@@ -1,0 +1,1 @@
+<a class="icon icon-edit nb-close" id="edit-button" data-edit-toggle href="#"></a>

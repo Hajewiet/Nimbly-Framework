@@ -3,4 +3,4 @@
 [set page-title="Debug"]
 [set bar-title="Admin | Debug"]
 [set html-classes="admin-page" append]
-[html]
+[admin-html]

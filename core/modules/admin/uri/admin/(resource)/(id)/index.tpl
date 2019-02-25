@@ -2,4 +2,4 @@
 [access feature=edit_[data.resource],(any)_[data.resource]]
 [set page-title="Edit [resource-name [data.resource]]"]
 [set html-classes="admin-page" append]
-[html]
+[admin-html]

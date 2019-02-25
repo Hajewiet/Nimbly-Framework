@@ -3,4 +3,4 @@
 [set page-title="Add Resource"]
 [set bar-title="Admin | Add Resource"]
 [set html-classes="admin-page" append]
-[html]
+[admin-html]
