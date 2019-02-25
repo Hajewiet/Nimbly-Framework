@@ -23,9 +23,9 @@ editor.enable = function(e) {
         }
     }
     editor.enabled = true;
-    $('#edit-menu [data-edit-on').addClass("nb-close");
-    $('#edit-menu [data-edit-off').removeClass("nb-close");
-    $('#edit-menu [data-edit-save').removeClass("nb-close");
+    $('#edit-menu [data-edit-on]').addClass("nb-close");
+    $('#edit-menu [data-edit-off]').removeClass("nb-close");
+    $('#edit-menu [data-edit-save]').removeClass("nb-close");
     $('#edit-button[data-edit-toggle] a').addClass("active");
     if (editor.editors.length === 0) {
         $('[data-edit-field]').each(function(ix) {
