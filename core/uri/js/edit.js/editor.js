@@ -249,7 +249,7 @@ if (
       $('#edit-menu [data-edit-save]').addClass('nb-close');
     }
 
-    $('[data-edit-wysiwyg').each(function() {
+    $('[data-edit-wysiwyg]').each(function() {
       var btns = $(this).data('edit-buttons');
       var placeholder = $(this).attr('placeholder') || false;
       if (!btns) {
