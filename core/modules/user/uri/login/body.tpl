@@ -1,4 +1,4 @@
-<div class="nb-container medium">
+
     <h1>Log in</h1>
     <form name="login" action="[url]" method="post" accept-charset="utf-8" class="nb-form">
         [form-key login]
@@ -16,5 +16,5 @@
 
         [form-error]
     </form>
-</div>
+
 

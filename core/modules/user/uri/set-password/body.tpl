@@ -1,4 +1,4 @@
-<div class="container medium">
+
     <h1>Set password</h1>
     <form name="set-password" action="[url]?user=[get user]&key=[get key]" method="post" accept-charset="utf-8">
 
@@ -25,4 +25,4 @@
 
             [form-error]
     </form>
-</div>
+

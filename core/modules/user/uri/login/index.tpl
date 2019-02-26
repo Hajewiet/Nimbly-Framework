@@ -1,6 +1,6 @@
-[module user forms admin]
+[module user forms]
 [access role=anonymous redirect=]
 [set login-url=]
 [post]
 [set page-title=Login]
-[admin-html]
+[html]
