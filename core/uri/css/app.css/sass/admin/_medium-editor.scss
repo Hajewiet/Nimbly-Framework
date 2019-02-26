@@ -1,5 +1,5 @@
 [contenteditable=true], .editor.img-wrapper {
-  background-color: $light-green;
+  background-color: $admin-light-green;
 }
 
 .uploader.img-wrapper, .editor.img-wrapper {
@@ -51,7 +51,7 @@
 }
 
 .nb-img-grid[data-select] img { border: 1px solid transparent; }
-.nb-img-grid[data-select] img.selected { border: 1px solid $dark;  }
+.nb-img-grid[data-select] img.selected { border: 1px solid $admin-dark;  }
 
 a.edit-img-icon, a.clear-img-icon {
     position: absolute;
@@ -59,7 +59,7 @@ a.edit-img-icon, a.clear-img-icon {
     bottom: 0;
     width: 30px;
     height: 30px;
-    background: $dark;
+    background: $admin-dark;
     opacity: .8;
     line-height: 22px;
     color: #fff;
@@ -97,15 +97,15 @@ a.editor.add-img-icon {
 
 .medium-toolbar-arrow-under:after {
     top: 40px;
-    border-color: $dark transparent transparent transparent;
+    border-color: $admin-dark transparent transparent transparent;
 }
 
 .medium-toolbar-arrow-over:before {
     top: -8px;
-    border-color: transparent transparent $dark transparent;
+    border-color: transparent transparent $admin-dark transparent;
 }
 
-.medium-editor-toolbar { background-color: $dark; }
+.medium-editor-toolbar { background-color: $admin-dark; }
 
 .medium-editor-toolbar li { padding: 0; }
 
@@ -122,12 +122,12 @@ a.editor.add-img-icon {
 }
 
 .medium-editor-toolbar li button:hover {
-        background-color: $light;
+        background-color: $admin-light;
         color: #fff;
 }
 
 .medium-editor-toolbar li .medium-editor-button-active {
-      background-color: $light;
+      background-color: $admin-light;
       color: #fff;
 }
 
@@ -135,7 +135,7 @@ a.editor.add-img-icon {
 
 .medium-editor-toolbar-form .medium-editor-toolbar-input {
   height: 40px;
-  background: $dark;
+  background: $admin-dark;
   color: #fff; }
 
 .medium-editor-toolbar-form .medium-editor-toolbar-input::-webkit-input-placeholder {
@@ -162,8 +162,8 @@ a.editor.add-img-icon {
 .medium-editor-toolbar-form a { color: #fff; }
 
 .medium-editor-toolbar-anchor-preview {
-  background: $dark;
+  background: $admin-dark;
   color: #fff;
 }
 
-.medium-editor-placeholder:after { color: $dark; }
+.medium-editor-placeholder:after { color: $admin-dark; }

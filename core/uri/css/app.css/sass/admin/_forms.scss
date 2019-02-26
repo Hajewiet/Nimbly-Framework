@@ -36,11 +36,11 @@ p {
         &[type="password"],
         &[type="search"],
         &[type="date"] {
-            font-family: $text;
+            font-family: $admin-text;
             font-size: 14px;
             -webkit-appearance: none;
             -moz-appearance: none;
-            background-color: transparent;
+            background-color: #fff;
             border: 1px solid #ccc;
             border-radius: 4px;
             height: 32px;
@@ -51,14 +51,14 @@ p {
         }
 
         &[type="submit"] {
-            font-family: $text;
+            font-family: $admin-text;
             font-size: 14px;
             -webkit-appearance: none;
             -moz-appearance: none;
             height: 32px;
             border-radius: 4px;
             color: #fff;
-            background-color: $green;
+            background-color: $admin-green;
             padding: 0 20px;
             border: none;
             margin: 5px 5px 20px 0;
@@ -71,11 +71,11 @@ p {
     }
 
     select {
-        font-family: $text;
+        font-family: $admin-text;
         font-size: 14px;
         -webkit-appearance: none;
         -moz-appearance: none;
-        background-color: transparent;
+        background-color: #fff;
         border: 1px solid #ccc;
         border-radius: 4px;
         height: 32px;
@@ -92,7 +92,7 @@ p {
     label {
         font-size: 11px;
         text-transform: uppercase;
-        font-family: $text;
+        font-family: $admin-text;
         display: block;
         width: 100%;
 
@@ -108,7 +108,7 @@ p {
     }
 
     .medium-editor-element {
-        font-family: $text;
+        font-family: $admin-text;
         font-size: 14px;
         min-height: 96px;
         border: 1px solid #ccc;
@@ -142,7 +142,7 @@ p {
 }
 
 .nb-button {
-    font-family: $text;
+    font-family: $admin-text;
     font-size: 14px;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -150,7 +150,7 @@ p {
     line-height: 32px;
     border-radius: 4px;
     color: #fff;
-    background-color: $green;
+    background-color: $admin-green;
     padding: 0 20px;
     border: none;
     margin: 5px 5px 10px 0;
@@ -158,7 +158,7 @@ p {
     text-decoration: none;
 
     &.delete {
-        background-color: $red;
+        background-color: $admin-red;
     }
 }
 

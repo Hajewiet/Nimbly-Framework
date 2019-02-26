@@ -3,14 +3,11 @@
     margin: 0 auto;
     padding: 20px 0;
     display: flex;
+    font-family: $admin-text;
+    color: $admindark;
 
     @include breakpoint(tablet) {
         width: 1200px;
-    }
-
-    a {
-        color: $blue;
-        text-decoration: none;
     }
 }
 

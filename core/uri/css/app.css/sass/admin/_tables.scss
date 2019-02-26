@@ -1,7 +1,7 @@
 .nb-table  {
     border-spacing: 0;
     width: 100%;
-    font-family: $text;
+    font-family: $admin-text;
     margin-bottom: 30px;
     
     td,
@@ -10,7 +10,7 @@
         padding: 12px 15px;
         text-align: left;
         vertical-align: top;
-        font-family: $text;
+        font-family: $admin-text;
 
         &:first-child {
             padding-left: 0; 
