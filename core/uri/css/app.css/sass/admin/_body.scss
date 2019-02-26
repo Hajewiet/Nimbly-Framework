@@ -4,7 +4,7 @@
     padding: 20px 0;
     display: flex;
     font-family: $admin-text;
-    color: $admindark;
+    color: $admin-dark;
 
     @include breakpoint(tablet) {
         width: 1200px;
