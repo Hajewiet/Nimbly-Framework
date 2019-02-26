@@ -24,7 +24,7 @@
                 [callouts]
                 [body]
             </div>
-            <div class="admin-sidebar">
+            <div class="admin-sidebar">                
                 [role-cond admin tpl=admin-menu]
                 [role-cond user tpl=user-menu]
             </div>

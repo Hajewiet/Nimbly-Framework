@@ -1,4 +1,4 @@
-<ul class="nb-menu light">
+<ul class="nb-menu">
 	[set admin-menu-item=]
     [admin-menu-item]
     <li><a href="[base-url]/admin/resources">Resources</a></li>
