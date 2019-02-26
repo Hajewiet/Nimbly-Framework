@@ -6,6 +6,13 @@
     font-family: $admin-text;
     color: $admin-dark;
 
+    h1 {
+        font-family: $admin-text;
+        font-size: 28px;
+        font-weight: normal;
+        padding: 30px 0;
+    }
+
     @include breakpoint(tablet) {
         width: 1200px;
     }

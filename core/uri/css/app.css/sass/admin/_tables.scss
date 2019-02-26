@@ -9,7 +9,6 @@
         border-bottom: 1px solid #ddd;
         padding: 12px 15px;
         text-align: left;
-        vertical-align: top;
         font-family: $admin-text;
 
         &:first-child {
@@ -19,6 +18,11 @@
         &:last-child {
             padding-right: 0;
             white-space: nowrap;
+        }
+
+        a {
+            color: $admin-blue;
+            text-decoration: none;
         }
 
         img {
