@@ -19,11 +19,10 @@
     </head>
     <body class="[body-classes]">
         [role-cond user tpl=user-bar]
-        [top]
-        [page]
-        [bottom]
-        [left]
-        [right]
+        [callouts]
+        [header]
+        [body]
+        [footer]
         <script>
             [load-scripts]
         </script>
