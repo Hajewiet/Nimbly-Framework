@@ -19,7 +19,7 @@
     </head>
     <body class="[body-classes]">
         [role-cond user tpl=user-bar]
-        <div class="wrapper">
+        <div class="admin-wrapper">
             <div class="admin-body">
                 [callouts]
                 [body]
