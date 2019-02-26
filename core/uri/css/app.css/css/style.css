@@ -34,7 +34,7 @@ p { font-size: 14px; }
 
 .nb-button { font-family: sans-serif; font-size: 14px; -webkit-appearance: none; -moz-appearance: none; height: 32px; line-height: 32px; border-radius: 4px; color: #fff !important; background-color: #338e2d; padding: 0 20px; border: none; margin: 5px 5px 10px 0; display: inline-block; text-decoration: none; }
 
-.nb-button.delete { background-color: #e00b0b; }
+.nb-button.delete { background-color: #9f1010; }
 
 td .nb-button, th .nb-button { margin: 0 5px 0 0; }
 
@@ -131,7 +131,7 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
   100% { -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
 
-.nb-callout, .nb-notification { position: absolute; height: 40px; background: #fffdcf; padding: 10px; -webkit-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3); box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3); width: calc(100vw - 80px); margin: 20px; }
+.nb-callout, .nb-notification { position: absolute; right: 0; background: #fffdcf; padding: 10px; line-height: 1.6; -webkit-box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.2); box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.2); width: 330px; margin: 20px; }
 
 #modal { position: fixed; top: 0; bottom: 0; left: 0; right: 0; background: rgba(0, 0, 0, 0.6); z-index: 9999; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; padding: 20px; }
 
