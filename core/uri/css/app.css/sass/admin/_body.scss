@@ -25,6 +25,12 @@
     @include breakpoint(tablet) {
         flex: 4;
     }
+
+    p {
+        padding: 0 0 30px;
+        max-width: 680px;
+        line-height: 1.6;
+    }
 }
 
 .admin-sidebar {

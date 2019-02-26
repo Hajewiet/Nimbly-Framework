@@ -48,6 +48,8 @@ td .nb-button, th .nb-button { margin: 0 5px 0 0; }
 
 @media (min-width: 1000px) { .admin-body { -webkit-box-flex: 4; -ms-flex: 4; flex: 4; } }
 
+.admin-body p { padding: 0 0 30px; max-width: 680px; line-height: 1.6; }
+
 .admin-sidebar { padding: 0 0 0 20px; -webkit-box-flex: 1; -ms-flex: 1; flex: 1; }
 
 /* lazy image loading fx */
