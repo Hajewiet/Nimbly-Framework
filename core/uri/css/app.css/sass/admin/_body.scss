@@ -1,3 +1,11 @@
+.logged-in {
+    &.admin {
+        body {
+            margin-right: 30px;
+        }
+    }
+}
+
 .admin-wrapper {
     width: 90%;
     margin: 0 auto;

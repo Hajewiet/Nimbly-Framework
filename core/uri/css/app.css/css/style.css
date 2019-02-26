@@ -38,6 +38,8 @@ p { font-size: 14px; }
 
 td .nb-button, th .nb-button { margin: 0 5px 0 0; }
 
+.logged-in.admin body { margin-right: 30px; }
+
 .admin-wrapper { width: 90%; margin: 0 auto; padding: 20px 0; display: -webkit-box; display: -ms-flexbox; display: flex; font-family: sans-serif; color: #333333; }
 
 .admin-wrapper h1 { font-family: sans-serif; font-size: 28px; font-weight: normal; padding: 30px 0; }
