@@ -1,11 +1,11 @@
 [module user]
+[access feature=admin]
 [set app-name="Nimbly Framework"]
 [set site-name=[app-name]]
 [set language=en]
 [set body-classes=]
-[set html-classes="[logged-in]"]
+[set html-classes="logged-in admin-page"]
 [set page-title=Admin]
-[set head=]
 [init]
 <!doctype html>
 <html class="[html-classes]" lang="[language]">
@@ -13,7 +13,6 @@
         [meta]
         <title>[page-title] | [site-name]</title>
         [stylesheets]
-        [head]
         [scripts]
         [favicon]
     </head>
@@ -26,7 +25,6 @@
             </div>
             <div class="admin-sidebar">                
                 [role-cond admin tpl=admin-menu]
-                [role-cond user tpl=user-menu]
             </div>
         </div>
         <script>
