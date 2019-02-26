@@ -1,0 +1,24 @@
+.wrapper {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px 0;
+    display: flex;
+
+    @include breakpoint(tablet) {
+        width: 1200px;
+    }
+}
+
+.admin-body {
+    padding: 0 20px 0 0;
+    flex: 1;
+
+    @include breakpoint(tablet) {
+        flex: 4;
+    }
+}
+
+.admin-sidebar {
+    padding: 0 0 0 20px;
+    flex: 1;
+}

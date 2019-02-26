@@ -19,9 +19,16 @@
     </head>
     <body class="[body-classes]">
         [role-cond user tpl=user-bar]
-        [page]
-        [left]
-        [right]
+        <div class="wrapper">
+            <div class="admin-body">
+                [callouts]
+                [body]
+            </div>
+            <div class="admin-sidebar">
+                [role-cond admin tpl=admin-menu]
+                [role-cond user tpl=user-menu]
+            </div>
+        </div>
         <script>
             [load-scripts]
         </script>
