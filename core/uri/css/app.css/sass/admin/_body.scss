@@ -7,6 +7,11 @@
     @include breakpoint(tablet) {
         width: 1200px;
     }
+
+    a {
+        color: $blue;
+        text-decoration: none;
+    }
 }
 
 .admin-body {

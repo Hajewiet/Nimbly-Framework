@@ -50,6 +50,8 @@ td .nb-button, th .nb-button { margin: 0 5px 0 0; }
 
 @media (min-width: 1000px) { .admin-wrapper { width: 1200px; } }
 
+.admin-wrapper a { color: #0074D9; text-decoration: none; }
+
 .admin-body { padding: 0 20px 0 0; -webkit-box-flex: 1; -ms-flex: 1; flex: 1; }
 
 @media (min-width: 1000px) { .admin-body { -webkit-box-flex: 4; -ms-flex: 4; flex: 4; } }
@@ -157,23 +159,11 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 #nimblybar .nimbly-logo { position: fixed; z-index: 2000; bottom: 40px; right: -20px; height: 24px; width: auto; -webkit-transform: rotate(90deg); transform: rotate(90deg); }
 
-ul.nb-menu { margin-bottom: 0; border-bottom: 1px solid rgba(0, 0, 0, 0.2); padding: 0; font-family: 'helvetica', sans-serif; }
+.nb-menu { margin-bottom: 0; border-bottom: 1px solid rgba(0, 0, 0, 0.2); padding: 0; font-family: 'helvetica', sans-serif; }
 
-ul.nb-menu.light { border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
+.nb-menu li { list-style-type: none; margin: 0; font-family: 'helvetica', sans-serif; }
 
-ul.nb-menu li { list-style-type: none; margin: 0; font-family: 'helvetica', sans-serif; }
-
-ul.nb-menu li a, ul.nb-menu li.caption { display: block; width: 100%; line-height: 30px; padding: 10px 20px; text-decoration: none; }
-
-ul.nb-menu.light li a { color: white; background: [primary-color]; }
-
-ul.nb-menu.horizontal { border-bottom: 0; }
-
-ul.nb-menu.horizontal li { display: inline-block; }
-
-ul.nb-menu.horizontal li:last-child a { padding-right: 0; }
-
-ul.nb-menu.horizontal li:first-child a { padding-left: 0; }
+.nb-menu li a { display: block; width: 100%; line-height: 30px; padding: 10px 20px; text-decoration: none; }
 
 [contenteditable=true], .editor.img-wrapper { background-color: #ebfce9; }
 
