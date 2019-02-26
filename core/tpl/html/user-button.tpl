@@ -1,1 +1,1 @@
-<a data-toggle="#off-right-panel" class="icon icon-gear"></a>
+<a href=[base-url/admin/] class="icon icon-gear"></a>

@@ -220,7 +220,7 @@ a.editor.add-img-icon { position: absolute; width: 30px; height: 30px; left: -30
 
 .nb-table { border-spacing: 0; width: 100%; font-family: sans-serif; margin-bottom: 30px; }
 
-.nb-table td, .nb-table th { border-bottom: 1px solid #ddd; padding: 12px 15px; text-align: left; font-family: sans-serif; }
+.nb-table td, .nb-table th { border-bottom: 1px solid #ddd; padding: 12px 15px; text-align: left; font-family: sans-serif; vertical-align: middle; }
 
 .nb-table td:first-child, .nb-table th:first-child { padding-left: 0; }
 
