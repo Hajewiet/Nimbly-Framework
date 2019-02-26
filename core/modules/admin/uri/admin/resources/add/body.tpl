@@ -1,4 +1,4 @@
-<section class="nb-container medium">
+
     <h1>Add resource</h1>
     <form class="nb-form">
         <label>Resource Name:
@@ -41,4 +41,3 @@
         />
 
     </form>
-</section>

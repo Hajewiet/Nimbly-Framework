@@ -1,9 +1,6 @@
 
-<a href='#' class="nb-button" data-upload='{"preview": "#nb-single-file-preview", "autoselect": "true"}'>
-	Upload
-</a>
+<a href='#' class="nb-button" data-upload='{"preview": "#nb-single-file-preview", "autoselect": "true"}'>Upload</a>
 <div id="nb-single-file-preview"></div>
-
 
 <template id="nb-row">
 	<tr data-uuid="(uuid)">
@@ -28,7 +25,6 @@
 		</td>
 	</tr>
 </template>
-
 
 <script>
 	$script.ready('jquery', function() {

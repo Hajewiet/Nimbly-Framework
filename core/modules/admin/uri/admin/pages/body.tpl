@@ -1,4 +1,4 @@
-<section class="nb-container">
+
     <h1>Pages</h1>
     <a href="[base-url]/admin/pages/add" class="nb-button">Add Page</a>
     [get-pages]
@@ -15,4 +15,3 @@
       [repeat data.pages]
       </tbody>
     </table>
-</section>
