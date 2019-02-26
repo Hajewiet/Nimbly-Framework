@@ -28,6 +28,7 @@ p {
 }
 
 .nb-form {
+    max-width: 680px;
 
     input {
         &[type="text"],
@@ -149,7 +150,7 @@ p {
     height: 32px;
     line-height: 32px;
     border-radius: 4px;
-    color: #fff;
+    color: #fff !important;
     background-color: $admin-green;
     padding: 0 20px;
     border: none;
