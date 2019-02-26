@@ -4,8 +4,8 @@
 	[repeat data.user-resources]
 </ul>
 <ul class="nb-menu">
-	[set admin-menu-item=]
-    [admin-menu-item]
+	[set admin-menu-extend=]
+    [admin-menu-extend]
 	<li><a href="[base-url]/admin/debug">Debug</a></li>
 </ul>
 <ul class="nb-menu light nb-close" id="edit-menu">
