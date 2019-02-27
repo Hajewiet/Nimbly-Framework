@@ -103,8 +103,12 @@ function data_read($resource, $uuid = null, $field = null) {
         }
         return null;
     }
-    $result['_modified'] = filemtime($file);
-    $result['_created'] = filectime($file);
+    if (!isset($result['_modified'])) {
+        $result['_modified'] = filemtime($file);
+    }
+    if (!isset($result['_created'])) {
+        $result['_created'] = filectime($file);
+    }
     return $result;
 }
 
@@ -189,6 +193,7 @@ function data_update($resource, $uuid, $data_update_ls) {
     load_library('md5');
     load_library('username', 'user');
     $data_merged_ls['_modified_by'] = md5_uuid(username_get());
+    $data_merged_ls['_modified'] = time();
 
     if (data_create($resource, $uuid, $data_merged_ls)) {
         return $data_merged_ls;
@@ -231,6 +236,10 @@ function data_create($resource, $uuid, $data_ls) {
         load_library('md5');
         load_library('username', 'user');
         $data_ls['_created_by'] = md5_uuid(username_get());
+    }
+    if (!isset($data_ls['_created'])) {
+        $data_ls['_created'] = time();
+        $data_ls['_modified'] = time();
     }
     $json_data = json_encode($data_ls, JSON_UNESCAPED_UNICODE);
     return @file_put_contents($file, $json_data) !== false;
