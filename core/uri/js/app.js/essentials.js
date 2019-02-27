@@ -338,6 +338,15 @@ function system_notification(msg) {
     }, 1500);
 }
 
+function nb_populate_template(tpl_id, context) {
+    var result = $('#' + tpl_id).html();
+    for (v in context) {
+        const re = new RegExp('\\(\\(' + v + '\\)\\)', 'g')
+        result = result.replace(re, context[v]);
+    }
+    return result;
+}
+
 /*
  * Lazy image loading
  */
