@@ -1,6 +1,7 @@
 <?php
 
-$GLOBALS['SYSTEM']['session_lifetime'] = 4 * 3600; //4 hours
+$GLOBALS['SYSTEM']['session_lifetime'] = 24 * 60 * 60; //24 hours
+$GLOBALS['SYSTEM']['session_regentime'] = 24 * 60; //24 minutes
 
 /**
  * Implements session sc
@@ -39,7 +40,12 @@ function session_sc() {
         return;
     }
 
-    //4. update session
+    //4. regen session id
+    if ($GLOBALS['SYSTEM']['request_time'] >= $_SESSION['modified'] + $GLOBALS['SYSTEM']['session_regentime']) {
+        session_regenerate_id(true);
+    }
+
+    //5. update session
     $_SESSION['modified'] = $_SERVER['REQUEST_TIME'];
 }
 
