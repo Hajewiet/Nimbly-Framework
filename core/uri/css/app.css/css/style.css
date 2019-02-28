@@ -189,9 +189,11 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 .nb-img-grid[data-select] img.selected { border: 1px solid #333333; }
 
-a.edit-img-icon, a.clear-img-icon { position: absolute; right: 0; bottom: 0; width: 30px; height: 30px; background: #333333; opacity: .8; line-height: 22px; color: #fff; text-decoration: none; text-align: center; font-weight: 700; }
+a.edit-img-icon, a.clear-img-icon { position: absolute; right: 5px; }
 
-a.clear-img-icon { bottom: 32px; line-height: 30px; }
+a.edit-img-icon { top: 5px; }
+
+a.clear-img-icon { top: 40px; }
 
 a.editor.add-img-icon { position: absolute; width: 30px; height: 30px; left: -30px; opacity: .8; text-decoration: none; line-height: 30px; text-align: center; font-weight: bold; font-size: 20px; display: none; }
 

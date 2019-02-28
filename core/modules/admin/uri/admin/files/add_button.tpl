@@ -10,17 +10,15 @@
 		<td>(name)</td>
 		<td>(type)</td>
 		<td>
-			<a
+			<a class="nb-button icon-button delete"
 				data-confirm="File `(name)` will be deleted! Are you sure?"
 				data-delete=".files/(uuid)"
 				data-done='{
 				"hide": "\[data-uuid=(uuid)]",
 				"msg": "File `(name)` deleted successfully"
-				}'>
-				delete
-			</a>
+				}'></a>
 
-			<a href="[base-url]/admin/files/(uuid)">edit</a>
+			<a class="nb-button icon-button edit" href="[base-url]/admin/files/(uuid)"></a>
 
 		</td>
 	</tr>
