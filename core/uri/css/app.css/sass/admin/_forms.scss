@@ -151,15 +151,34 @@ p {
     line-height: 32px;
     border-radius: 4px;
     color: #fff !important;
-    background-color: $admin-green;
+    background-color: $admin-blue;
     padding: 0 20px;
     border: none;
     margin: 5px 5px 10px 0;
     display: inline-block;
     text-decoration: none;
 
+    &.green {
+        background-color: $admin-green;
+    }
+
     &.delete {
         background-color: $admin-red;
+    }
+
+    &.icon-button {
+        width: 32px;
+        background-position: center;
+        background-size: 24px 24px;
+        background-repeat: no-repeat;
+    }
+
+    &.edit {
+        background-image: url('[base-url]/img/icon-edit.svg')
+    }
+
+    &.delete {
+        background-image: url('[base-url]/img/icon-delete.svg')
     }
 }
 
