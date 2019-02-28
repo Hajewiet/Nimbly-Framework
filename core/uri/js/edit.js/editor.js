@@ -365,7 +365,7 @@ editor.enable_img = function(elem, ix) {
         img_uuid +
         '", "resource_uuid": "' +
         resource_uuid +
-        '"}\'>...</a>'
+        '"}\'></a>'
     );
 };
 
