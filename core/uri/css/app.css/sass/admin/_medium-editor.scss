@@ -55,22 +55,15 @@
 
 a.edit-img-icon, a.clear-img-icon {
     position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 30px;
-    height: 30px;
-    background: $admin-dark;
-    opacity: .8;
-    line-height: 22px;
-    color: #fff;
-    text-decoration: none;
-    text-align: center;
-    font-weight: 700;
+    right: 5px;
+}
+
+a.edit-img-icon {
+    top: 5px;
 }
 
 a.clear-img-icon {
-  bottom: 32px;
-  line-height: 30px;
+    top: 40px;
 }
 
 a.editor.add-img-icon {

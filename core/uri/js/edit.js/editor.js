@@ -348,18 +348,20 @@ editor.enable_img = function(elem, ix) {
     elem
       .parent()
       .append(
-        '<a href="#" class="clear-img-icon nb-close" data-clear-img>❌</a>'
+        '<a href="#" class="clear-img-icon nb-button icon-button nb-close" data-clear-img></a>'
       );
   } else {
     elem
       .parent()
-      .append('<a href="#" class="clear-img-icon" data-clear-img>❌</a>');
+      .append(
+        '<a href="#" class="clear-img-icon nb-button icon-button delete" data-clear-img></a>'
+      );
   }
 
   elem
     .parent()
     .append(
-      '<a href="#" class="edit-img-icon" data-modal=\'{"url": "img-select", "uid": "' +
+      '<a href="#" class="edit-img-icon nb-button icon-button edit" data-modal=\'{"url": "img-select", "uid": "' +
         img_uuid +
         '", "resource_uuid": "' +
         resource_uuid +
