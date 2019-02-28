@@ -38,11 +38,11 @@ p { font-size: 14px; }
 
 .nb-button.delete { background-color: #9f1010; }
 
-.nb-button.icon-button { width: 32px; background-position: center; background-size: 24px 24px; background-repeat: no-repeat; }
+.nb-button.icon-button { width: 32px; padding: 0; border-radius: 16px; background-position: center; background-size: 20px 20px; background-repeat: no-repeat; }
 
-.nb-button.edit { background-image: url("[base-url]/img/icon-edit.svg"); }
+.nb-button.edit { background-image: url("../img/icon-edit.svg"); }
 
-.nb-button.delete { background-image: url("[base-url]/img/icon-delete.svg"); }
+.nb-button.delete { background-image: url("../img/icon-delete.svg"); }
 
 td .nb-button, th .nb-button { margin: 0 5px 0 0; }
 

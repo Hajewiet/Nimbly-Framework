@@ -168,17 +168,19 @@ p {
 
     &.icon-button {
         width: 32px;
+        padding: 0;
+        border-radius: 16px;
         background-position: center;
-        background-size: 24px 24px;
+        background-size: 20px 20px;
         background-repeat: no-repeat;
     }
 
     &.edit {
-        background-image: url('[base-url]/img/icon-edit.svg')
+        background-image: url('../img/icon-edit.svg')
     }
 
     &.delete {
-        background-image: url('[base-url]/img/icon-delete.svg')
+        background-image: url('../img/icon-delete.svg')
     }
 }
 
