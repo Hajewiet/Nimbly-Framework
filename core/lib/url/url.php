@@ -1,6 +1,6 @@
 <?php
 
-function url_sc($params) {
+function url_sc($params=null) {
 
 	if (empty($params)) {
 		return $GLOBALS['SYSTEM']['uri_base'] . $GLOBALS['SYSTEM']['request_uri'];
