@@ -32,7 +32,7 @@ p { font-size: 14px; }
 
 .nb-form .nb-gallery-field .editor.img-wrapper { margin: 0; }
 
-.nb-button { font-family: sans-serif; font-size: 14px; -webkit-appearance: none; -moz-appearance: none; height: 32px; line-height: 32px; border-radius: 4px; color: #fff !important; background-color: #0074D9; padding: 0 20px; border: none; margin: 5px 5px 10px 0; display: inline-block; text-decoration: none; }
+.nb-button { font-family: sans-serif; font-size: 14px; font-weight: bold; -webkit-appearance: none; -moz-appearance: none; height: 32px; line-height: 32px; border-radius: 4px; color: #fff !important; background-color: #0074D9; padding: 0 20px; border: none; margin: 5px 5px 10px 0; display: inline-block; text-decoration: none; }
 
 .nb-button.green { background-color: #338e2d; }
 
@@ -165,7 +165,7 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 #nimblybar .nimbly-logo { position: fixed; z-index: 2000; bottom: 40px; right: -20px; height: 24px; width: auto; -webkit-transform: rotate(90deg); transform: rotate(90deg); }
 
-.nb-menu { margin-bottom: 30px; border-bottom: 1px solid rgba(0, 0, 0, 0.2); padding: 0; font-family: 'helvetica', sans-serif; }
+.nb-menu { margin-bottom: 20px; border-bottom: 1px solid rgba(0, 0, 0, 0.2); padding: 0 0 20px; font-family: 'helvetica', sans-serif; }
 
 .nb-menu li { list-style-type: none; margin: 0; font-family: 'helvetica', sans-serif; }
 
