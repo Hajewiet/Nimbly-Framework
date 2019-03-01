@@ -51,22 +51,6 @@ p {
             vertical-align: top;
         }
 
-        &[type="submit"] {
-            font-family: $admin-text;
-            font-size: 14px;
-            font-weight: bold;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            height: 32px;
-            border-radius: 4px;
-            color: #fff;
-            background-color: $admin-blue;
-            padding: 0 20px;
-            border: none;
-            margin: 5px 5px 20px 0;
-            vertical-align: top;
-        }
-
         &:focus {
             outline: 0;
         }
@@ -143,7 +127,8 @@ p {
 
 }
 
-.nb-button {
+.nb-button,
+input[type="submit"] {
     font-family: $admin-text;
     font-size: 14px;
     font-weight: bold;
