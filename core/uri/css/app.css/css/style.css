@@ -10,8 +10,6 @@ p { font-size: 14px; }
 
 .nb-form input[type="text"], .nb-form input[type="email"], .nb-form input[type="number"], .nb-form input[type="password"], .nb-form input[type="search"], .nb-form input[type="date"] { font-family: sans-serif; font-size: 14px; -webkit-appearance: none; -moz-appearance: none; background-color: #fff; border: 1px solid #ccc; border-radius: 4px; height: 32px; padding: 0 10px; width: 100%; margin: 5px 0 20px; vertical-align: top; }
 
-.nb-form input[type="submit"] { font-family: sans-serif; font-size: 14px; font-weight: bold; -webkit-appearance: none; -moz-appearance: none; height: 32px; border-radius: 4px; color: #fff; background-color: #0074D9; padding: 0 20px; border: none; margin: 5px 5px 20px 0; vertical-align: top; }
-
 .nb-form input:focus { outline: 0; }
 
 .nb-form select { font-family: sans-serif; font-size: 14px; -webkit-appearance: none; -moz-appearance: none; background-color: #fff; border: 1px solid #ccc; border-radius: 4px; height: 32px; padding: 6px 10px; width: 100%; margin: 5px 0 20px; background-image: url("../img/down.svg"); background-repeat: no-repeat; background-position: right 15px center; background-size: 10px 5px; vertical-align: top; }
@@ -32,17 +30,17 @@ p { font-size: 14px; }
 
 .nb-form .nb-gallery-field .editor.img-wrapper { margin: 0; }
 
-.nb-button { font-family: sans-serif; font-size: 14px; font-weight: bold; -webkit-appearance: none; -moz-appearance: none; height: 32px; line-height: 32px; border-radius: 4px; color: #fff !important; background-color: #0074D9; padding: 0 20px; border: none; margin: 5px 5px 10px 0; display: inline-block; text-decoration: none; }
+.nb-button, input[type="submit"] { font-family: sans-serif; font-size: 14px; font-weight: bold; -webkit-appearance: none; -moz-appearance: none; height: 32px; line-height: 32px; border-radius: 4px; color: #fff !important; background-color: #0074D9; padding: 0 20px; border: none; margin: 5px 5px 10px 0; display: inline-block; text-decoration: none; }
 
-.nb-button.green { background-color: #338e2d; }
+.nb-button.green, input[type="submit"].green { background-color: #338e2d; }
 
-.nb-button.delete { background-color: #9f1010; }
+.nb-button.delete, input[type="submit"].delete { background-color: #9f1010; }
 
-.nb-button.icon-button { width: 32px; padding: 0; border-radius: 16px; background-position: center; background-size: 20px 20px; background-repeat: no-repeat; }
+.nb-button.icon-button, input[type="submit"].icon-button { width: 32px; padding: 0; border-radius: 16px; background-position: center; background-size: 20px 20px; background-repeat: no-repeat; }
 
-.nb-button.edit { background-image: url("../img/icon-edit.svg"); }
+.nb-button.edit, input[type="submit"].edit { background-image: url("../img/icon-edit.svg"); }
 
-.nb-button.delete { background-image: url("../img/icon-delete.svg"); }
+.nb-button.delete, input[type="submit"].delete { background-image: url("../img/icon-delete.svg"); }
 
 td .nb-button, th .nb-button { margin: 0 5px 0 0; }
 
