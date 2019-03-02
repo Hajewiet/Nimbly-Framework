@@ -1,8 +1,16 @@
-.mobile-menu {
+#off-left-panel {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 300px;
     height: 100vh;
+    background: #fff;
 }
 
+.mobile-menu {
+    padding: 20px;
+}
 
 .nb-menu {
     margin-bottom: 20px;
