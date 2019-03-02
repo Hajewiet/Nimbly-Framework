@@ -137,7 +137,7 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
   100% { -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
 
-.nb-callout, .nb-notification { position: absolute; right: 0; background: #fffdcf; padding: 20px; -webkit-box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.2); box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.2); width: 330px; margin: 20px; }
+.nb-callout, .nb-notification { position: absolute; right: 0; background: #fffdcf; padding: 20px; -webkit-box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.2); box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.2); width: 330px; margin: 20px; z-index: 10000; }
 
 .nb-callout p, .nb-notification p { margin: 0; padding: 0; line-height: 1.4; }
 
