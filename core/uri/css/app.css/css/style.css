@@ -163,6 +163,8 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 #nimblybar .nimbly-logo { position: fixed; z-index: 2000; bottom: 40px; right: -20px; height: 24px; width: auto; -webkit-transform: rotate(90deg); transform: rotate(90deg); }
 
+.mobile-menu { width: 300px; height: 100vh; }
+
 .nb-menu { margin-bottom: 20px; border-bottom: 1px solid #595959; padding: 0 0 20px; font-family: 'helvetica', sans-serif; }
 
 .nb-menu li { list-style-type: none; margin: 0; font-family: 'helvetica', sans-serif; }
