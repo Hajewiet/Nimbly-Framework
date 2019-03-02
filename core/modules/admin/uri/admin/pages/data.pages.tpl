@@ -3,7 +3,6 @@
       <td>[item.env]</td>
       <td>[item.module]</td>
       <td>
-            [if item.env=ext item.module=root tpl=action.delete]
-            [if item.env=ext item.module=root tpl=action.edit]
+            [if item.env=ext item.module=root tpl=action.delete][if item.env=ext item.module=root tpl=action.edit]
       </td>
 </tr>
