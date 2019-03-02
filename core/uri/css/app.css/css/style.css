@@ -163,9 +163,15 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 #nimblybar .nimbly-logo { position: fixed; z-index: 2000; bottom: 40px; right: -20px; height: 24px; width: auto; -webkit-transform: rotate(90deg); transform: rotate(90deg); }
 
-#off-left-panel { position: absolute; top: 0; left: 0; width: 300px; height: 100vh; background: #fff; z-index: 10000; }
+#off-left-panel { position: absolute; top: 0; width: 300px; height: 100vh; background: #fff; z-index: 10000; -webkit-box-shadow: 10px 0px 15px 0px rgba(0, 0, 0, 0.2); box-shadow: 10px 0px 15px 0px rgba(0, 0, 0, 0.2); -webkit-transition: left 0.3s ease; transition: left 0.3s ease; }
+
+#off-left-panel.nb-close { left: -300px; }
+
+#off-left-panel.nb-open { left: 0; }
 
 .mobile-menu { padding: 20px; }
+
+.mobile-menu li { padding-bottom: 20px; }
 
 .nb-menu { margin-bottom: 20px; border-bottom: 1px solid #595959; padding: 0 0 20px; font-family: 'helvetica', sans-serif; }
 
