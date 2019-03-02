@@ -1,6 +1,7 @@
 .nb-callout,
 .nb-notification {
-    position: absolute;
+    position: fixed;
+    top: 0;
     right: 0;
     background: #fffdcf;
     padding: 20px;
