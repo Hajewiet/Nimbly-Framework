@@ -1,6 +1,7 @@
 body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    margin: 0;
 }
 
 .logged-in {
@@ -12,9 +13,6 @@ body {
 }
 
 .admin-wrapper {
-    width: 90%;
-    margin: 0 auto;
-    padding: 20px 0;
     display: flex;
     font-family: $admin-text;
     color: $admin-dark;
@@ -33,21 +31,24 @@ body {
 }
 
 .admin-body {
-    padding: 0 20px 0 0;
-    flex: 1;
 
-    @include breakpoint(tablet) {
-        flex: 4;
+    .admin-content {
+        max-width: 680px;
+        margin: 20px auto;
     }
 
     p {
         padding: 0 0 30px;
-        max-width: 680px;
         line-height: 1.6;
+    }
+
+    @include breakpoint(tablet) {
+        flex: 4;
     }
 }
 
 .admin-sidebar {
-    padding: 0 0 0 20px;
+    padding: 20px;
     flex: 1;
+    background-color: $admin-dark;
 }

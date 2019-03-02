@@ -21,7 +21,9 @@
         <div class="admin-wrapper">
             <div class="admin-body">
                 [callouts]
+                <div class="admin-content">
                 [body]
+                </div>
             </div>
             <div class="admin-sidebar">                
                 [role-cond admin tpl=admin-menu]
