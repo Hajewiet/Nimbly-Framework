@@ -20,6 +20,7 @@
     <body class="[body-classes]">
         [role-cond user tpl=user-bar]
         [callouts]
+        [mobile-menu]
         [header]
         [body]
         [footer]
