@@ -1,6 +1,6 @@
 .nb-menu {
     margin-bottom: 20px;
-    border-bottom: 1px solid rgba(0,0,0,0.20);
+    border-bottom: 1px solid $admin-medium;
     padding: 0 0 20px;
     font-family: 'helvetica', sans-serif;
 
@@ -11,12 +11,11 @@
 
         a {
             display: block;
-            color: $admin-blue;
+            color: #fff;
             width: 100%;
             line-height: 30px;
             padding: 10px 20px;
             text-decoration: none;
-            font-weight: bold;
         }
     }
 }
