@@ -1,24 +1,32 @@
 #off-left-panel {
     position: absolute;
     top: 0;
-    width: 300px;
+    left: 0;
     height: 100vh;
     background: #fff;
     z-index: 10000;
     box-shadow: 10px 0px 15px 0px rgba(0,0,0,0.2);
-    transition: left 0.3s ease;
+    transition: width 0.3s ease;
+    overflow: hidden;
 
     &.nb-close {
-        left: -300px;
+        width: 0;
     }
 
     &.nb-open {
-        left: 0;
+        width: 300px;
+
+        .mobile-menu {
+            opacity: 1;
+        }
     }
 }
 
 .mobile-menu {
     padding: 20px;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 
     li {
         padding-bottom: 20px;
