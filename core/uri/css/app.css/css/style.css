@@ -163,13 +163,15 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 #nimblybar .nimbly-logo { position: fixed; z-index: 2000; bottom: 40px; right: -20px; height: 24px; width: auto; -webkit-transform: rotate(90deg); transform: rotate(90deg); }
 
-#off-left-panel { position: absolute; top: 0; width: 300px; height: 100vh; background: #fff; z-index: 10000; -webkit-box-shadow: 10px 0px 15px 0px rgba(0, 0, 0, 0.2); box-shadow: 10px 0px 15px 0px rgba(0, 0, 0, 0.2); -webkit-transition: left 0.3s ease; transition: left 0.3s ease; }
+#off-left-panel { position: absolute; top: 0; left: 0; height: 100vh; background: #fff; z-index: 10000; -webkit-box-shadow: 10px 0px 15px 0px rgba(0, 0, 0, 0.2); box-shadow: 10px 0px 15px 0px rgba(0, 0, 0, 0.2); -webkit-transition: width 0.3s ease; transition: width 0.3s ease; overflow: hidden; }
 
-#off-left-panel.nb-close { left: -300px; }
+#off-left-panel.nb-close { width: 0; }
 
-#off-left-panel.nb-open { left: 0; }
+#off-left-panel.nb-open { width: 300px; }
 
-.mobile-menu { padding: 20px; }
+#off-left-panel.nb-open .mobile-menu { opacity: 1; }
+
+.mobile-menu { padding: 20px; overflow: hidden; opacity: 0; -webkit-transition: opacity 0.3s ease; transition: opacity 0.3s ease; }
 
 .mobile-menu li { padding-bottom: 20px; }
 
