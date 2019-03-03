@@ -81,7 +81,13 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 .nb-gallery-field img, .nb-form .nb-gallery-field .editor.img-wrapper img { max-width: 150px; max-height: 150px; }
 
-.icon, .icon-nav, .icon-gear, .icon-edit { background-size: 24px 24px; background-position: center; background-repeat: no-repeat; width: 32px; height: 32px; display: inline-block; line-height: 36px; }
+.nb-icon { background-size: 24px 24px; background-position: center; background-repeat: no-repeat; width: 32px; height: 32px; display: inline-block; line-height: 36px; }
+
+.nb-icon-close { background-image: url("../img/icon-close-dark.svg"); }
+
+.nb-icon-edit { background-image: url("../img/icon-edit-white.svg"); }
+
+.nb-icon-admin { background-image: url("../img/icon-gear-white.svg"); }
 
 [data-close], [data-open], [data-toggle], [data-delete], [data-post], [data-put], [data-link], [data-onclick], [data-get] { cursor: pointer; }
 
@@ -157,21 +163,19 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 #nimblybar { position: fixed; top: 0; right: 0; bottom: 0; width: 30px; background: #0074D9; z-index: 1000; }
 
-#nimblybar .icon { margin: 0; margin-top: 4px; }
-
-#nimblybar .icon-edit { background-image: url("../img/icon-edit-white.svg"); }
-
-#nimblybar .icon-gear { background-image: url("../img/icon-gear-white.svg"); background-size: 22px 22px; }
+#nimblybar .nb-icon { margin: 4px 0 0; }
 
 #nimblybar .nimbly-logo { position: fixed; z-index: 2000; bottom: 40px; right: -20px; height: 24px; width: auto; -webkit-transform: rotate(90deg); transform: rotate(90deg); }
 
-#off-left-panel { position: absolute; display: block !important; top: 0; left: 0; height: 100vh; background: #fff; z-index: 10000; -webkit-box-shadow: 10px 0px 15px 0px rgba(0, 0, 0, 0.2); box-shadow: 10px 0px 15px 0px rgba(0, 0, 0, 0.2); -webkit-transition: width 0.15s ease; transition: width 0.15s ease; overflow: hidden; }
+#off-left-panel { position: absolute; display: block !important; top: 0; left: 0; height: 100vh; background: #fff; z-index: 10000; -webkit-box-shadow: 10px 0px 15px 0px rgba(0, 0, 0, 0.2); box-shadow: 10px 0px 15px 0px rgba(0, 0, 0, 0.2); -webkit-transition: width 0.15s ease; transition: width 0.15s ease; overflow: hidden; position: relative; }
 
 #off-left-panel.nb-close { width: 0; }
 
 #off-left-panel.nb-open { width: 300px; }
 
 #off-left-panel.nb-open .mobile-menu { opacity: 1; }
+
+#off-left-panel .menu-closer { position: absolute; top: 20px; right: 40px; width: 30px; height: 30px; display: block; background-image: url("../img/icon-close-dark.svg"); background-position: center; background-repeat: no-repeat; background-size: 24px 24px; }
 
 .mobile-menu { padding: 20px; overflow: hidden; opacity: 0; -webkit-transition: opacity 0.3s ease; transition: opacity 0.3s ease; }
 

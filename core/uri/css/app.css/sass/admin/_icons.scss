@@ -1,7 +1,4 @@
-.icon,
-.icon-nav, 
-.icon-gear, 
-.icon-edit {
+.nb-icon {
     background-size: 24px 24px;
     background-position: center;
     background-repeat: no-repeat;
@@ -9,6 +6,18 @@
     height: 32px;
     display: inline-block;
     line-height: 36px;
+}
+
+.nb-icon-close {
+    background-image: url('../img/icon-close-dark.svg');
+}
+
+.nb-icon-edit {
+    background-image: url('../img/icon-edit-white.svg');
+}
+
+.nb-icon-admin {
+    background-image: url('../img/icon-gear-white.svg');
 }
 
 [data-close], 
