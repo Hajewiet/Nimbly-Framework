@@ -185,7 +185,7 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 .nb-menu li { list-style-type: none; margin: 0; font-family: 'helvetica', sans-serif; }
 
-.nb-menu li a { display: block; color: #fff; width: 100%; line-height: 30px; padding: 10px 20px; text-decoration: none; }
+.nb-menu li a { display: block; color: #fff; width: 100%; line-height: 30px; padding: 0 20px; text-decoration: none; }
 
 [contenteditable=true], .editor.img-wrapper { background-color: #ebfce9; }
 
