@@ -9,6 +9,7 @@
     box-shadow: 10px 0px 15px 0px rgba(0,0,0,0.2);
     transition: width 0.15s ease;
     overflow: hidden;
+    position: relative;
 
     &.nb-close {
         width: 0;
@@ -20,6 +21,19 @@
         .mobile-menu {
             opacity: 1;
         }
+    }
+
+    .menu-closer {
+        position: absolute;
+        top: 20px;
+        right: 40px;
+        width: 30px;
+        height: 30px;
+        display: block;
+        background-image: url('../img/icon-close-dark.svg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 24px 24px;
     }
 }
 
