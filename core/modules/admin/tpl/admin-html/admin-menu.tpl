@@ -1,4 +1,7 @@
 <ul class="nb-menu">
+    <li><a href="[base-url]/">Site home</a></li>
+</ul>
+<ul class="nb-menu">
     <li><a href="[base-url]/admin/resources">Resources</a></li>
     [get-user-resources]
 	[repeat data.user-resources]
