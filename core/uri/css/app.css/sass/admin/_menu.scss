@@ -3,7 +3,6 @@
     display: block !important;
     top: 0;
     left: 0;
-    height: 100vh;
     background: #fff;
     z-index: 10000;
     box-shadow: 10px 0px 15px 0px rgba(0,0,0,0.2);
@@ -13,10 +12,12 @@
 
     &.nb-close {
         width: 0;
+        height: 0;
     }
 
     &.nb-open {
         width: 300px;
+        height: 100vh;
 
         .mobile-menu {
             opacity: 1;
