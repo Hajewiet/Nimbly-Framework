@@ -48,6 +48,8 @@ td .nb-button, th .nb-button { margin: 0 5px 0 0; }
 
 body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; margin: 0; }
 
+.admin-page { background-color: #fff; font-family: sans-serif; }
+
 .logged-in.admin body { margin-right: 30px; }
 
 .admin-wrapper { display: -webkit-box; display: -ms-flexbox; display: flex; font-family: sans-serif; color: #333333; }
