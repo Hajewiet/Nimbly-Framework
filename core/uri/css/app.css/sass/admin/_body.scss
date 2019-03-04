@@ -9,8 +9,11 @@ body {
 }
 
 .admin-page {
-    background-color: #fff;
-    font-family: $admin-text;
+
+    body {
+        background-color: #fff;
+        font-family: $admin-text;
+    }
 }
 
 .logged-in {
