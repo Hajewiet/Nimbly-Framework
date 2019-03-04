@@ -8,6 +8,11 @@ body {
     margin: 0;
 }
 
+.admin-page {
+    background-color: #fff;
+    font-family: $admin-text;
+}
+
 .logged-in {
     &.admin {
         body {
