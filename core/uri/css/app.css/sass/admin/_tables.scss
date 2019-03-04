@@ -11,6 +11,7 @@
         text-align: left;
         font-family: $admin-text;
         vertical-align: middle;
+        word-wrap: anywhere;
 
         &:first-child {
             padding-left: 0; 
