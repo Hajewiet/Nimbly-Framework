@@ -1,4 +1,4 @@
-<div class="login-view">
+<div class="login-container">
     <h1>Log in</h1>
     <form name="login" action="[url]" method="post" accept-charset="utf-8" class="nb-form">
         [form-key login]
