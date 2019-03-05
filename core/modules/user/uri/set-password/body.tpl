@@ -1,4 +1,4 @@
-<div class="login-view">
+<div class="login-container">
     <h1>Set password</h1>
     <form name="set-password" action="[url]?user=[get user]&key=[get key]" method="post" accept-charset="utf-8">
         [form-key set-password]
