@@ -15,6 +15,7 @@ uploader.init_uploader = function(elem, uid) {
     opts.file_reader = new FileReader();
     opts.file_reader.onload = function(e) {
         uploader.handle_load(e, opts);
+        elem.prop('disabled', true);
     }
     $('#' + uid).change(function(e) {
         uploader.handle_change(e, opts);
@@ -98,7 +99,11 @@ uploader.upload_file = function(opts, file) {
 
 $('body').on('click', '[data-upload]', function(e) {
     e.preventDefault();
+    $this = $(this);
+    if ($this.prop('disabled')) {
+        return;
+    }
     var uid = uploader.unique_id();
-    uploader.init_uploader($(this), uid);
+    uploader.init_uploader($this, uid);
     var r = $('#' + uid).click();
 });
