@@ -46,6 +46,8 @@ td .nb-button, th .nb-button { margin: 0 5px 0 0; }
 
 .login-view { width: 350px; margin: 40px auto 80px; }
 
+.login-view h1 { padding: 0 0 30px; }
+
 * { -webkit-box-sizing: border-box; box-sizing: border-box; }
 
 body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; margin: 0; }
