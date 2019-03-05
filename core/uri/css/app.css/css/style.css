@@ -189,7 +189,7 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 .nb-menu li a { display: block; color: #fff; width: 100%; line-height: 30px; padding: 0 20px; text-decoration: none; }
 
-[contenteditable=true], .editor.img-wrapper { background-color: #ebfce9; }
+[contenteditable=true], .editor.img-wrapper { background-color: #ebfce966; }
 
 .uploader.img-wrapper, .editor.img-wrapper { display: inline-block; overflow: hidden; background: #eee; position: relative; max-width: 100%; }
 
