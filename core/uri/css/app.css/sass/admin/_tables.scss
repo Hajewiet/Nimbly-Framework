@@ -3,21 +3,22 @@
     width: 100%;
     font-family: $admin-text;
     margin-bottom: 30px;
+
+    tr:nth-child(even) {
+        td {
+            background-color: #f3f3f3;
+        }
+    }
     
     td,
     th {
-        border-bottom: 1px solid #ddd;
         padding: 12px 15px;
         text-align: left;
+        font-size: 14px;
         font-family: $admin-text;
         vertical-align: middle;
 
-        &:first-child {
-            padding-left: 0; 
-        }
-
         &:last-child {
-            padding-right: 0;
             white-space: nowrap;
         }
 

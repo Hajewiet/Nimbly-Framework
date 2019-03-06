@@ -230,7 +230,7 @@ a.editor.add-img-icon { position: absolute; width: 30px; height: 30px; left: -30
 
 .medium-toolbar-arrow-over:before { top: -8px; border-color: transparent transparent #333333 transparent; }
 
-.medium-editor-toolbar { background-color: #333333; }
+.medium-editor-toolbar { background-color: #333333; border-radius: 4px; -webkit-box-shadow: 0px 5px 15px #0000004f; box-shadow: 0px 5px 15px #0000004f; }
 
 .medium-editor-toolbar li { padding: 0; }
 
@@ -260,11 +260,11 @@ a.editor.add-img-icon { position: absolute; width: 30px; height: 30px; left: -30
 
 .nb-table { border-spacing: 0; width: 100%; font-family: sans-serif; margin-bottom: 30px; }
 
-.nb-table td, .nb-table th { border-bottom: 1px solid #ddd; padding: 12px 15px; text-align: left; font-family: sans-serif; vertical-align: middle; }
+.nb-table tr:nth-child(even) td { background-color: #f3f3f3; }
 
-.nb-table td:first-child, .nb-table th:first-child { padding-left: 0; }
+.nb-table td, .nb-table th { padding: 12px 15px; text-align: left; font-size: 14px; font-family: sans-serif; vertical-align: middle; }
 
-.nb-table td:last-child, .nb-table th:last-child { padding-right: 0; white-space: nowrap; }
+.nb-table td:last-child, .nb-table th:last-child { white-space: nowrap; }
 
 .nb-table td a, .nb-table th a { color: #0074D9; text-decoration: none; }
 
