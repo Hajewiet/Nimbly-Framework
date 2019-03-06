@@ -195,10 +195,10 @@ th {
     }
 
     .nimbly-logo {
-        position: fixed;
+        position: absolute;
         z-index: 2000;
         bottom: 40px;
-        right: -20px;
+        right: -50px;
         height: 24px;
         width: auto;
         transform: rotate(90deg);
