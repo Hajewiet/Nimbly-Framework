@@ -78,7 +78,7 @@ function render_create_template($tpl_name) {
             $btns = "bold,italic";
             break;
         case 'content':
-            $btns = "bold,italic,anchor,quote,orderedlist,unorderedlist";
+            $btns = "h1,h2,h3,bold,italic,anchor,quote,orderedlist,unorderedlist";
             break;
         default:
             $btns = "";
