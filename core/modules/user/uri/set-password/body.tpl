@@ -18,4 +18,5 @@
         <input type="submit" value="Create password" class="button expanded"  />
         [form-error]
     </form>
+    <img src="[base-url]/img/nimbly-logo.svg" class="nimbly-logo" data-link='[base-url]/' alt="nimbly">
 </div>
