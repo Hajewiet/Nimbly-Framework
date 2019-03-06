@@ -44,7 +44,7 @@ p { font-size: 14px; }
 
 td .nb-button, th .nb-button { margin: 0 5px 0 0; }
 
-.login-container { width: 350px; margin: 40px auto 80px; width: 350px; margin: 40px auto 80px; border-radius: 6px; padding: 40px; border-right: 30px solid #0073e1; background-color: #fff; -webkit-box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.25); box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.25); position: relative; }
+.login-container { width: 350px; margin: 40px auto 80px; border-radius: 6px; padding: 40px; border-right: 30px solid #0073e1; background-color: #fff; -webkit-box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.25); box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.25); position: relative; }
 
 .login-container h1 { padding: 0 0 30px; }
 
