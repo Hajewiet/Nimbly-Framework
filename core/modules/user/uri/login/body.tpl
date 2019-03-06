@@ -13,4 +13,5 @@
         <input type="submit" value="Log In" class="nb-button"  />
         [form-error]
     </form>
+    <img src="[base-url]/img/nimbly-logo.svg" class="nimbly-logo" data-link='[base-url]/' alt="nimbly">
 </div>
