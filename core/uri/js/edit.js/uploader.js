@@ -7,7 +7,6 @@ uploader.init_uploader = function(elem, uid) {
     return;
   }
   var settings = elem.data('upload');
-  console.log('uploader.init_uploader', elem, uid, settings);
   opts = {
     uid: uid,
     field: settings.field,
@@ -86,7 +85,6 @@ uploader.clear_img = function(e) {
 };
 
 uploader.handle_change = function(e, opts) {
-  console.log('uploader.handle_change', e, opts);
   var files = e.target.files || e.dataTransfer.files;
   if (!files || files.length !== 1) {
     return;
@@ -98,7 +96,6 @@ uploader.handle_change = function(e, opts) {
 };
 
 uploader.handle_load = function(e, opts) {
-  console.log('handle_load', e, opts);
   opts.img_preview = e.target.result;
   elem = $(opts.elem);
   if (elem.is('img')) {
@@ -155,15 +152,14 @@ uploader.upload_file = function(opts, file) {
       }
       return myXhr;
     },
-  })
-    .done(function(json) {
+  }).done(function(json) {
       uploader.set_progress(opts.uid, 100, 'Done');
       if (opts.field) {
         $('#' + opts.uid + '-field').text(json.files.uuid);
       }
-      $('#preview_' + opts.uid).attr('data-uuid', json.files.uuid);
+      //$('#preview_' + opts.uid).attr('data-uuid', json.files.uuid);
       if (opts.trigger) {
-        $('#preview_' + opts.uid).trigger('autoselect', json.files);
+        $(document).trigger(opts.trigger, json.files);
       }
     })
     .fail(function() {

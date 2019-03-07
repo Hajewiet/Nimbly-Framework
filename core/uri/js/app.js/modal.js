@@ -50,7 +50,8 @@ $('body').on('keyup', function(e) {
 });
 
 // handle modal autoselect
-$('body').on('autoselect', '#modal [data-select] [data-uuid]', function (e, opts) {
+$(document).on('modal_img_autoselect', function (e, opts) {
+    $(e.target).data('uuid', opts.uuid);
     modal.handle_select($(e.target));
 });
 
