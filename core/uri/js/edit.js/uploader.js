@@ -3,37 +3,57 @@ var uploader = {};
 uploader.count = 0;
 
 uploader.init_uploader = function(elem, uid) {
-    var init_done = $(this).data('uid');
-    opts = elem.data('upload');
-    elem.attr('id', 'preview-' + uid);
-    if (!opts) {
-        uploader.wrap_progress_bar(elem, uid);
-        opts = {"preview":"#preview-" + uid }
+    var settings = elem.data('upload');
+    console.log('uploader.init_uploader', elem, uid, settings);
+    opts = {
+        'uid': uid,
+        'field': settings.field,
+        'elem': elem,
+        'file_reader': new FileReader(),
+        'preview': !!settings.preview
     }
-    opts['uid'] = uid;
-    elem.after('<input type="file" name="file" id="' + uid + '" class="nb-close">');
-    opts.file_reader = new FileReader();
     opts.file_reader.onload = function(e) {
         uploader.handle_load(e, opts);
         elem.prop('disabled', true);
     }
-    $('#' + uid).change(function(e) {
+    elem.attr('id', uid);
+    elem.after('<input type="file" name="file" id="' + uid + '-file" class="nb-close">');
+    $('#' + uid + '-file').change(function(e) {
         uploader.handle_change(e, opts);
     });
 }
 
-uploader.wrap_progress_bar = function(elem, uid) {
-    var p = elem.parent();
-    if (p.is('div .uploader.img-wrapper')) {
-        p.find('div.progress-bar-bg,div.progress-bar-text,div.progress-bar').remove();
-        elem.unwrap();
+uploader.remove_preview = function(opts) {
+    $('#' + opts.uid + '-preview').remove();
+}
+
+uploader.add_preview = function(opts) {
+    uploader.remove_preview(opts);
+    if (!opts.preview) {
+        return;
     }
-    elem.wrap('<div class="uploader img-wrapper"></div>');
-    elem.after('<div class="progress-bar-bg nb-close" id="' + uid + '-bg"><div class="progress-bar" id="' + uid + '-bar"></div></div>');
-    elem.after('<div class="progress-bar-text nb-close" id="' + uid + '-msg">Uploading</div>');
+    var uid = opts.uid;
+    opts.elem.after('<div id="' + uid + '-preview" class="uploader img-wrapper"></div>');
+    $('#' + opts.uid + '-preview')
+        .append('<div class="nb-close" data-field="' + opts.field + '"></div>')
+        .append($('<img>',{id: opts.uid + '-img', src:opts.img_preview }))
+        .append('<div class="progress-bar-bg nb-close" id="' + uid + '-bg"><div class="progress-bar" id="' + uid + '-bar"></div></div>')
+        .append('<div class="progress-bar-text nb-close" id="' + uid + '-msg">Uploading</div>')
+        .append('<a id="' + uid + '-clear" data-uid="' + uid + '" href="javascript:void(0)" data-onclick="uploader_clear_img" class="clear-img-icon nb-button icon-button delete"></a>');
+}
+
+function uploader_clear_img(e) {
+    uploader.clear_img(e);
+}
+
+uploader.clear_img = function(e) {
+    var uid = $(e.target).data('uid');
+    uploader.remove_preview({"uid": uid});
+    $('#' + uid).prop('disabled', false);
 }
 
 uploader.handle_change = function(e, opts) {
+    console.log('uploader.handle_change', e, opts);
     var files = e.target.files || e.dataTransfer.files;
     if (!files || files.length !== 1) {
         return;
@@ -45,12 +65,13 @@ uploader.handle_change = function(e, opts) {
 }
 
 uploader.handle_load = function(e, opts) {
-    elem = $(opts.preview);
+    console.log('handle_load', e, opts);
+    opts.img_preview = e.target.result;
+    elem = $(opts.elem);
     if (elem.is('img')) {
         elem.attr('src', e.target.result);
-    } else {
-        elem.prepend($('<img>',{id: 'preview_' + opts.uid, src:e.target.result }));
-        uploader.wrap_progress_bar($('#preview_' + opts.uid), opts.uid);
+    } else if (opts.preview) {
+        uploader.add_preview(opts);
     }
 }
 
@@ -105,5 +126,5 @@ $('body').on('click', '[data-upload]', function(e) {
     }
     var uid = uploader.unique_id();
     uploader.init_uploader($this, uid);
-    var r = $('#' + uid).click();
+    $('#' + uid + '-file').click();
 });
