@@ -144,6 +144,7 @@ input[type="submit"] {
     margin: 5px 5px 10px 0;
     display: inline-block;
     text-decoration: none;
+    cursor: pointer;
 
     &.green {
         background-color: $admin-green;
