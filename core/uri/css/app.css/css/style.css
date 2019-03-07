@@ -185,9 +185,9 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 #off-left-panel .menu-closer { position: absolute; top: 20px; right: 20px; width: 30px; height: 30px; display: block; background-image: url("../img/icon-close-dark.svg"); background-position: center; background-repeat: no-repeat; background-size: 24px 24px; }
 
-.mobile-menu { padding: 20px; overflow: hidden; opacity: 0; -webkit-transition: opacity 0.3s ease; transition: opacity 0.3s ease; }
+.site-menu { padding: 20px; overflow: hidden; opacity: 0; -webkit-transition: opacity 0.3s ease; transition: opacity 0.3s ease; }
 
-.mobile-menu li { padding-bottom: 20px; }
+.site-menu li { padding-bottom: 20px; }
 
 .nb-menu { margin-bottom: 20px; border-bottom: 1px solid #595959; padding: 0 0 20px; font-family: 'helvetica', sans-serif; }
 
