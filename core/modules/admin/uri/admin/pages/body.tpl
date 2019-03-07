@@ -8,7 +8,7 @@
           <th>URL</th>
           <th>Layer</th>
           <th>Module</th>
-          <th>Actions</th>
+          <th>&nbsp;</th>
         </tr>
       </thead>
       <tbody>

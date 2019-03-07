@@ -5,7 +5,7 @@
         <tr>
           [repeat data.fields var=field]
           [if data.fields=(empty) echo="<th>Name</th>"]
-          <th>Actions</th>
+          <th>&nbsp;</th>
         </tr>
       </thead>
       <tbody>

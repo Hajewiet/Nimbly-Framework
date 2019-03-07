@@ -34,5 +34,9 @@
         img {
             display: block;
         }
+
+        &.action-cell {
+            text-align: right;
+        }
     }
 }
