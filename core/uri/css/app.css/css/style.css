@@ -275,4 +275,6 @@ a.editor.add-img-icon { position: absolute; width: 30px; height: 30px; left: -30
 .nb-table td a, .nb-table th a { color: #0074D9; text-decoration: none; }
 
 .nb-table td img, .nb-table th img { display: block; }
+
+.nb-table td.action-cell, .nb-table th.action-cell { text-align: right; }
 /*# sourceMappingURL=style.css.map */

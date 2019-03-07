@@ -7,7 +7,7 @@
         <tr>
           <th>Resource</th>
           <th>Instances</th>
-          <th>Actions</th>
+          <th>&nbsp;</th>
         </tr>
       </thead>
       <tbody>

@@ -7,7 +7,7 @@
       <th>Thumb</th>
       <th>Name</th>
       <th>Type</th>
-      <th>Actions</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
