@@ -223,7 +223,7 @@ a.edit-img-icon { top: 5px; }
 
 a.clear-img-icon { top: 44px; }
 
-a.editor.add-img-icon { position: absolute; width: 30px; height: 30px; left: -30px; opacity: .8; text-decoration: none; line-height: 30px; text-align: center; font-weight: bold; font-size: 20px; display: none; }
+a.editor.add-img-icon { position: absolute; width: 30px; height: 30px; left: -40px; opacity: .8; text-decoration: none; line-height: 30px; text-align: center; font-weight: bold; font-size: 20px; display: none; background-color: #0074D9; border-radius: 15px; }
 
 .editor.editor-active.img-insert a.editor.add-img-icon { display: block; }
 
