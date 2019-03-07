@@ -498,10 +498,6 @@ $(document).mousedown(function(event) {
     return;
   }
 
-  if (editor.autoenabled) {
-    return;
-  }
-
   if (
     event.target === $('html')[0] &&
     event.clientX >= document.documentElement.offsetWidth
@@ -520,6 +516,12 @@ $(document).mousedown(function(event) {
   ) {
     editor.handle_click($(event.target), event);
     return;
+  }
+
+  if (editor.autoenabled) {
+      editor.active = null;
+      $('.editor-active').removeClass('editor-active');
+      return;
   }
 
   editor.disable();
