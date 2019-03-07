@@ -70,7 +70,7 @@ a.editor.add-img-icon {
     position: absolute;
     width: 30px;
     height: 30px;
-    left: -30px;
+    left: -40px;
     opacity: .8;
     text-decoration: none;
     line-height: 30px;
@@ -78,6 +78,8 @@ a.editor.add-img-icon {
     font-weight: bold;
     font-size: 20px;
     display: none;
+    background-color: $admin-blue;
+    border-radius: 15px;
 }
 
 .editor.editor-active.img-insert a.editor.add-img-icon { display: block; }
