@@ -191,7 +191,9 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 .site-menu li { padding-bottom: 20px; }
 
-header .site-menu { opacity: 1; }
+header .site-menu { display: none; }
+
+@media (min-width: 1000px) { header .site-menu { opacity: 1; display: unset; } }
 
 .nb-menu { margin-bottom: 20px; border-bottom: 1px solid #595959; padding: 0 0 20px; font-family: 'helvetica', sans-serif; }
 
