@@ -1,3 +1,3 @@
-<ul class="mobile-menu">
+<ul class="site-menu">
     <li><a href="">Dummy link</a></li>
 </ul>
