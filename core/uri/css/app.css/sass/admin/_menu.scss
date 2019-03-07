@@ -50,7 +50,14 @@
 
 header {
     .site-menu {
-        opacity: 1;
+        display: none;
+    }
+
+    @include breakpoint(tablet) {
+        .site-menu {
+            opacity: 1;
+            display: unset;
+        }
     }
 }
 
