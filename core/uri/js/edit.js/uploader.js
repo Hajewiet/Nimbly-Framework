@@ -3,6 +3,9 @@ var uploader = {};
 uploader.count = 0;
 
 uploader.init_uploader = function(elem, uid) {
+    if (elem.data('uid') === uid) {
+        return;
+    }
     var settings = elem.data('upload');
     console.log('uploader.init_uploader', elem, uid, settings);
     opts = {
@@ -10,14 +13,19 @@ uploader.init_uploader = function(elem, uid) {
         'field': settings.field,
         'elem': elem,
         'file_reader': new FileReader(),
-        'preview': !!settings.preview
+        'preview': !!settings.preview,
+        'trigger': settings.trigger
     }
     opts.file_reader.onload = function(e) {
         uploader.handle_load(e, opts);
         elem.prop('disabled', true);
     }
     elem.attr('id', uid);
+    elem.data('uid', uid);
     elem.after('<input type="file" name="file" id="' + uid + '-file" class="nb-close">');
+    if (opts.field) {
+        elem.after('<div id="' + uid + '-field" class="nb-close" data-edit-field="' + opts.field + '"></div>')
+    }
     $('#' + uid + '-file').change(function(e) {
         uploader.handle_change(e, opts);
     });
@@ -35,7 +43,6 @@ uploader.add_preview = function(opts) {
     var uid = opts.uid;
     opts.elem.after('<div id="' + uid + '-preview" class="uploader img-wrapper"></div>');
     $('#' + opts.uid + '-preview')
-        .append('<div class="nb-close" data-field="' + opts.field + '"></div>')
         .append($('<img>',{id: opts.uid + '-img', src:opts.img_preview }))
         .append('<div class="progress-bar-bg nb-close" id="' + uid + '-bg"><div class="progress-bar" id="' + uid + '-bar"></div></div>')
         .append('<div class="progress-bar-text nb-close" id="' + uid + '-msg">Uploading</div>')
@@ -81,7 +88,10 @@ uploader.set_progress = function(uid, progress, msg) {
     $('#' + uid + '-msg').removeClass('nb-close').text(msg);
 }
 
-uploader.unique_id = function() {
+uploader.unique_id = function($uploader) {
+    if ($uploader.data('uid')) {
+        return $uploader.data('uid');
+    }
     uploader.count++;
     return "uploader-" + uploader.count;
 }
@@ -109,8 +119,11 @@ uploader.upload_file = function(opts, file) {
         }
     }).done(function(json) {
             uploader.set_progress(opts.uid, 100, 'Uploaded');
+            if (opts.field) {
+                $('#' + opts.uid + '-field').text(json.files.uuid);
+            }
             $('#preview_' + opts.uid).attr('data-uuid', json.files.uuid);
-            if (opts.autoselect) {
+            if (opts.trigger) {
                 $('#preview_' + opts.uid).trigger('autoselect', json.files);
             }
     }).fail(function() {
@@ -124,7 +137,7 @@ $('body').on('click', '[data-upload]', function(e) {
     if ($this.prop('disabled')) {
         return;
     }
-    var uid = uploader.unique_id();
+    var uid = uploader.unique_id($this);
     uploader.init_uploader($this, uid);
     $('#' + uid + '-file').click();
 });
