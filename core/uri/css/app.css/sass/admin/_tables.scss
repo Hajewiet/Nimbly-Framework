@@ -4,6 +4,10 @@
     font-family: $admin-text;
     margin-bottom: 30px;
 
+    thead {
+        border-bottom: 1px solid #e6e6e6;
+    }
+
     tr:nth-child(even) {
         td {
             background-color: #f3f3f3;

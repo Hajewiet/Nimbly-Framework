@@ -264,6 +264,8 @@ a.editor.add-img-icon { position: absolute; width: 30px; height: 30px; left: -30
 
 .nb-table { border-spacing: 0; width: 100%; font-family: sans-serif; margin-bottom: 30px; }
 
+.nb-table thead { border-bottom: 1px solid #e6e6e6; }
+
 .nb-table tr:nth-child(even) td { background-color: #f3f3f3; }
 
 .nb-table td, .nb-table th { padding: 12px 15px; text-align: left; font-size: 14px; font-family: sans-serif; vertical-align: middle; }
