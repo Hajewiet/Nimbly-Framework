@@ -22,9 +22,16 @@
     cursor: pointer;
 }
 
+.uploader {
+    a.clear-img-icon {
+        top: 6px;
+        z-index: 1000;
+    }
+}
+
 .progress-bar-bg, .progress-bar, .progress-bar-text {
     position: absolute;
-    top: 40%;
+    top: 0;
     width: 100%;
     background: #ddd;
     opacity: .7;
