@@ -18,7 +18,7 @@
         [favicon]
     </head>
     <body class="[body-classes]">
-        [role-cond user tpl=user-bar]
+        [feature-cond manage-content tpl=nimbly-bar]
         [callouts]
         [mobile-menu]
         [header]
