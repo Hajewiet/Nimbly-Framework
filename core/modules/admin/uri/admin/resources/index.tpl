@@ -1,5 +1,5 @@
 [module user admin]
-[access feature=list_resources]
+[access feature=list-resources]
 [set page-title="Resources"]
 [set bar-title="Admin | Resources"]
 [set html-classes="admin-page" append]
