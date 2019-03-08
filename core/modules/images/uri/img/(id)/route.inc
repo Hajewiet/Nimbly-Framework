@@ -53,11 +53,28 @@ if (is_numeric($size)) { //max to full hd
 	}
 }
 
-load_library("set");
-load_library("get");
-set_variable("img-ratio", $ratio);
-set_variable("img-mode", $mode);
-set_variable("img-uuid", $uuid);
-set_variable("img-size", $size);
-load_module("images");
-router_accept();
+session_cache_limiter(false);
+header('Cache-Control: private');
+
+$t = time();
+$headers = apache_request_headers();
+
+if (isset($headers['If-Modified-Since']) && strtotime($headers['If-Modified-Since']) < $t) {
+    header('Last-Modified: '. gmdate('D, d M Y H:i:s', $t).' GMT', true, 304);
+    exit();
+}
+
+load_library("thumbnail", "images");
+$file = thumbnail_create($uuid, $size, $ratio, $mode);
+
+if (empty($file)) {
+    return;
+}
+
+$cache_time = 315360000; //10 years
+header("Expires: " . gmdate("D, d M Y H:i:s", $t + $cache_time) . " GMT");
+header('Last-Modified: '. gmdate('D, d M Y H:i:s', $t).' GMT');
+header('Content-Length: '. filesize($file));
+header('Content-Type: image/jpg');
+readfile($file);
+exit();
