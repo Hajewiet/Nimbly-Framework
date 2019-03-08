@@ -41,9 +41,9 @@
 
         &.img-thumb {
             img {
-                width: 150px;
-                height: 150px;
-                object-fit: cover;
+                width: auto;
+                height: 80px;
+                cursor: pointer;
             }
         }
     }
