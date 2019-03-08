@@ -279,4 +279,6 @@ a.editor.add-img-icon { position: absolute; width: 30px; height: 30px; left: -40
 .nb-table td img, .nb-table th img { display: block; }
 
 .nb-table td.action-cell, .nb-table th.action-cell { text-align: right; }
+
+.nb-table td.img-thumb img, .nb-table th.img-thumb img { width: 150px; height: 150px; -o-object-fit: cover; object-fit: cover; }
 /*# sourceMappingURL=style.css.map */
