@@ -87,10 +87,6 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 #nb-single-file-preview img, div.nb-single-file-preview img { display: none; }
 
-.small-screen .nb-gallery-field { text-align: center; }
-
-.nb-gallery-field img, .nb-form .nb-gallery-field .editor.img-wrapper img { max-width: 150px; max-height: 150px; }
-
 .nb-icon { background-size: 22px 22px; background-position: center; background-repeat: no-repeat; width: 30px; height: 30px; display: inline-block; }
 
 .nb-icon-close { background-image: url("../img/icon-close-dark.svg"); }
