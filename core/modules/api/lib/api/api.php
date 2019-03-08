@@ -9,7 +9,7 @@ function api_method_switch($func_prefix, $resource = null, $uuid = null) {
     $method = strtolower($_SERVER['REQUEST_METHOD']);
     $perm = $resource ?? $func_prefix;
     $access_feature = sprintf("api_%s_%s,api_(any)_%s,api_(any)_(any)", $method, $perm, $perm);
-    if (!api_access($access_feature)) {
+    if (!api_access($access_feature, $perm)) {
         return json_result(array('message' => 'ACCESS_DENIED'), 403);
     }
     $func_name = "{$func_prefix}_{$method}";
@@ -19,8 +19,8 @@ function api_method_switch($func_prefix, $resource = null, $uuid = null) {
     return json_result(array('message' => 'METHOD_NOT_ALLOWED'), 405);
  }
 
- function api_access($feature='api') {
-    return get_variable('api_public', false) || api_key_access($feature) || api_user_access($feature);
+ function api_access($feature='api', $resource=false) {
+    return get_variable('api_public', false) || api_key_access($feature) || api_user_access($feature, $resource);
 }
 
 function api_key_access($feature) {
@@ -32,8 +32,14 @@ function api_key_access($feature) {
     return false;
 }
 
-function api_user_access($feature) {
-    return access_by_feature($feature);
+function api_user_access($feature, $resource = false) {
+    if (access_by_feature($feature)) {
+        return true;
+    }
+    if (access_by_feature('manage-content') && $resource && !in_array($resource, ['users', 'roles'])) {
+        return true;
+    }
+    return false;
 }
 
 /*
