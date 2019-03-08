@@ -24,7 +24,7 @@ function get_user_resources_access($k) {
 		return true;
 	}
 	if (access_by_feature('manage-content')) {
-		return $k !== 'roles' && $k[0] !== '.';
+		return $k[0] !== '.' && !in_array($k, ['roles', 'users']);
 	}
 	return false;
 }
