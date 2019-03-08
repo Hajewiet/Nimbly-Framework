@@ -1,5 +1,5 @@
 [module user admin]
-[access feature=get_[data.resource],(any)_[data.resource]]
+[access feature=manage-[data.resource],get_[data.resource],(any)_[data.resource]]
 [set page-title="[field-name [data.resource]]"]
 [set html-classes="admin-page" append]
 [admin-html]

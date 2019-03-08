@@ -22,6 +22,10 @@ set_variable("data.resource", $resource);
 set_variable("data.fields", $meta['fields']);
 set_variables("data.field.", $meta['fields']);
 set_variable_dot('record', $record);
-
+load_library("access", "user");
+load_library("get-user-resources", "admin");
+if (access_by_feature('manage-content') && get_user_resources_access($resource)) {
+	$_SESSION['features']['manage-' . $resource] = true;
+}
 load_module("admin");
 router_accept();
