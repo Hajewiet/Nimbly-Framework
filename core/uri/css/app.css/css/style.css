@@ -1,6 +1,6 @@
 p { font-size: 14px; }
 
-.nb-img-grid { line-height: 0; -webkit-column-count: 3; -webkit-column-gap: 10px; -moz-column-count: 3; -moz-column-gap: 10px; column-count: 3; column-gap: 10px; text-align: center; }
+.nb-img-grid { line-height: 0; -webkit-column-count: 3; column-count: 3; -webkit-column-gap: 10px; column-gap: 10px; text-align: center; }
 
 .nb-img-grid img { margin-bottom: 10px; max-width: 100%; }
 
@@ -26,9 +26,11 @@ p { font-size: 14px; }
 
 .nb-form .editor.img-wrapper img { max-width: 400px; max-height: 400px; }
 
-.nb-form .nb-gallery-field { margin: 5px 0px 20px 0px; }
+.nb-form .nb-gallery-field { margin: 5px 0px 20px 0px; margin: 5px 0px 20px; display: -ms-grid; display: grid; -ms-grid-columns: (1fr)[3]; grid-template-columns: repeat(3, 1fr); grid-gap: 10px; grid-auto-rows: 136px; }
 
-.nb-form .nb-gallery-field .editor.img-wrapper { margin: 0; }
+.nb-form .nb-gallery-field .editor.img-wrapper { margin: 0; background: #ccc; }
+
+.nb-form .nb-gallery-field .editor.img-wrapper img { height: 100%; width: auto; }
 
 .nb-button, input[type="submit"] { font-family: sans-serif; font-size: 14px; font-weight: bold; -webkit-appearance: none; -moz-appearance: none; height: 32px; line-height: 32px; border-radius: 4px; color: #fff !important; background-color: #0074D9; padding: 0 20px; border: none; margin: 5px 5px 10px 0; display: inline-block; text-decoration: none; cursor: pointer; }
 
