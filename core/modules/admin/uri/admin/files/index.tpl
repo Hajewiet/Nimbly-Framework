@@ -1,5 +1,5 @@
 [module user admin]
-[access feature=list_files,(any)_files]
+[access feature=list_files,(any)_files,manage-content]
 [set page-title="Files"]
 [set html-classes="admin-page" append]
 [admin-html]

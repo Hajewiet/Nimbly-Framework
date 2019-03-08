@@ -1,5 +1,5 @@
 <h1>Files</h1>
-[feature-cond features="add_files,(any)_files" tpl=add_button]
+[feature-cond features="add_files,(any)_files,manage-content" tpl=add_button]
 [data .files_meta]
 <table class="nb-table">
   <thead>

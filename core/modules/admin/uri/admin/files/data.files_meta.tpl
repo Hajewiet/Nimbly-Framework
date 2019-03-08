@@ -8,6 +8,7 @@
   <td>[get item.name default="n/a"]</td>
   <td>[get item.type default="n/a"]</td>
   <td class="action-cell">
-    [feature-cond features="delete_files,(any)_files" tpl="delete"][feature-cond features="edit_files,(any)_files" tpl="edit"]
+    [feature-cond features="manage-content,delete_files,(any)_files" tpl="delete"]
+    [feature-cond features="manage-content,edit_files,(any)_files" tpl="edit"]
   </td>
 </tr>
