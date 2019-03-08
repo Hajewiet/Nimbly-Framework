@@ -4,10 +4,6 @@ p {
 
 .nb-img-grid {
     line-height: 0;
-    -webkit-column-count: 3;
-    -webkit-column-gap: 10px;
-    -moz-column-count: 3;
-    -moz-column-gap: 10px;
     column-count: 3;
     column-gap: 10px;
     text-align: center;
@@ -21,8 +17,6 @@ p {
 .small-screen {
 
     .nb-img-grid {
-        -webkit-column-count: 2;
-        -moz-column-count: 2;
         column-count: 2;
     }
 }
@@ -120,8 +114,20 @@ p {
 
     .nb-gallery-field {
         margin: 5px 0px 20px 0px;
+        margin: 5px 0px 20px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 10px;
+        grid-auto-rows: 136px;
+
         .editor.img-wrapper {
             margin: 0;
+            background: #ccc;
+
+            img {
+                height: 100%;
+                width: auto;
+            }
         }
     }
 
