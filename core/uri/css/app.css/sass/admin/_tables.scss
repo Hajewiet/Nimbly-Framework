@@ -38,5 +38,13 @@
         &.action-cell {
             text-align: right;
         }
+
+        &.img-thumb {
+            img {
+                width: 150px;
+                height: 150px;
+                object-fit: cover;
+            }
+        }
     }
 }
