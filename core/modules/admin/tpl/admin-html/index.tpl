@@ -20,6 +20,7 @@
     </head>
     <body class="[body-classes]">
         [nimbly-bar]
+        [mobile-editor-menu]
         <div class="admin-wrapper">
             <div class="admin-body">
                 [callouts]
@@ -27,7 +28,7 @@
                 [body]
                 </div>
             </div>
-            <div class="admin-sidebar">                
+            <div class="admin-sidebar only-md">                
                 [editor-menu]
             </div>
         </div>
