@@ -199,10 +199,6 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 .site-menu li { padding-bottom: 20px; }
 
-.admin-menu { padding: 20px; }
-
-.admin-menu li a { color: #333333; }
-
 header .site-menu { display: none; }
 
 @media (min-width: 1000px) { header .site-menu { opacity: 1; display: unset; } }
@@ -212,6 +208,10 @@ header .site-menu { display: none; }
 .nb-menu li { list-style-type: none; margin: 0; font-family: 'helvetica', sans-serif; }
 
 .nb-menu li a { display: block; color: #fff; width: 100%; line-height: 30px; padding: 0 20px; text-decoration: none; }
+
+.nb-menu.admin-menu { padding: 20px; }
+
+.nb-menu.admin-menu li a { color: #333333; }
 
 [contenteditable=true], .editor.img-wrapper { background-color: #ebfce966; }
 

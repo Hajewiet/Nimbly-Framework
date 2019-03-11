@@ -20,9 +20,9 @@
     </head>
     <body class="[body-classes]">
         [nimbly-bar]
+        [mobile-editor-menu]
         <div class="admin-wrapper">
             <div class="admin-body">
-                [mobile-editor-menu]
                 [callouts]
                 <div class="admin-content">
                     <a class="only-sm mobile-menu-link" data-push="#off-left-panel">&#9776; menu</a>
