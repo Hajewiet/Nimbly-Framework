@@ -402,7 +402,7 @@ function nb_load_image(e, bg=false, cb=null) {
     if (!nb_in_viewport(e, 200)) {
         return false;
     }
-    var container = bg? $e : $e.closest('div,figure');
+    var container = bg? $e : $e.closest('div,figure,li');
     var ratio = $e.data('img-ratio') || 0;
     var mode = $e.data('img-mode') || false;
     var img_src = nb_img_src($e, container, mode, ratio);
