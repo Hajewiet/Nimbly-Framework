@@ -43,12 +43,12 @@
     display: none !important;
 
     @include breakpoint(tablet) {
-        display: inherit !important;
+        display: unset !important;
     }
 }
 
 .no-desktop {
-	display: inherit;
+	display: unset;
 
 	@include breakpoint(tablet) {
         display: none !important;

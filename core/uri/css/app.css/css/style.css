@@ -139,9 +139,9 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 .no-mobile { display: none !important; }
 
-@media (min-width: 1000px) { .no-mobile { display: inherit !important; } }
+@media (min-width: 1000px) { .no-mobile { display: unset !important; } }
 
-.no-desktop { display: inherit; }
+.no-desktop { display: unset; }
 
 @media (min-width: 1000px) { .no-desktop { display: none !important; } }
 
