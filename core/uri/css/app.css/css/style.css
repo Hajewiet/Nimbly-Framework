@@ -209,7 +209,7 @@ header .site-menu { display: none; }
 
 .nb-menu li a { display: block; color: #fff; width: 100%; line-height: 30px; padding: 0 20px; text-decoration: none; }
 
-.admin-menu { padding: 20px; }
+.admin-menu .nb-menu { margin-bottom: 0; padding: 20px; }
 
 .admin-menu .nb-menu li a { color: #333333; }
 

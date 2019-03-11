@@ -84,9 +84,11 @@ header {
 }
 
 .admin-menu {
-    padding: 20px;
 
     .nb-menu {
+        margin-bottom: 0;
+        padding: 20px;
+
         li {
             a {
                 color: $admin-dark;
