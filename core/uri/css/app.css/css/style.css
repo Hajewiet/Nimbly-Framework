@@ -199,6 +199,10 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 .site-menu li { padding-bottom: 20px; }
 
+.admin-menu { padding: 20px; }
+
+.admin-menu li a { color: #333333; }
+
 header .site-menu { display: none; }
 
 @media (min-width: 1000px) { header .site-menu { opacity: 1; display: unset; } }

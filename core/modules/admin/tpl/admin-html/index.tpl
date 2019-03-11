@@ -21,11 +21,11 @@
     <body class="[body-classes]">
         [nimbly-bar]
         <div class="admin-wrapper">
-            <a class="only-sm mobile-menu-link" data-push="#off-left-panel">&#9776; menu</a>
             <div class="admin-body">
                 [mobile-editor-menu]
                 [callouts]
                 <div class="admin-content">
+                    <a class="only-sm mobile-menu-link" data-push="#off-left-panel">&#9776; menu</a>
                     [body]
                 </div>
             </div>

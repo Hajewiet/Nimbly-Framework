@@ -48,6 +48,16 @@
     }
 }
 
+.admin-menu {
+    padding: 20px;
+
+    li {
+        a {
+            color: $admin-dark;
+        }
+    }
+}
+
 header {
     .site-menu {
         display: none;
