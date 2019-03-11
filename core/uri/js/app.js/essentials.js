@@ -379,8 +379,13 @@ function nb_load_images() {
     $('[data-bgimg-uuid]').each(function() {
         nb_load_image(this, true);
     });
+    var interval = 1000;
     $('[data-img-preload').each(function() {
-        nb_preload_image(this);
+        var t = this;
+        setTimeout(function(){
+            nb_preload_image(t);
+        }, interval);
+        interval += 500;
     })
 }
 
