@@ -81,10 +81,12 @@ header {
             text-decoration: none;
         }
     }
+}
 
-    &.admin-menu {
-        padding: 20px;
-    
+.admin-menu {
+    padding: 20px;
+
+    .nb-menu {
         li {
             a {
                 color: $admin-dark;

@@ -209,9 +209,9 @@ header .site-menu { display: none; }
 
 .nb-menu li a { display: block; color: #fff; width: 100%; line-height: 30px; padding: 0 20px; text-decoration: none; }
 
-.nb-menu.admin-menu { padding: 20px; }
+.admin-menu { padding: 20px; }
 
-.nb-menu.admin-menu li a { color: #333333; }
+.admin-menu .nb-menu li a { color: #333333; }
 
 [contenteditable=true], .editor.img-wrapper { background-color: #ebfce966; }
 
