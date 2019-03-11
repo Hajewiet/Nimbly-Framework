@@ -370,6 +370,9 @@ function nb_load_images() {
     $('[data-bgimg-uuid]').each(function() {
         nb_load_image(this, true);
     });
+    $('[data-img-preload').each(function() {
+        nb_preload_image(this);
+    })
 }
 
 function nb_image_size(e, mf=1.0) {
@@ -387,42 +390,28 @@ function nb_image_box(e, mf=1.0, suffix='f') {
 }
 
 function nb_load_image(e, bg=false, cb=null) {
-    var uuid = $(e).data('img-uuid') || $(e).data('bgimg-uuid');
-    if (!uuid) {
-        return;
-    }
+    $e = $(e);
     if (!$(e).is(':visible')) {
-        return;
+        return false;
     }
     if (!nb_in_viewport(e, 200)) {
         return false;
     }
-
-    var container = bg? $(e) : $(e).closest('div');
-    var img_src = full_base_url + '/img/' + uuid + '/';
-    var mode = $(e).data('img-mode') || false;
-    if (mode === false) {
-        img_src +=  nb_image_size(container) + 'w';
-    } else if (mode === 'crop') {
-        img_src += nb_image_box(container, 1.0, 'c');
-    } else if (mode === 'fit') {
-        img_src += nb_image_box(container);
-    } else if (mode === 'third') {
-        img_src +=  nb_image_size(container, 0.33) + 'w';
+    var container = bg? $e : $e.closest('div,figure');
+    var ratio = $e.data('img-ratio') || 0;
+    var mode = $e.data('img-mode') || false;
+    var img_src = nb_img_src($e, container, mode, ratio);
+    if (!img_src) {
+        return false;
     }
-    var ratio = $(e).data('img-ratio') || 0;
-    if (ratio) {
-        img_src += '?ratio=' + ratio;
-    } 
-
     if (!bg && e.src != img_src) {
         e.onload = cb || nb_image_loaded;
         e.src = img_src;
     } else if (bg) {
         var bg_url = 'url("' + img_src + '")';
-        if ($(e).css('background-image') !== bg_url) {
+        if ($e.css('background-image') !== bg_url) {
             e.onload = cb || nb_image_loaded;
-            $(e).css('background-image', bg_url);
+            $e.css('background-image', bg_url);
         }
     }
 }
@@ -443,7 +432,7 @@ function nb_swap_image($img, uuid, bgimg=false) {
     var h = $img.height();
 
     // 1. get or create container
-    var $parent = $img.parent('figure', 'div');
+    var $parent = $img.parent('div,figure');
     if ($parent.length === 0) {
         $img.wrap('<figure></figure>');
         $parent = $img.parent('figure');
@@ -478,6 +467,47 @@ function nb_swap_image($img, uuid, bgimg=false) {
     });
     
 }
+
+function nb_img_src($e, container, mode, ratio=0) {
+    var uuid = $e.data('img-uuid') || $e.data('bgimg-uuid');
+    if (!uuid) {
+        return false;
+    }
+    var img_src = full_base_url + '/img/' + uuid + '/';
+    if (mode === false) {
+        img_src +=  nb_image_size(container) + 'w';
+    } else if (mode === 'crop') {
+        img_src += nb_image_box(container, 1.0, 'c');
+    } else if (mode === 'fit') {
+        img_src += nb_image_box(container);
+    } else if (mode === 'third') {
+        img_src +=  nb_image_size(container, 0.33) + 'w';
+    }
+    if (ratio) {
+        img_src += '?ratio=' + ratio;
+    } 
+    return img_src;
+}
+
+/* like swap, but does not actually swap */
+function nb_preload_image(e) {
+    var $e = $(e);
+    var s = $e.data('img-preload');
+    if (!s) {
+        return false;
+    }
+    var $img = $(s);
+    var $container = $img.closest('div,figure');
+    var mode = $img.data('img-mode') || false;
+    var ratio = $img.data('img-ratio') || 0;
+    var img_src = nb_img_src($e, $container, mode, ratio);
+    if (img_src) {
+        console.log('preloading', img_src);
+        $('<img/>')[0].src = img_src;
+    }
+}
+
+
 
 function nb_debounced_viewport_changed() {
     nb_load_images();
