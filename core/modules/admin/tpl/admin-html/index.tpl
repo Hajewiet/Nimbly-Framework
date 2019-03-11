@@ -22,10 +22,11 @@
         [nimbly-bar]
         [mobile-editor-menu]
         <div class="admin-wrapper">
+            <a class="only-sm mobile-menu-link" data-push="#off-left-panel">&#9776; menu/a>
             <div class="admin-body">
                 [callouts]
                 <div class="admin-content">
-                [body]
+                    [body]
                 </div>
             </div>
             <div class="admin-sidebar only-md">                

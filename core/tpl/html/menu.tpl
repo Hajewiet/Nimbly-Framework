@@ -1,3 +1,3 @@
 <ul class="site-menu">
-    <li><a href="">Dummy link</a></li>
+    <li><a href="[base-url/">home</a></li>
 </ul>
