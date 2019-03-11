@@ -460,7 +460,7 @@ function nb_swap_image($img, uuid, bgimg=false) {
 
     // 2. add background and throbber to container
     $parent.css("position", "relative");
-    $img.after('<div class="nb-throbber"></div>');
+    $img.after('<div class="nb-throbber nb-close"></div>');
     $img.after('<div class="nb-bg"></div>');
     var $throbber = $parent.find("div.nb-throbber");
     var $bg = $parent.find("div.nb-bg");
@@ -471,12 +471,16 @@ function nb_swap_image($img, uuid, bgimg=false) {
         "top": $img.position().top, "left": $img.position().left,
         "opacity": 0 });
     $throbber.css({"position": "absolute", "top": y, "left": x});
+    setTimeout(function(){
+        $throbber.removeClass('nb-close');
+    }, 1000);
+
 
     // 3. smoothly load new image
     $img.data('img-uuid', uuid); 
-    $bg.fadeTo(200, '0.2', function() {
+    $bg.fadeTo(100, '0.2', function() {
         nb_load_image($img[0], bgimg, function() {
-            $bg.fadeTo(200, '0.0', function() {
+            $bg.fadeTo(100, '0.0', function() {
                 $parent.find('.nb-bg, .nb-throbber').remove();
             });
         });
