@@ -29,6 +29,11 @@ body {
     display: flex;
     font-family: $admin-text;
     color: $admin-dark;
+    padding: 20px;
+
+    @include breakpoint(tablet) {
+        padding: 0;
+    }
 
     h1 {
         font-family: $admin-text;

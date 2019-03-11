@@ -60,7 +60,9 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 
 .logged-in.admin body { margin-right: 30px; }
 
-.admin-wrapper { display: -webkit-box; display: -ms-flexbox; display: flex; font-family: sans-serif; color: #333333; }
+.admin-wrapper { display: -webkit-box; display: -ms-flexbox; display: flex; font-family: sans-serif; color: #333333; padding: 20px; }
+
+@media (min-width: 1000px) { .admin-wrapper { padding: 0; } }
 
 .admin-wrapper h1 { font-family: sans-serif; font-size: 28px; font-weight: normal; padding: 30px 0; margin: 0; }
 
@@ -134,6 +136,14 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 .nb-obfs { direction: rtl; }
 
 .nb-obfs span, .nb-obfs i, .nb-obfs b, .nb-obfs small, .nb-obfs strong { display: none; }
+
+.no-mobile { display: none !important; }
+
+@media (min-width: 1000px) { .no-mobile { display: inherit !important; } }
+
+.no-desktop { display: inherit; }
+
+@media (min-width: 1000px) { .no-desktop { display: none !important; } }
 
 .nb-throbber, .nb-throbber:after { border-radius: 50%; width: 32px; height: 32px; }
 

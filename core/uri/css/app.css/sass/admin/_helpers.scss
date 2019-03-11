@@ -38,3 +38,19 @@
 		display: none;
 	}
 }
+
+.no-mobile {
+    display: none !important;
+
+    @include breakpoint(tablet) {
+        display: inherit !important;
+    }
+}
+
+.no-desktop {
+	display: inherit;
+
+	@include breakpoint(tablet) {
+        display: none !important;
+    }
+}

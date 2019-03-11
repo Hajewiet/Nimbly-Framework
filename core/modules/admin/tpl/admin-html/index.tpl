@@ -29,7 +29,7 @@
                     [body]
                 </div>
             </div>
-            <div class="admin-sidebar only-md">                
+            <div class="admin-sidebar no-mobile">                
                 [editor-menu]
             </div>
         </div>
