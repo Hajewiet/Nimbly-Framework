@@ -20,6 +20,9 @@ function render_field_select($value) {
     $resource = get_variable('field.resource');
     if (!empty($resource)) {
         $v = lookup_data($resource, $value, 'name', false);
+        if (empty($v)) {
+            $v = lookup_data($resource, $value, 'title', false);
+        }
     } else {
         $v = false;
     }

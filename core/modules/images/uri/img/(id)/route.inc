@@ -13,7 +13,8 @@ if (count($parts) < 2 || $parts[0] !== 'img') {
 $uuid = $parts[1];
 load_library("data");
 if (!data_exists(".files", $uuid)) {
-    return;
+	http_response_code(404);
+    exit();
 }
 $size = $parts[count($parts) - 1] ?? 240;
 $ratio = get_variable("ratio", 0);
