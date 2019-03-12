@@ -427,10 +427,14 @@ function _data_meta_build($items) {
     }
     $meta = array();
     $fields = array_keys(current($items));
-    $exclude = array("uuid", "salt");
+    $exclude = array("uuid", "salt", "_created_by", "_modified", "_created");
     $fields = array_diff($fields, $exclude);
     $fields = array_fill_keys($fields, array('type' => 'text', 'name' => ''));
     foreach ($fields as $k => $v) {
+        if (!empty($k) && $k[0] === '_') {
+            unset($fields[$k]);
+            continue;
+        }
         $fields[$k]['name'] = $k;
     }
     $meta['fields'] = $fields;
