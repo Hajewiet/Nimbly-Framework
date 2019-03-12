@@ -2,7 +2,7 @@
 
 img[data-img-uuid] {
     opacity: 0;
-    transition: opacity 200ms;
+    transition: opacity .1s ease-out;
 
     &.nb-img-loaded {
     	opacity: 1;
