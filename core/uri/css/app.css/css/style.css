@@ -75,7 +75,7 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 .admin-sidebar { min-height: 100vh; padding: 20px; -webkit-box-flex: 1; -ms-flex: 1; flex: 1; background-color: #333333; }
 
 /* lazy image loading fx */
-img[data-img-uuid] { opacity: 0; -webkit-transition: opacity 200ms; transition: opacity 200ms; }
+img[data-img-uuid] { opacity: 0; -webkit-transition: opacity .1s ease-out; transition: opacity .1s ease-out; }
 
 img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
