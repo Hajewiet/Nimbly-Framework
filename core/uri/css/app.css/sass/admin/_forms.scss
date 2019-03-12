@@ -2,6 +2,12 @@ p {
     font-size: 14px;
 }
 
+* {
+    &:focus {
+        outline: none;
+    }
+}
+
 .nb-img-grid {
     line-height: 0;
     column-count: 3;
@@ -46,7 +52,7 @@ p {
         }
 
         &:focus {
-            outline: 0;
+            border: 1px solid $admin-blue;
         }
     }
 
@@ -98,6 +104,10 @@ p {
         padding: 6px 10px;
         width: 100%;
         margin: 5px 0 20px;
+
+        &:focus {
+            border: 1px solid $admin-blue;
+        }
     }
 
     .editor {
