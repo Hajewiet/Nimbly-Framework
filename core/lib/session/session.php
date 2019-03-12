@@ -18,6 +18,7 @@ function session_sc() {
         $session_started = true;
     }
 
+    session_save_path($GLOBALS['SYSTEM']['file_base'] . 'ext/data/.tmp/sessions');
     session_name("session_id");
     @session_start();
 
