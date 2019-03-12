@@ -5,7 +5,7 @@ function check_requirements_sc($params) {
     load_library("set");
     set_variable("require_all", 'fail');
 
-    if (get_variable("session_ok") === "fail") {
+    if (get_variable("session_ok") !== "pass") {
         set_variable("require_msg", "require_session");
         return;
     }

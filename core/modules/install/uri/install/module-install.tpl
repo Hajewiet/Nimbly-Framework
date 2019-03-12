@@ -1,1 +1,0 @@
-[set page-title="Installation"]
