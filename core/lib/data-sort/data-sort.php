@@ -86,14 +86,14 @@ function data_sort_regular($data, $key, $sort_order = SORT_ASC) {
 
 function data_sort_numeric($data, $key, $sort_order = SORT_ASC) {
     uasort($data,  $sort_order ===  SORT_ASC?
-            function($a, $b) use ($key) { return floatval($a[$key]) - floatval($b[$key]); }
-        :   function($b, $a) use ($key) { return floatval($a[$key]) - floatval($b[$key]); });
+            function($a, $b) use ($key) { return floatval($a[$key] ?? 0) - floatval($b[$key] ?? 0); }
+        :   function($b, $a) use ($key) { return floatval($a[$key] ?? 0) - floatval($b[$key] ?? 0); });
     return $data;
 }
 
 function data_sort_string($data, $key, $sort_order = SORT_ASC) {
     uasort($data, $sort_order ===  SORT_ASC?
-            function($a, $b) use ($key) { return strcasecmp($a[$key], $b[$key]); }
-        :   function($b, $a) use ($key) { return strcasecmp($a[$key], $b[$key]); });
+            function($a, $b) use ($key) { return strcasecmp($a[$key] ?? '', $b[$key] ?? ''); }
+        :   function($b, $a) use ($key) { return strcasecmp($a[$key] ?? '', $b[$key] ?? ''); });
     return $data;
 }
