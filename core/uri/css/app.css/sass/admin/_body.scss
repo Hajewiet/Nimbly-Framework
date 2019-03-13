@@ -26,12 +26,12 @@ body {
 }
 
 .admin-wrapper {
-    display: flex;
     font-family: $admin-text;
     color: $admin-dark;
     padding: 20px;
 
     @include breakpoint(tablet) {
+        display: flex;
         padding: 0;
     }
 
