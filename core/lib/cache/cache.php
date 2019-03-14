@@ -1,6 +1,6 @@
 <?php
 
-$GLOBALS['SYSTEM']['cache_base'] = $GLOBALS['SYSTEM']['file_base'] . 'data/.tmp/cache/';
+$GLOBALS['SYSTEM']['cache_base'] = $GLOBALS['SYSTEM']['file_base'] . 'ext/data/.tmp/cache/';
 
 /**
  * @doc * `[cache type=html|css|js]` minifies current output buffer and writes it to a static cached file
