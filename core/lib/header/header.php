@@ -4,48 +4,34 @@
  * @doc `[header (type)]` outputs a http header, possible header types: css, js, json, woff, 403, 404, 500, csv
  */
 function header_sc($params) {
-    $css = get_single_param_value($params, "css", true, false);
-    if ($css) {
-        header("Content-type: text/css");
-        return;
-    }
-    $js = get_single_param_value($params, "js", true, false);
-    if ($js) {
-        header("Content-type: application/javascript");
-        return;
-    }
-    $json = get_single_param_value($params, "json", true, false);
-    if ($json) {
-        header("Content-type: application/json");
-        return;
-    }
-    $woff = get_single_param_value($params, "woff", true, false);
-    if ($woff) {
-        header("Content-type: application/x-font-woff");
-        return;
-    }
-    $error_403 = get_single_param_value($params, "403", true, false);
-    if ($error_403) {
-        header('HTTP/1.0 403 Forbidden');
-        return;
-    }
-    $error_404 = get_single_param_value($params, "404", true, false);
-    if ($error_404) {
-        header('HTTP/1.0 404 Not Found');
-        return;
-    }
-    $error_500 = get_single_param_value($params, "500", true, false);
-    if ($error_500) {
-        header('HTTP/1.1 500 Internal Server Error');
-        return;
-    }
-    $csv = get_single_param_value($params, "csv", true, false);
-    if ($css) {
-        header("Content-type: application/csv; charset=UTF-8");
-        return;
-    }
+    header_sent($type = current($params), $cached = end($params));
 }
 
-function header_sent($type) {
-    header_sc(array($type => $type));
+function header_sent($type, $cached=false) {
+    if ($cached === 'cached') {
+        $t = time();
+        $headers = apache_request_headers();
+        session_cache_limiter(false);
+        header('Cache-Control: private');
+        if (isset($headers['If-Modified-Since']) && strtotime($headers['If-Modified-Since']) < $t) {
+            header('Last-Modified: '. gmdate('D, d M Y H:i:s', $t).' GMT', true, 304);
+            exit();
+        }
+        $cache_time = 315360000; //10 years
+        header("Expires: " . gmdate("D, d M Y H:i:s", $t + $cache_time) . " GMT");
+        header('Last-Modified: '. gmdate('D, d M Y H:i:s', $t).' GMT');    
+    }
+    static $types = [
+        'css' => 'Content-type: text/css',
+        'js' => 'Content-type: application/javascript',
+        'json' => 'Content-type: application/json',
+        'woff' => 'Content-type: application/x-font-woff',
+        '403' => 'HTTP/1.0 403 Forbidden',
+        '404' => 'HTTP/1.0 404 Not Found',
+        '500' => 'HTTP/1.1 500 Internal Server Error',
+        'csv' => 'Content-type: application/csv; charset=UTF-8'
+    ];
+    if (isset($types[$type])) {
+        header($types[$type]);
+    }
 }

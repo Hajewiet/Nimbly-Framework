@@ -46,12 +46,12 @@ AddOutputFilterByType DEFLATE application/javascript
 AddOutputFilterByType DEFLATE application/x-javascript
 
 # cache control headers
-<ifModule mod_headers.c>
+<IfModule mod_headers.c>
     # 480 weeks
-    <filesMatch ".(ico|pdf|webm|mp4|jpg|jpeg|png|gif|js|css|svg)$">
+    <FilesMatch ".(ico|pdf|webm|mp4|jpg|jpeg|png|gif|js|css|svg)$">
     Header set Cache-Control "max-age=290304000, public"
-    </filesMatch>
-</ifModule>
+    </FilesMatch>
+</IfModule>
 
 # rewrite: initialize
 RewriteEngine on
@@ -66,8 +66,8 @@ RewriteRule ^ ext/data/.tmp/cache/%1 \[END]
 
 # rewrite: use cache if available for the requested uri
 RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
-RewriteCond data/.tmp/cache/%1._cached_.html -F
-RewriteRule ^ data/.tmp/cache/%1._cached_.html \[END]
+RewriteCond ext/data/.tmp/cache/%1._cached_.html -F
+RewriteRule ^ ext/data/.tmp/cache/%1._cached_.html \[END]
 
 # rewrite: use EXT static if available for the requested file
 RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
