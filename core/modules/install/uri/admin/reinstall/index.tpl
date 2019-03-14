@@ -1,0 +1,6 @@
+[module user admin install forms]
+[access feature=reinstall]
+[set page-title="Reinstall"]
+[set html-classes="admin-page" append]
+[post]
+[admin-html]
