@@ -5,11 +5,15 @@ function post_sc($params) {
         return; //not a valid post, do nothing
     }
     load_library("session");
-
-    session_resume();
-    if (empty($_SESSION['key']) || $_SESSION['key'] != post_get('form_key')) {
+    $csrf_pass = false;
+    if (session_resume()) {
+        $csrf_pass = isset($_SESSION['key']) && $_SESSION['key'] === post_get('form_key');
+    } else {
+        $csrf_pass = isset($_COOKIE['key']) && $_COOKIE['key'] === post_get('form_key');
+    }
+    if ($csrf_pass !== true) {
         load_library("log");
-        log_system("Post: session key does not match form key");
+        log_system("Post: session key or cookie key does not match form key");
         return; //suspicious, could be a CSRF attack.. do nothing.
     }
     load_library("validate");

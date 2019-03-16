@@ -45,9 +45,12 @@ function data_sort_param_separator($data, $sort_csv, $sep = ',') {
 
 function data_sort_meta($data, $meta) {
     switch (trim(strtolower($meta['flags']))) {
+        case 'num':
+        case 'int':
         case 'numeric':
             $flags = SORT_NUMERIC;
             break;
+        case 'text':
         case 'string':
             $flags = SORT_STRING;
             break;
@@ -79,8 +82,8 @@ function data_sort($data, $key, $sort_flags = SORT_REGULAR, $sort_order = SORT_A
 
 function data_sort_regular($data, $key, $sort_order = SORT_ASC) {
     uasort($data, $sort_order === SORT_ASC?
-            function($a, $b) use ($key) { return $a[$key] - $b[$key]; }
-        :   function($b, $a) use ($key) { return $a[$key] - $b[$key]; });
+            function($a, $b) use ($key) { return $a[$key] ?? '' - $b[$key] ?? ''; }
+        :   function($b, $a) use ($key) { return $a[$key] ?? '' - $b[$key] ?? ''; });
     return $data;
 }
 

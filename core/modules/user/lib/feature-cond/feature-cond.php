@@ -15,11 +15,10 @@ function feature_cond_sc($params) {
     $echo = get_param_value($params, "echo", null);
     $echo_else = get_param_value($params, "echo_else", null);
 
-    if (empty($features) || empty($tpl) || !session_exists()) {
+    if (empty($features) || empty($tpl) || !session_resume()) {
         return;
     }
 
-    session_sc();
     $features_ls = explode(',', $features);
 
     if (!isset($_SESSION['features'])) {

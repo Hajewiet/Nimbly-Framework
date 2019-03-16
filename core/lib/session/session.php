@@ -2,6 +2,7 @@
 
 $GLOBALS['SYSTEM']['session_lifetime'] = 24 * 60 * 60; //24 hours
 $GLOBALS['SYSTEM']['session_regentime'] = 24 * 60; //24 minutes
+$GLOBALS['SYSTEM']['session_path'] = $GLOBALS['SYSTEM']['file_base'] . 'ext/data/.tmp/sessions';
 
 /**
  * Implements session sc
@@ -18,8 +19,8 @@ function session_sc() {
         $session_started = true;
     }
 
-    session_save_path($GLOBALS['SYSTEM']['file_base'] . 'ext/data/.tmp/sessions');
-    session_name("session_id");
+    session_save_path($GLOBALS['SYSTEM']['session_path']);
+    session_name("nb_session_id");
     @session_start();
 
     //2. if it's a new session, just create and initialize it and done.
@@ -51,7 +52,11 @@ function session_sc() {
 }
 
 function session_exists() {
-    return !empty($_SESSION) || !empty($_COOKIE['session_id']);
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        return true;
+    }
+    return isset($_COOKIE['nb_session_id']) 
+        && file_exists($GLOBALS['SYSTEM']['session_path'] . '/sess_' . $_COOKIE['nb_session_id']);
 }
 
 function session_resume() {

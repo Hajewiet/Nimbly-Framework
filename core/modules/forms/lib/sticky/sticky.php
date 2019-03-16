@@ -10,7 +10,7 @@ function sticky_sc($params) {
     $value = filter_input(INPUT_POST, $key, FILTER_SANITIZE_STRING);
     if (empty($value)) {
         load_library("get");
-        $value = get_sc("sticky." . $key);
+        $value = get_variable("sticky." . $key);
     }
     if (!isset($value)) {
         $value = $default;

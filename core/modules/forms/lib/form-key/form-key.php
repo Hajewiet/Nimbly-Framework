@@ -1,8 +1,17 @@
 <?php
 
 function form_key_sc($params) {
-    run_library("session");
-    $key = $_SESSION['key'];
+    load_library('session');
+    
+    if (session_resume() && isset($_SESSION['key'])) {
+        $key = $_SESSION['key'];
+    } else if (isset($_COOKIE['key'])) {
+        $key = $_COOKIE['key'];
+    } else {
+        $key = md5(uniqid(rand(), true));
+        setcookie('key', $key, time() + (30*86400), "/");
+    }
+    
     if (get_single_param_value($params, "plain", true, false)) {
         return $key;
     }
