@@ -1,6 +1,7 @@
-[header js]
+[header js cached]
 [include [cur-path]/debounce.js]
 [include [cur-path]/serializer.js]
 [include [cur-path]/essentials.js]
 [include [cur-path]/modal.js]
 [include [cur-path]/gallery.js]
+[cache type=js]

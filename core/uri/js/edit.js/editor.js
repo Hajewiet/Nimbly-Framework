@@ -138,7 +138,9 @@ editor.save = function() {
           // clean up
           $('[data-remove]', this).remove();
           $("[style='']", this).removeAttr('style');
-
+          $('img[data-img-uuid]', this)
+            .attr('src', 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==')
+            .removeClass('nb-img-loaded');
           if (tpl === 'plain_text') {
             payload[field] = $(this).text();
             $(this).html(payload[field]);

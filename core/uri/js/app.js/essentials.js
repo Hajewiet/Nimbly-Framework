@@ -389,11 +389,9 @@ function nb_load_images() {
     })
 }
 
-function nb_image_size(e, mf=1.0) {
+function nb_image_width(e, mf=1.0) {
     var prf = (window.devicePixelRatio || 1) / 10;
-    var max_w = Math.ceil(e.outerWidth() * prf * mf) * 10;
-    var max_h = Math.ceil(e.outerHeight() * prf * mf) * 10;
-    return Math.max(max_w, max_h);
+    return Math.ceil(e.outerWidth() * prf * mf) * 10;
 }
 
 function nb_image_box(e, mf=1.0, suffix='f') {
@@ -411,7 +409,7 @@ function nb_load_image(e, bg=false, cb=null) {
     if (!nb_in_viewport(e, 200)) {
         return false;
     }
-    var container = bg? $e : $e.closest('div,figure,li');
+    var container = bg? $e : $e.closest('div,figure,li,section,p');
     var ratio = $e.data('img-ratio') || 0;
     var mode = $e.data('img-mode') || false;
     var img_src = nb_img_src($e, container, mode, ratio);
@@ -489,13 +487,13 @@ function nb_img_src($e, container, mode, ratio=0) {
     }
     var img_src = full_base_url + '/img/' + uuid + '/';
     if (mode === false) {
-        img_src +=  nb_image_size(container) + 'w';
+        img_src +=  nb_image_width(container) + 'w';
     } else if (mode === 'crop') {
         img_src += nb_image_box(container, 1.0, 'c');
     } else if (mode === 'fit') {
         img_src += nb_image_box(container);
     } else if (mode === 'third') {
-        img_src +=  nb_image_size(container, 0.33) + 'w';
+        img_src +=  nb_image_width(container, 0.33) + 'w';
     }
     if (ratio) {
         img_src += '?ratio=' + ratio;
