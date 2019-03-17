@@ -17,7 +17,7 @@ function set_cookie(cn, cv, xd=50000) {
     var d = new Date();
     d.setTime(d.getTime() + (xd * 24 * 60 * 60 * 1000));
     var x = "expires=" + d.toUTCString();
-    document.cookie = cn + "=" + cv + "; " + x;
+    document.cookie = cn + "=" + cv + "; " + x + ";path=/";
 }
 
 function get_cookie(cn) {
