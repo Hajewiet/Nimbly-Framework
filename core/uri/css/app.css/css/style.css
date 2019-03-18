@@ -217,7 +217,7 @@ header .site-menu { display: none; }
 
 .admin-menu .nb-menu li a { color: #333333; }
 
-[contenteditable=true], .editor.img-wrapper { background-color: #ebfce966; }
+[contenteditable=true], .editor.img-wrapper { background-color: #0074d93b; }
 
 .uploader.img-wrapper, .editor.img-wrapper { display: inline-block; overflow: hidden; background: #eee; position: relative; max-width: 100%; }
 
