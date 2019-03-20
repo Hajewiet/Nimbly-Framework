@@ -21,7 +21,7 @@ uploader.init_uploader = function(elem, uid) {
   };
   elem.attr('id', uid);
   elem.data('uid', uid);
-  elem.after(
+  elem.after( // todo: also work with input type=file and support drag/drop
     '<input type="file" name="file" id="' + uid + '-file" class="nb-close">'
   );
   if (opts.field) {
@@ -74,6 +74,13 @@ uploader.add_preview = function(opts) {
     );
 };
 
+uploader.trigger = function(opts, event, data=false) {
+  if (opts.trigger) {
+    $(document).trigger(opts.trigger, {'event': event, 'data': data});
+  }
+
+}
+
 function uploader_clear_img(e) {
   uploader.clear_img(e);
 }
@@ -91,7 +98,7 @@ uploader.handle_change = function(e, opts) {
   }
   var file = files[0];
   opts.file_reader.readAsDataURL(file);
-  uploader.set_progress(opts.uid, 0, 'Uploading');
+  uploader.set_progress(opts, 0, 'Uploading');
   uploader.upload_file(opts, file);
 };
 
@@ -103,9 +110,11 @@ uploader.handle_load = function(e, opts) {
   } else if (opts.preview) {
     uploader.add_preview(opts);
   }
+  uploader.trigger(opts, 'preview', opts.img_preview);
 };
 
-uploader.set_progress = function(uid, progress, msg) {
+uploader.set_progress = function(opts, progress, msg) {
+  var uid = opts.uid;
   $('#' + uid + '-bg').removeClass('nb-close');
   $('#' + uid + '-bar')
     .removeClass('nb-close')
@@ -113,6 +122,7 @@ uploader.set_progress = function(uid, progress, msg) {
   $('#' + uid + '-msg')
     .removeClass('nb-close')
     .text(msg);
+  uploader.trigger(opts, 'progress', { 'pct': progress, 'msg': msg });
 };
 
 uploader.unique_id = function($uploader) {
@@ -141,7 +151,7 @@ uploader.upload_file = function(opts, file) {
           function(e) {
             if (e.lengthComputable) {
               uploader.set_progress(
-                opts.uid,
+                opts,
                 parseInt((100 * e.loaded) / e.total),
                 'Uploading'
               );
@@ -153,17 +163,15 @@ uploader.upload_file = function(opts, file) {
       return myXhr;
     },
   }).done(function(json) {
-      uploader.set_progress(opts.uid, 100, 'Done');
+      uploader.set_progress(opts, 100, 'Done');
       if (opts.field) {
         $('#' + opts.uid + '-field').text(json.files.uuid);
       }
-      //$('#preview_' + opts.uid).attr('data-uuid', json.files.uuid);
-      if (opts.trigger) {
-        $(document).trigger(opts.trigger, json.files);
-      }
+      uploader.trigger(opts, 'done', json.files);
     })
     .fail(function() {
-      uploader.set_progress(opts.uid, 0, 'Failed');
+      uploader.set_progress(opts, 0, 'Failed');
+      uploader.trigger(opts, 'fail');
     });
 };
 

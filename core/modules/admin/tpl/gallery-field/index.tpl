@@ -2,19 +2,19 @@
 </label>
 
 <table class="nb-table" id="gallery_[record.uuid]">
-<thead></thead>
+<thead>
+</thead>
 <tbody class="nb-sortable" style="cursor:move"></tbody>
 <tfoot>
 <tr>
-	<td width="20"></td>
-	<td width="200">
-		<img src='[base-url]/img/placeholder.png' 
-			data-empty=true 
-			data-edit-img='[item.name]((img_count))'
-			data-img-mode='fit' style="height:100px; width: 150px;" />
-	</td>
-	<td width="460">
-		
+	<td colspan=4 id="[item.name]_upload">
+		<button class="nb-button" data-upload='{"trigger": "[item.name]_upload"}'>Upload photo</button>
+		<div style="position:relative; width: 200px; height: 20px;" class="progress-wrapper nb-close">
+			<div class="progress-bar-bg">
+				<div class="progress-bar" style="width:0%");></div>
+			</div>
+		    <div class="progress-bar-text"></div>
+		</div>
 	</td>
 </tr>
 </tfoot>

@@ -5,11 +5,8 @@ gallery_field.init = function(opts) {
 	opts.ix = [];
 	var $table = $('#gallery_' + opts.uuid + ' tbody' + '.nb-sortable');
 	$table.data('opts', opts);
-	for (x in opts.images) {
-		var row_ctx = gallery_field.data_context(opts, x);
-		var row_html = nb_populate_template(opts.tpl_id, row_ctx);
-		$table.append(row_html);
-		opts.ix[x] = parseInt(x);
+	for (ix in opts.images) {
+		gallery_field.add_row($table, parseInt(ix))
 	}
 	$table.sortable();
 	$table.on('sortstop', { 'opts' : opts }, gallery_field.on_sortstop);
@@ -19,11 +16,20 @@ gallery_field.init = function(opts) {
 	$table.on('click', 'a[data-move-up]', gallery_field.move_up);
 	$table.on('click', 'a[data-move-down]', gallery_field.move_down);
 	gallery_field.refresh($table);
+	$(document).on(opts.name + '_upload', gallery_field.handle_upload_event);
 }
 
 gallery_field.data_context = function(opts, x) {
 	var img_nr = parseInt(x) + 1;
 	return {'img_nr': img_nr, 'img_uuid': opts.images[x], 'field_name': opts.name + img_nr, 'img_name': opts.image_names[x]}
+}
+
+gallery_field.add_row = function($table, ix) {
+	var opts = $table.data('opts');
+	var row_ctx = gallery_field.data_context(opts, ix);
+	var row_html = nb_populate_template(opts.tpl_id, row_ctx);
+	$table.append(row_html);
+	opts.ix[ix] = ix;
 }
 
 gallery_field.on_sortstop = function(e, ui) {
@@ -128,4 +134,30 @@ gallery_field.move_down = function(e) {
 	gallery_field.swap_data($table, num-1, num);
 	e.preventDefault();
 	gallery_field.refresh($table);
+}
+
+gallery_field.handle_upload_event = function(e, data) {
+	$uploader = $('#' + e.type);
+	if (data.event === 'preview') {
+
+	} else if (data.event === 'progress') {
+		$uploader.find('div.progress-wrapper').removeClass('nb-close').css('display', 'inline-block');
+		$uploader.find('div.progress-bar').css('width', data.data.pct + '%');
+		$uploader.find('div.progress-bar-text').text(data.data.msg);
+	} else if (data.event === 'done') {
+		$uploader.find('button[data-upload]').prop('disabled', false);
+		$table = $uploader.closest('table').find('tbody');
+		var opts = $table.data('opts');
+		var ix = $table.find('tr').length;
+		opts.images[ix] = data.data.uuid;
+		opts.image_names[ix] = data.data.name;
+		opts.ix[ix] = ix;
+		$table.data('opts', opts);
+		gallery_field.add_row($table, ix);
+		gallery_field.refresh($table);
+	} else if (data.event === 'fail') {
+		$uploader.find('button[data-upload]').prop('disabled', false);
+	} else {
+		console.log('event', data);
+	}
 }
