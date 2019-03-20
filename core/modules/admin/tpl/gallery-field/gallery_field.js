@@ -64,7 +64,6 @@ gallery_field.swap_data = function($table, x, y) {
 }
 
 gallery_field.update_row = function($table, $row, ix) {
-	console.log('gallery_field.update_row', $row, ix);
 	var opts = $table.data('opts');
 	var row_ctx = gallery_field.data_context(opts, ix)
 	$row.replaceWith(nb_populate_template(opts.tpl_id, row_ctx));
@@ -91,7 +90,6 @@ gallery_field.update_rows = function($table) {
 	$table.find('tr').each(function(ix) {
 		var $row = $(this);
 		var num = gallery_field.row_num($row);
-		console.log(num, ix, opts.ix[ix]);
 		if (num !== (ix+1) || opts.ix[ix] != ix) {
 			gallery_field.update_row($table, $row, ix);
 		}
