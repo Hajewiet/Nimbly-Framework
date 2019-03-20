@@ -232,13 +232,15 @@ if (
     });
 
     $('body').on('click', 'a[data-clear-img]', function(e) {
+      e.preventDefault();
       var $img = $(this).siblings('img:first');
+      var uuid = $img.data('img-uuid');
       $img.data('edit-changed', true);
       $img.data('img-uuid', '');
       $img.attr('src', base_url + '/img/placeholder.png');
       $img.data('empty', true);
       $(this).addClass('nb-close');
-      e.preventDefault();
+      $(document).trigger('clear-img', { uuid: uuid });
     });
 
     if ($('form[data-edit-autoenable]').length > 0) {

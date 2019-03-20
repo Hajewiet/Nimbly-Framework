@@ -26,7 +26,7 @@
 
 <script>
 	$script.ready('jquery', function() {
-		[include [cur-path]/handle_upload.js]
+		[include [uri-path]/handle_upload.js]
 	});
 </script>
 

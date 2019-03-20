@@ -1,7 +1,9 @@
 <?php
 
-// @doc * `[cur-path]` returns the file path of the current template, e.g. /var/www/ext/uri/css/app.css
+load_library('uri-path');
+load_library('log');
 
 function cur_path_sc() {
-    return $GLOBALS['SYSTEM']['uri_path'];
+	log_system('call to [cur-path] deprecated. replace with [get-path] or [uri-path]');
+	return uri_path_sc();
 }
