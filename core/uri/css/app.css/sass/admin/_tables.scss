@@ -50,7 +50,11 @@
 }
 
 .gallery-image-row {
-    .img-wrapper {
-        margin: 0;
+
+    .editor {
+        &.img-wrapper {
+            margin: 0;
+        }
     }
+    
 }

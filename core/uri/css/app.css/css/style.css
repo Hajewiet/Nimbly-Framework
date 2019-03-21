@@ -306,5 +306,5 @@ a.editor.add-img-icon { position: absolute; width: 30px; height: 30px; left: -40
 
 .nb-table td.img-thumb img, .nb-table th.img-thumb img { width: auto; height: 80px; cursor: pointer; }
 
-.gallery-image-row .img-wrapper { margin: 0; }
+.gallery-image-row .editor.img-wrapper { margin: 0; }
 /*# sourceMappingURL=style.css.map */
