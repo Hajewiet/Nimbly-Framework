@@ -5,9 +5,11 @@ load_library('lookup');
 load_library('base_url');
 
 function render_field_value_sc($params) {
-
     $key = get_variable('field.key');
     $type = get_variable('field.type');
+    if ($type === 'gallery') {
+        $key .= '1';
+    }
     $value = get_variable('record.' . $key);
     $func = "render_field_" . str_replace('-', '_', $type);
     if (function_exists($func)) {
@@ -52,7 +54,7 @@ function render_field_image($value) {
 }
 
 function render_field_gallery($value) {
-    return '';
+    return render_field_image($value);
 }
 
 function render_field_block_text($value) {
