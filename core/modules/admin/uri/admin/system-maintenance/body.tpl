@@ -16,7 +16,7 @@ Disk space total: [disk-space-total]Gb
 	<li>
 		<form id='ccache' action="[url]" method="post" accept-charset="utf-8">
 			[form-key ccache]
-			<a href='#' data-submit-std="#ccache" data-confirm="Press OK to continue and clear cache.">Clear cache</a>
+			<a href='#' data-submit-std="#ccache" data-confirm="Press OK to continue and clear cached JS, CSS and HTML files.">Clear cache</a>
 		<form>
 		<p>Clears server-side javascript and css cache.</p>
 	</li>
