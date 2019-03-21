@@ -19,6 +19,14 @@
     background-image: url('../img/icon-gear-white.svg');
 }
 
+.nb-icon-up {
+    background-image: url('../img/icon-up-white.svg');
+}
+
+.nb-icon-down {
+    background-image: url('../img/icon-down-white.svg');
+}
+
 [data-close], 
 [data-open], 
 [data-toggle], 
@@ -30,4 +38,8 @@
 [data-onclick],
 [data-get] {
     cursor: pointer;
+}
+
+.nb-sortable {
+    cursor: move;
 }
