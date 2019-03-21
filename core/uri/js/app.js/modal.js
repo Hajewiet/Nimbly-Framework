@@ -57,6 +57,7 @@ $(document).on('modal_img_autoselect', function (e, opts) {
 
 modal.handle_select = function (elem) {
     var uuid = elem.data('uuid');
+    var name = elem.data('name');
     var p = elem.closest('[data-select]');
     var old_uuid = p.data('select');
     p.find("[data-uuid='" + old_uuid + "']").removeClass('selected');
@@ -67,6 +68,7 @@ modal.handle_select = function (elem) {
     opts.uuid = uuid;
     opts.modal_uid = $('#modal').data('uid');
     opts.prev = old_uuid;
+    opts.name = name;
     modal.close();
     $(document).trigger('data-select', opts);
 }

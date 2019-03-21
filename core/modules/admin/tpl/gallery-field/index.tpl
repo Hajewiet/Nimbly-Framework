@@ -8,13 +8,16 @@
 <tfoot>
 <tr>
 	<td colspan=4 id="[item.name]_upload">
-		<button class="nb-button" data-upload='{"trigger": "[item.name]_upload"}'>Upload photo</button>
-		<div style="position:relative; width: 200px; height: 20px;" class="progress-wrapper nb-close">
+		<div style="position:relative; height: 20px; margin-bottom: 20px;" class="progress-wrapper nb-close">
 			<div class="progress-bar-bg">
 				<div class="progress-bar" style="width:0%");></div>
 			</div>
 		    <div class="progress-bar-text"></div>
 		</div>
+		<button class="nb-button" data-upload='{"trigger": "[item.name]_upload"}'>Upload photo</button>
+		<button id="[item.name]_select" class="nb-button" data-modal='{"url": "img-select", "uid": "[item.name]_select"}'>
+			Select photo
+		</button>
 	</td>
 </tr>
 </tfoot>

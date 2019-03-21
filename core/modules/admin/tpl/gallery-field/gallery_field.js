@@ -16,7 +16,8 @@ gallery_field.init = function(opts) {
 	$table.on('click', 'a[data-move-up]', gallery_field.move_up);
 	$table.on('click', 'a[data-move-down]', gallery_field.move_down);
 	gallery_field.refresh($table);
-	$(document).on(opts.name + '_upload', gallery_field.handle_upload_event);
+	$(document).on(opts.name + '_upload', gallery_field.handle_upload);
+	$(document).on('data-select', gallery_field.handle_image_select)
 }
 
 gallery_field.data_context = function(opts, x) {
@@ -136,28 +137,41 @@ gallery_field.move_down = function(e) {
 	gallery_field.refresh($table);
 }
 
-gallery_field.handle_upload_event = function(e, data) {
+gallery_field.add_data = function($table, img_uuid, img_name) {
+	var opts = $table.data('opts');
+	var ix = $table.find('tr').length;
+	opts.images[ix] = img_uuid;
+	opts.image_names[ix] = img_name;
+	opts.ix[ix] = ix;
+	$table.data('opts', opts);
+	gallery_field.add_row($table, ix);
+	gallery_field.refresh($table);
+}
+
+gallery_field.handle_upload = function(e, data) {
 	$uploader = $('#' + e.type);
 	if (data.event === 'preview') {
 
 	} else if (data.event === 'progress') {
-		$uploader.find('div.progress-wrapper').removeClass('nb-close').css('display', 'inline-block');
+		$uploader.find('div.progress-wrapper').removeClass('nb-close');
 		$uploader.find('div.progress-bar').css('width', data.data.pct + '%');
 		$uploader.find('div.progress-bar-text').text(data.data.msg);
 	} else if (data.event === 'done') {
 		$uploader.find('button[data-upload]').prop('disabled', false);
 		$table = $uploader.closest('table').find('tbody');
-		var opts = $table.data('opts');
-		var ix = $table.find('tr').length;
-		opts.images[ix] = data.data.uuid;
-		opts.image_names[ix] = data.data.name;
-		opts.ix[ix] = ix;
-		$table.data('opts', opts);
-		gallery_field.add_row($table, ix);
-		gallery_field.refresh($table);
+		gallery_field.add_data($table, data.data.uuid, data.data.name);
 	} else if (data.event === 'fail') {
 		$uploader.find('button[data-upload]').prop('disabled', false);
 	} else {
 		console.log('event', data);
+	}
+}
+
+gallery_field.handle_image_select = function(e, data) {
+	console.log('gallery_field.handle_image_select', e, data);
+	$selectbtn = $('#' + data.uid);
+	if (data.uuid && data.name) {
+		$table = $selectbtn.closest('table').find('tbody');
+		gallery_field.add_data($table, data.uuid, data.name);
 	}
 }
