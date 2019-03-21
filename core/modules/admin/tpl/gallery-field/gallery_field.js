@@ -168,7 +168,6 @@ gallery_field.handle_upload = function(e, data) {
 }
 
 gallery_field.handle_image_select = function(e, data) {
-	console.log('gallery_field.handle_image_select', e, data);
 	$selectbtn = $('#' + data.uid);
 	if (data.uuid && data.name) {
 		$table = $selectbtn.closest('table').find('tbody');
