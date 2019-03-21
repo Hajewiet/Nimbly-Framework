@@ -101,7 +101,13 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 .nb-icon-admin { background-image: url("../img/icon-gear-white.svg"); }
 
+.nb-icon-up { background-image: url("../img/icon-up-white.svg"); }
+
+.nb-icon-down { background-image: url("../img/icon-down-white.svg"); }
+
 [data-close], [data-open], [data-toggle], [data-delete], [data-push], [data-post], [data-put], [data-link], [data-onclick], [data-get] { cursor: pointer; }
+
+.nb-sortable { cursor: move; }
 
 .float-left { float: left; }
 
@@ -299,4 +305,6 @@ a.editor.add-img-icon { position: absolute; width: 30px; height: 30px; left: -40
 .nb-table td.action-cell, .nb-table th.action-cell { text-align: right; }
 
 .nb-table td.img-thumb img, .nb-table th.img-thumb img { width: auto; height: 80px; cursor: pointer; }
+
+.gallery-image-row .img-wrapper { margin: 0; }
 /*# sourceMappingURL=style.css.map */
