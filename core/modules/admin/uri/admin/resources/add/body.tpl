@@ -32,12 +32,15 @@
         </fieldset>
 
         <input type="button" class="nb-button nb-button-outline" id="button-add-field" value="+ Field" />
-        <input
-            type="submit"
-            value="Save"
-            class="nb-button"
-            data-post=".resources"
-            data-done='{"redirect": "admin/resources", "msg": "Resource created"}'
-        />
+
+        <div class="nb-actions">
+            <input
+                type="submit"
+                value="Save"
+                class="nb-button"
+                data-post=".resources"
+                data-done='{"redirect": "admin/resources", "msg": "Resource created"}'
+            />
+        </div>
 
     </form>

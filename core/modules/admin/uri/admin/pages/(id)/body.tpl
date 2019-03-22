@@ -7,11 +7,13 @@
     <label>Template:
         <textarea name="template">[get data.page.template echo]</textarea>
     </label>
-    <input
-        type="submit"
-        value="Save"
-        class="nb-button"
-        data-put=".pages/[data.page.uuid]"
-        data-done='{"redirect": "admin/pages", "msg": "Page `[data.page.url]` updated"}'
-    />
+    <div class="nb-actions">
+        <input
+            type="submit"
+            value="Save"
+            class="nb-button"
+            data-put=".pages/[data.page.uuid]"
+            data-done='{"redirect": "admin/pages", "msg": "Page `[data.page.url]` updated"}'
+        />
+    </div>
 </form>

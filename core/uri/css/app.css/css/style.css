@@ -36,6 +36,10 @@ p { font-size: 14px; }
 
 .nb-form .nb-gallery-field .editor.img-wrapper img { height: 100%; width: auto; }
 
+.nb-form .nb-actions { width: 100%; padding: 5px; background-color: #efefef; border-radius: 5px; border: 1px solid #dcdcdc; }
+
+.nb-form .nb-actions .nb-button, .nb-form .nb-actions input[type="submit"] { margin: 0 5px 0 0; }
+
 .nb-button, input[type="submit"] { font-family: sans-serif; font-size: 14px; font-weight: bold; -webkit-appearance: none; -moz-appearance: none; height: 32px; line-height: 32px; border-radius: 4px; color: #fff !important; background-color: #0074D9; padding: 0 20px; border: none; margin: 5px 5px 10px 0; display: inline-block; text-decoration: none; cursor: pointer; }
 
 .nb-button.green, input[type="submit"].green { background-color: #338e2d; }
