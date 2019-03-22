@@ -483,8 +483,8 @@ function nb_swap_image($img, uuid, bgimg=false) {
 
 function nb_img_src($e, container, mode, ratio=0) {
     var uuid = $e.data('img-uuid') || $e.data('bgimg-uuid');
-    if (!uuid) {
-        return false;
+    if (!uuid) { //emtpy image
+        return "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
     }
     var img_src = full_base_url + '/img/' + uuid + '/';
     if (mode === false) {
