@@ -294,7 +294,7 @@ a.editor.add-img-icon { position: absolute; width: 30px; height: 30px; left: -40
 
 .medium-editor-placeholder:after { color: #333333; }
 
-.nb-table { border-spacing: 0; width: 100%; font-family: sans-serif; margin-bottom: 30px; }
+.nb-table { border-spacing: 0; width: 100%; font-family: sans-serif; margin-bottom: 30px; background-color: #fff; border-radius: 5px; border: 1px solid #e6e6e6; }
 
 .nb-table thead { border-bottom: 1px solid #e6e6e6; }
 
