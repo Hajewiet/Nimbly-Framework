@@ -14,7 +14,7 @@ p { font-size: 14px; }
 
 .nb-form input:focus { border: 1px solid #0074D9; }
 
-.nb-form select { font-family: sans-serif; font-size: 14px; -webkit-appearance: none; -moz-appearance: none; background-color: #fff; border: 1px solid #ccc; border-radius: 4px; height: 32px; padding: 6px 10px; width: 100%; margin: 5px 0 20px; background-image: url("../img/down.svg"); background-repeat: no-repeat; background-position: right 15px center; background-size: 10px 5px; vertical-align: top; }
+.nb-form select { font-family: sans-serif; font-size: 14px; -webkit-appearance: none; -moz-appearance: none; background-color: #fff; border: 1px solid #e6e6e6; border-radius: 4px; height: 32px; padding: 6px 10px; width: 100%; margin: 5px 0 20px; background-image: url("../img/down.svg"); background-repeat: no-repeat; background-position: right 15px center; background-size: 10px 5px; vertical-align: top; }
 
 .nb-form label { font-size: 11px; text-transform: uppercase; font-family: sans-serif; display: block; width: 100%; }
 
@@ -22,7 +22,7 @@ p { font-size: 14px; }
 
 .nb-form .label-inline { display: inline-block; font-weight: normal; margin: 0 5px 20px 0; }
 
-.nb-form .medium-editor-element { font-family: sans-serif; font-size: 14px; min-height: 96px; border: 1px solid #ccc; -webkit-box-shadow: none; box-shadow: none; background-color: #fff; border-radius: 4px; padding: 6px 10px; width: 100%; margin: 5px 0 20px; }
+.nb-form .medium-editor-element { font-family: sans-serif; font-size: 14px; min-height: 96px; border: 1px solid #e6e6e6; -webkit-box-shadow: none; box-shadow: none; background-color: #fff; border-radius: 4px; padding: 6px 10px; width: 100%; margin: 5px 0 20px; }
 
 .nb-form .medium-editor-element:focus { border: 1px solid #0074D9; }
 
@@ -36,7 +36,7 @@ p { font-size: 14px; }
 
 .nb-form .nb-gallery-field .editor.img-wrapper img { height: 100%; width: auto; }
 
-.nb-form .nb-actions { width: 100%; padding: 5px; background-color: #efefef; border-radius: 5px; border: 1px solid #dcdcdc; }
+.nb-form .nb-actions { width: 100%; padding: 5px; background-color: #efefef; border-radius: 5px; border: 1px solid #e6e6e6; }
 
 .nb-form .nb-actions .nb-button, .nb-form .nb-actions input[type="submit"] { margin: 0 5px 0 0; }
 
