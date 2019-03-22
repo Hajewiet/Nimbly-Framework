@@ -10,7 +10,7 @@ p { font-size: 14px; }
 
 .nb-form { max-width: 680px; }
 
-.nb-form input[type="text"], .nb-form input[type="email"], .nb-form input[type="number"], .nb-form input[type="password"], .nb-form input[type="search"], .nb-form input[type="date"] { font-family: sans-serif; font-size: 14px; -webkit-appearance: none; -moz-appearance: none; background-color: #fff; border: 1px solid #ccc; border-radius: 4px; height: 32px; padding: 0 10px; width: 100%; margin: 5px 0 20px; vertical-align: top; -webkit-transition: border 0.1s linear; transition: border 0.1s linear; }
+.nb-form input[type="text"], .nb-form input[type="email"], .nb-form input[type="number"], .nb-form input[type="password"], .nb-form input[type="search"], .nb-form input[type="date"] { font-family: sans-serif; font-size: 14px; -webkit-appearance: none; -moz-appearance: none; background-color: #fff; border: 1px solid #e6e6e6; border-radius: 4px; height: 32px; padding: 0 10px; width: 100%; margin: 5px 0 20px; vertical-align: top; -webkit-transition: border 0.1s linear; transition: border 0.1s linear; }
 
 .nb-form input:focus { border: 1px solid #0074D9; }
 
@@ -294,7 +294,7 @@ a.editor.add-img-icon { position: absolute; width: 30px; height: 30px; left: -40
 
 .medium-editor-placeholder:after { color: #333333; }
 
-.nb-table { border-spacing: 0; width: 100%; font-family: sans-serif; margin-bottom: 30px; background-color: #fff; border-radius: 5px; border: 1px solid #e6e6e6; }
+.nb-table { border-spacing: 0; width: 100%; font-family: sans-serif; margin: 5px 0 30px; background-color: #fff; border-radius: 5px; border: 1px solid #e6e6e6; }
 
 .nb-table thead { border-bottom: 1px solid #e6e6e6; }
 
