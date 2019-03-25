@@ -380,7 +380,7 @@ function nb_load_images() {
         nb_load_image(this, true);
     });
     var interval = 1000;
-    $('[data-img-preload').each(function() {
+    $('[data-img-preload]').each(function() {
         var t = this;
         setTimeout(function(){
             nb_preload_image(t);
