@@ -27,7 +27,7 @@
 				data-empty=false 
 				data-edit-img='((field_name))' 
 				data-img-uuid=((img_uuid))
-				data-img-mode='fit' style="height:100px; width: 150px;" />
+				data-img-mode='fit' style="height:100px; width: 150px; object-fit: scale-down; object-position: left;" />
 		</td>
 		<td>
 			((img_name))
