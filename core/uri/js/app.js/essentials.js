@@ -476,6 +476,7 @@ function nb_swap_image($img, uuid, bgimg=false) {
             $bg.fadeTo(100, '0.0', function() {
                 $parent.find('.nb-bg, .nb-throbber').remove();
             });
+            $(this).addClass('nb-img-loaded');
         });
     });
     
