@@ -92,6 +92,7 @@ php_value zlib.output_compression 16386
 php_value session.gc_maxlifetime 2592000
 php_value session.cookie_lifetime 2592000
 php_value session.gc_probability 1
+php_value error_log ext/data/.tmp/logs/system.log
 
 # rewrite: redirect anything that is not a file to index.php
 RewriteCond %{REQUEST_FILENAME} !-f

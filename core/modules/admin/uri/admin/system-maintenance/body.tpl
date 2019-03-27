@@ -32,7 +32,10 @@ Disk space total: [disk-space-total]Gb
 	 	<a href='[base-url]/admin/debug'>Debug</a>
 	 	<p>Show Nimbly system info, including current set variables, session and <a href='[base-url]/admin/debug/php'>PHP Info</a>.</p>
 	 </li>
-
+	<li>
+	 	<a href='[base-url]/admin/log'>Log files</a>
+	 	<p>Show system log files.</p>
+	 </li>
 	<li>
 		<a href='[base-url]/admin/shortcodes'>Shortcodes</a>
 		<p>Overview of shortcodes with description of what they do.</p>

@@ -1,5 +1,4 @@
 [module user admin]
 [access feature=debug]
 [set page-title="Debug"]
-[set html-classes="admin-page" append]
 [admin-html]

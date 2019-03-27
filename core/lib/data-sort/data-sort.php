@@ -19,6 +19,9 @@ function data_sort_sc($params) {
 }
 
 function data_sort_param($data, $sort_rules) {
+    if (empty($data)) {
+        return $data;
+    }
     if (strpos($sort_rules, '|') === false) {
         return data_sort_param_separator($data, $sort_rules);
     }
@@ -44,6 +47,9 @@ function data_sort_param_separator($data, $sort_csv, $sep = ',') {
 }
 
 function data_sort_meta($data, $meta) {
+    if (empty($data)) {
+        return $data;
+    }
     switch (trim(strtolower($meta['flags']))) {
         case 'num':
         case 'int':
@@ -68,6 +74,9 @@ function data_sort_meta($data, $meta) {
 }
 
 function data_sort($data, $key, $sort_flags = SORT_REGULAR, $sort_order = SORT_ASC) {
+    if (empty($data)) {
+        return $data;
+    }
     switch ($sort_flags) {
         case SORT_REGULAR:
             return data_sort_regular($data, $key, $sort_order);
