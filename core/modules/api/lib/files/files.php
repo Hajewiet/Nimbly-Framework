@@ -17,7 +17,9 @@ function files_post() { // create a new file and it's meta data
     $from = $_FILES['file']['tmp_name'];
     $uuid = hash_file('md5', $from); // use checksum as uuid
     if (data_exists('.files', $uuid)) {
-        return json_result(array("files" => data_read(".files_meta", $uuid), 'count' => 1, 'message' => 'RESOURCE_EXISTS'), 409);
+        $meta = data_read('.files_meta', $uuid);
+        return json_result(array("files" => $meta, 'count' => 1, 'message' => 'RESOURCE_CREATED'), 201);
+        //return json_result(array("files" => data_read(".files_meta", $uuid), 'count' => 1, 'message' => 'RESOURCE_EXISTS'), 409);
     }
     $dir = $GLOBALS['SYSTEM']['data_base'] . '/.files/';
     if (!file_exists($dir)) {

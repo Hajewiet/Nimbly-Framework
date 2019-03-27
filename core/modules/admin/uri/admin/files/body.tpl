@@ -1,6 +1,6 @@
 <h1>Files</h1>
 [feature-cond features="add_files,(any)_files,manage-content" tpl=add_button]
-[data .files_meta]
+[data .files_meta sort=name|string|asc]
 <table class="nb-table">
   <thead>
     <tr>
