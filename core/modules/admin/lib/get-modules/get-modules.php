@@ -18,6 +18,9 @@ function get_modules_sc() {
         	if (isset($modules[$module])) {
         		continue;
         	}
+            if ($module[0] === '.') {
+                continue;
+            }
         	$install_file = $path . '/' . $module . '/.install.inc';
         	$result[$module] = array(
         		"name" => $module,

@@ -26,7 +26,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
  * and execute the requested uri with the function run_uri.
  */
 
-$SYSTEM['env_paths'] = array('ext', 'core');
+$SYSTEM['env_paths'] = array('ext', 'contrib', 'core');
 foreach ($SYSTEM['env_paths'] as $env_path) {
     $path = $SYSTEM['file_base'] . $env_path . '/lib/find/find.php';
     if (file_exists($path)) {
