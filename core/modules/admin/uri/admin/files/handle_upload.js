@@ -4,6 +4,7 @@ row_uploader.init = function() {
 	if (row_uploader.init_done) {
 		return;
 	}
+	$('.nb-button[data-upload]').addClass('nb-button-disabled').prop('disabled', true);
 	$table = $('table tbody');
 	var ctx = {
 		"uuid": "new",
@@ -17,7 +18,7 @@ row_uploader.init = function() {
 
 row_uploader.reset = function() {
 	$('.file-upload-row').removeClass('file-upload-row');
-	$('a.nb-button[data-upload]').prop('disabled', false);
+	$('.nb-button[data-upload]').removeClass('nb-button-disabled').prop('disabled', false);
 	row_uploader.init_done = false;
 }
 
