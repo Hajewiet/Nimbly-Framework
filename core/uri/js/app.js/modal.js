@@ -50,20 +50,45 @@ $('body').on('keyup', function(e) {
 });
 
 // handle modal autoselect
-$(document).on('modal_img_autoselect', function (e, opts) {
-    $(e.target).data('uuid', opts.uuid);
-    modal.handle_select($(e.target));
+$(document).on('modal_img_select', function (e, opts) {
+    modal.handle_img_select(e, opts);
 });
 
-modal.handle_select = function (elem) {
-    var uuid = elem.data('uuid');
-    var name = elem.data('name');
-    var p = elem.closest('[data-select]');
+modal.handle_img_select = function (e, data) {
+    console.log('modal.handle_img_select', e, opts);
+
+    if (data.event === 'preview') {
+        modal.init_img_select_row(data.data);
+    } else if (data.event === 'progress') {
+        $urow = $('#modal table[data-select] tbody tr.file-upload-row:first');
+        $urow.find('div.progress-wrapper').removeClass('nb-close');
+        $urow.find('div.progress-bar').css('width', data.data.pct + '%');
+        $urow.find('div.progress-bar-text').text(data.data.msg);
+    } else if (data.event === 'done') {
+        modal.handle_img_upload_done(data);
+    } else if (data.event === 'fail') {
+        modal.reset_img_select();
+    } else {
+        console.log('unknown event', data);
+    }
+}
+
+modal.handle_img_upload_done = function(data) {
+    var html = nb_populate_template('tpl-modal-img-select-row', data.data);
+    $urow = $('#modal table[data-select] tbody tr.file-upload-row:first');
+    $urow = $urow.replaceWith(html);
+    $img = $('.file-upload-row .file-upload-row-img img');
+    $img.attr('src', base_url + '/img/' + data.data.uuid + '/100x50f');
+    $('.file-upload-row .file-upload-row-buttons .nb-close').removeClass('nb-close');
+    modal.reset_img_select();
+    var uuid = data.data.uuid;
+    var name = data.data.name;
+    var p = $urow.closest('[data-select]');
     var old_uuid = p.data('select');
     p.find("[data-uuid='" + old_uuid + "']").removeClass('selected');
     p.data('select', uuid);
     p.attr('data-select', uuid);
-    elem.addClass('selected');
+    $urow.addClass('selected');
     var opts = modal.options;
     opts.uuid = uuid;
     opts.modal_uid = $('#modal').data('uid');
@@ -73,3 +98,22 @@ modal.handle_select = function (elem) {
     $(document).trigger('data-select', opts);
 }
 
+modal.init_img_select_row = function(img_src) {
+    $('#modal .nb-button[data-upload]').addClass('nb-button-disabled').prop('disabled', true);
+    $table = $('#modal table[data-select] tbody');
+    var ctx = {
+        'uuid': '',
+        'name': ''
+    }
+    var html = nb_populate_template('tpl-modal-img-select-row', ctx);
+    $table.prepend(html);
+    $urow = $table.find('tr.file-upload-row:first');
+    $urow.find('img').attr('src', img_src);
+}
+
+modal.reset_img_select = function() {
+    $('#modal .nb-button[data-upload]').removeClass('nb-button-disabled').prop('disabled', false);
+    $table = $('#modal table[data-select] tbody');
+    $urow = $table.find('tr.file-upload-row:first');
+    $urow.removeClass('file-upload-row');
+}
