@@ -1,9 +1,10 @@
 <?php
 
+load_library("data");
+
 function router_run($uri) {
     $GLOBALS['SYSTEM']['route_found'] = false;
     $GLOBALS['SYSTEM']['uri_parts'] = explode("/", $GLOBALS['SYSTEM']['request_uri']);
-    load_library("data");
     $routes = data_read(".routes");
     $routes = data_sort($routes, 'order', SORT_NUMERIC);
     if (empty($routes)) {

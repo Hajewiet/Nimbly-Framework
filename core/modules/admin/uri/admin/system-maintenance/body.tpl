@@ -6,6 +6,10 @@ Disk space total: [disk-space-total]Gb
 
 <ul>
 	<li>
+		<a href='[base-url]/admin/modules'>Modules</a>
+		<p>Overiew of modules and module installer.</p>
+	</li>
+	<li>
 		<a href='[base-url]/admin/resources'>Resources</a>
 		<p>Overview of all resources.</p>
 	</li>
