@@ -5,8 +5,8 @@
   [form-key select_modules]
   <label class="label-inline">
     Select modules to install:<br />
-    <input type="checkbox" name="modules[]" value="pull"> Pull <br />
-    <input type="checkbox" name="modules[]" value="blog"> Blog
+    <input type="checkbox" name="modules[]" value="pull" [if pull-check=(not-empty) echo="checked"]> Pull <br />
+    <input type="checkbox" name="modules[]" value="blog" [if blog-check=(not-empty) echo="checked"]> Blog <br />
   </label>
   <button type="submit" class="nb-button">Install modules</button>
 </form>
