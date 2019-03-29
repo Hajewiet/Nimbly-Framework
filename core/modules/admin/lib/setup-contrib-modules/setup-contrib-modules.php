@@ -56,8 +56,7 @@ function setup_contrib_modules_sc() {
         _scmout('removing directory ' . $d);
         rrmdir($d);
     }
-
-
+    _scmin('git reset --hard');
     _scmin('git pull origin master');
 }
 
