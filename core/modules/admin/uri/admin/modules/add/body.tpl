@@ -10,3 +10,4 @@
   </label>
   <button type="submit" class="nb-button">Install modules</button>
 </form>
+[debug variables]

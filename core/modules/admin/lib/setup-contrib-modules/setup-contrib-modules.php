@@ -2,6 +2,7 @@
 
 function setup_contrib_modules_sc() {
 
+
 	_scmout('Setup contrib modules', 'lightgray');
 
     /* change directory */
@@ -37,10 +38,11 @@ function setup_contrib_modules_sc() {
     }
 
     /* get modules from file */
-    $modules = ['pull', 'blog']; // todo automatic
+    load_library('set');
     $content = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     foreach ($content as $c) {
-    	_scmout($c, 'yellow');
+    	$c = trim($c, '/');
+    	set_variable($c . '-check', true);
     }
 
     _scmin('git pull origin master');
