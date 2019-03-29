@@ -37,7 +37,7 @@ function setup_contrib_modules_sc() {
     }
 
     /* get modules from file */
-    $modules = ['pull', 'blog'] // todo automatic
+    $modules = ['pull', 'blog']; // todo automatic
     $content = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     foreach ($content as $c) {
     	_scmout($c, 'yellow');
