@@ -7,5 +7,5 @@
     Select modules to install:<br />
     [repeat data.modules tpl=module-check]
   </label>
-  <button type="submit" class="nb-button">Install modules</button>
+  <button type="submit" class="nb-button">Pull modules</button>
 </form>
