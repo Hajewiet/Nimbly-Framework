@@ -74,7 +74,6 @@ RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
 RewriteCond ext/static/%1 -F
 RewriteRule ^ ext/static/%1 \[END]
 
-
 # rewrite: use CORE static if availble for the requested file
 RewriteCond %{REQUEST_URI} ^/[get rewritebase-slash](.*)
 RewriteCond core/static/%1 -F

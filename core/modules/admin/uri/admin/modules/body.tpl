@@ -1,4 +1,5 @@
 <h1>Modules</h1>
+<a href="[base-url]/admin/modules/add" class="nb-button">Add Module(s)</a>
 <table class="nb-table">
   <thead>
     <tr>
