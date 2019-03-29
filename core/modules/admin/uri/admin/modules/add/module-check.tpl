@@ -1,0 +1,1 @@
+<input type="checkbox" name="modules[]" value="[item.key]" [if [item.key]-check=(not-empty) echo="checked"]> [item.key] <br />

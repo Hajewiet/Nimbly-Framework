@@ -2,6 +2,9 @@
 
 function setup_contrib_modules_sc() {
 
+    load_library('set');
+    $all_modules = ['pull', 'blog']; //todo: automize, configure?
+    set_variable('data.modules', $all_modules);
 
 	_scmout('Setup contrib modules', 'lightgray');
 
@@ -34,16 +37,26 @@ function setup_contrib_modules_sc() {
     $file = $dir . '/.git/info/sparse-checkout';
     if (!file_exists($file)) {
     	touch($file);
-    	chmod($file, 0750);
+    	chmod($file, 0640);
     }
 
     /* get modules from file */
-    load_library('set');
+    $clear_modules = $all_modules;
     $content = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     foreach ($content as $c) {
     	$c = trim($c, '/');
     	set_variable($c . '-check', true);
+        if (($k = array_search($c, $clear_modules)) !== false) {
+            unset($clear_modules[$k]);
+        }
     }
+    load_library('util');
+    foreach ($clear_modules as $m) {
+        $d = $dir . '/' . $m;
+        _scmout('removing directory ' . $d);
+        rrmdir($d);
+    }
+
 
     _scmin('git pull origin master');
 }
