@@ -15,14 +15,15 @@ function get_modules_sc() {
         unset($modules[0]);
         unset($modules[1]);
         foreach ($modules as $module) {
-        	if (isset($modules[$module])) {
-        		continue;
-        	}
             if ($module[0] === '.') {
                 continue;
             }
+            $k = $module . $env_path;
+        	if (isset($modules[$k])) {
+        		continue;
+        	}
         	$install_file = $path . '/' . $module . '/.install.inc';
-        	$result[$module] = array(
+        	$result[$k] = array(
         		"name" => $module,
         		"has_install" => file_exists($install_file),
         		"env" => $env_path,
