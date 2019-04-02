@@ -7,15 +7,13 @@ function repeat_sc($params) {
     $data_id = get_param_value($params, "data", current($params));
     $tpl_id = get_param_value($params, "tpl", $data_id);
     $tpl_dir = get_param_value($params, "tpldir");
-    $var_id = get_param_value($params, "var", "item");
-    $limit = get_param_value($params, "limit", 0);
     $tpl = find_template($tpl_id, $tpl_dir);
     if (empty($tpl)) {
         return;
     }
-
+    
     $data = get_variable($data_id);
-
+    
     if (get_param_value($params, "num", false) !== false) {
         $max = intval(get_param_value($params, "num", 0));
         $data = [];
@@ -27,6 +25,11 @@ function repeat_sc($params) {
             $data = array_map('trim', explode(',', $data));
         } else {
             $data = array($data);
+        }
+    } else if (!empty($data) && is_array($data)) {
+        $filter = get_param_value($params, "filter");
+        if (!empty($filter)) {
+            $data = data_filter($data, $filter);
         }
     }
 
@@ -45,6 +48,8 @@ function repeat_sc($params) {
         $exclude_ls = explode(",", $exclude);
     }
 
+    $var_id = get_param_value($params, "var", "item");
+    $limit = get_param_value($params, "limit", 0);
     $iterations = 0;
     foreach ($data as $k => $item) {
         $excluded = @in_array($item, $exclude_ls) || @in_array(key($item), $exclude_ls);
