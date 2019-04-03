@@ -10,6 +10,11 @@ function count_sc($params) {
     if ($as === false) {
         return 0;
     } else if (is_array($as)) {
+    	$filter = get_param_value($params, "filter");
+        if (!empty($filter)) {
+        	load_library("data");
+            $as = data_filter($as, $filter);
+        }
         return count($as);
     }
     return 1;

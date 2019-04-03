@@ -97,17 +97,24 @@ function data_read($resource, $uuid = null, $field = null) {
     }
     $contents = file_get_contents($file);
     $result = json_decode($contents, true);
-    if (!empty($field)) {
-        if (isset($result[$field])) {
-            return $result[$field];
-        }
-        return null;
-    }
     if (!isset($result['_modified'])) {
         $result['_modified'] = filemtime($file);
     }
     if (!isset($result['_created'])) {
         $result['_created'] = filectime($file);
+    }
+    if (!empty($field)) {
+        if (is_string($field) && isset($result[$field])) {
+            return $result[$field];
+        } else if (is_array($field)) {
+            $filtered_result = array();
+            foreach ($field as $f) {
+                $filtered_result[$f] = $result[$f];
+            }
+            unset($result);
+            return $filtered_result;
+        }
+        return null;
     }
     return $result;
 }
