@@ -1,5 +1,5 @@
 <h1>Modules</h1>
-<a href="[base-url]/admin/modules/add" class="nb-button">Add Module(s)</a>
+<a href="[base-url]/admin/modules/select" class="nb-button">Select Contrib Modules</a>
 <table class="nb-table">
   <thead>
     <tr>
