@@ -14,10 +14,14 @@
     .nimbly-logo {
         position: fixed;
         z-index: 2000;
-        bottom: 40px;
+        bottom: 80px;
         right: -20px;
         height: 24px;
         width: auto;
         transform: rotate(90deg);
+
+        @include breakpoint(tablet) {
+            bottom: 40px;
+        }
     }
 }
