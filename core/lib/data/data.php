@@ -475,7 +475,7 @@ function data_field_contains($object, $field_name, $val) {
         return false;
     }
     $field_value = $object[$field_name];
-    if ($field_Value === $val) {
+    if ($field_value === $val) {
         return true;
     }
     if (is_array($field_value) && in_array($val, $field_value)) {
