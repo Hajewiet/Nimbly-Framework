@@ -1,7 +1,11 @@
 <?php
 
 function text_sc($params) {
-    $languages = array($GLOBALS['SYSTEM']['variables']['language'], '');
+    if (isset($GLOBALS['SYSTEM']['variables']['language'])) {
+        $languages = array($GLOBALS['SYSTEM']['variables']['language'], '');
+    } else {
+        $languages = array('');
+    }
     $paths = array(
         $GLOBALS['SYSTEM']['file_base'] . 'data/i18n/text.',
         $GLOBALS['SYSTEM']['uri_path'] . '/text.');

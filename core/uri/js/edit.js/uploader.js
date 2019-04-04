@@ -42,6 +42,10 @@ uploader.remove_preview = function(opts) {
   $('#' + opts.uid + '-preview').remove();
 };
 
+uploader.clear_field = function(opts) {
+  $('#' + opts.uid + '-field').text('');
+}
+
 uploader.add_preview = function(opts) {
   uploader.remove_preview(opts);
   if (!opts.preview) {
@@ -88,6 +92,7 @@ function uploader_clear_img(e) {
 uploader.clear_img = function(e) {
   var uid = $(e.target).data('uid');
   uploader.remove_preview({ uid: uid });
+  uploader.clear_field({ uid: uid});
   $('#' + uid).prop('disabled', false);
 };
 
