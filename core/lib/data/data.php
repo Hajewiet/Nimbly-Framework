@@ -191,7 +191,7 @@ function data_update($resource, $uuid, $data_update_ls) {
             return false;
         }
         $data_merged_ls['uuid'] = $uuid;
-        if ($data_merged_ls['_fkrefs']) {
+        if (isset($data_merged_ls['_fkrefs'])) {
             // update fks for all references
         } 
     }
