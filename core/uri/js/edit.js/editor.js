@@ -376,7 +376,7 @@ editor.enable_img = function(elem, ix) {
 editor.disable_img = function(elem, ix) {
   elem
     .parent()
-    .find('a.edit-img-icon')
+    .find('a.edit-img-icon,a.clear-img-icon')
     .remove();
   if (elem.parent().is('div.editor.img-wrapper')) {
     elem.unwrap();
