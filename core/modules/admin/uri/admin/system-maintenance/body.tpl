@@ -58,8 +58,7 @@ Disk space total: [disk-space-total]Gb</p>
 			<td>Reinstall to update .htaccess; resets admin and editor role.</td>
 		</tr>
 		<tr>
-			<td>[admin-menu-extend]</td>
-			<td></td>
+			<td colspan="2">[admin-menu-extend]</td>
 		</tr>
 	</tbody>
 </table>
