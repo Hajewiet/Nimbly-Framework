@@ -18,7 +18,6 @@ if (empty ($items)) {
 }
 
 $meta = data_meta($resource, $items);
-
 if (isset($meta['sort'])) {
     $items = data_sort_meta($items, $meta['sort']);
 }

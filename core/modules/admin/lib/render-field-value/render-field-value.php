@@ -88,3 +88,7 @@ function render_field_pk($value) {
 function render_field_password($value) {
     return '************';
 }
+
+function render_field_parent($value) {
+    return render_field_select($value);
+}

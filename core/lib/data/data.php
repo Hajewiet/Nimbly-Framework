@@ -60,8 +60,8 @@ function data_var($resource, $uuid = "", $op = "read") {
  * @return boolean
  */
 function data_exists($resource, $uuid = "") {
-    $path = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . $uuid;
-    return file_exists($path);
+    $path = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/';
+    return file_exists($path . $uuid) || file_exists($path . str_replace('.', '/', $uuid));
 }
 
 /**
@@ -93,7 +93,10 @@ function data_read($resource, $uuid = null, $field = null) {
     }
     $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . $uuid;
     if (!file_exists($file) || is_dir($file)) {
-        return null;
+        $file =  $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . str_replace('.', '/', $uuid);
+        if (!file_exists($file) || is_dir($file)) {
+            return null;
+        }
     }
     $contents = file_get_contents($file);
     $result = json_decode($contents, true);
@@ -142,11 +145,40 @@ function _data_read_all($resource, $setting = null) {
     $all = @scandir($path);
     if (is_array($all)) {
         foreach ($all as $uuid) {
-            if ($uuid[0] !== '.') {
-                $result[$uuid] = data_read($resource, $uuid, $setting);
+            if ($uuid[0] === '.') {
+                continue;
             }
+            if (is_dir($path . '/' . $uuid)) {
+                $children = _data_read_children($resource, $uuid, $uuid, $setting);
+                $result = array_merge($result, $children);
+                continue;
+            }
+            $result[$uuid] = data_read($resource, $uuid, $setting);
         }
     }
+    return $result;
+}
+
+function _data_read_children($resource, $parent, $key, $settings = null) {
+    $result = array();
+    $meta = data_meta($resource);
+    $path = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . $parent;
+    $parents = @scandir($path);
+    if (!is_array($parents)) {
+        return $result;
+    }
+    foreach ($parents as $p) {
+        if ($p[0] === '.') {
+            continue;
+        }
+        $path2 = $path . '/' . $p;
+        if (is_dir($path2)) {
+            $sub_result = _data_read_children($resource, $parent . '/' . $p, $key . '.' . $p, $settings);
+            $result = array_merge($result, $sub_result);
+            continue;
+        }
+        $result[$key . '.' . $p] = data_read($resource . '/' . $parent, $p, $settings);
+    };
     return $result;
 }
 
@@ -173,6 +205,7 @@ function data_update($resource, $uuid, $data_update_ls) {
         return $result;
     }
 
+    _data_normalize_uuid($resource, $uuid);
 
     $data_ls = data_read($resource, $uuid);
 
@@ -181,7 +214,7 @@ function data_update($resource, $uuid, $data_update_ls) {
     } else {
         $data_merged_ls = array_merge($data_ls, $data_update_ls);
     }
-    
+
     // additional handling if PK field changed
     $pk_field =  $data_update_ls['pk-field-name'] ?? false;
     if ($pk_field) {
@@ -206,6 +239,19 @@ function data_update($resource, $uuid, $data_update_ls) {
         return $data_merged_ls;
     }
     return false;
+}
+
+function _data_normalize_uuid(&$resource, &$uuid) {
+    if (strpos($uuid, '.', 1) !== false) {
+        $parts = explode('.', $uuid);
+        if (count($parts) >= 2) {
+            for ($i = 0; $i < count($parts) - 1; $i++) {
+                $resource .= '/' . $parts[$i];
+            }
+            $uuid = $parts[count($parts) - 1];
+            $resource = str_replace('.', '/', $resource);
+        }
+    }
 }
 
 function data_update_pk($resource, $uuid, $pk_value) {
@@ -238,7 +284,11 @@ function data_create($resource, $uuid, $data_ls) {
     if (empty($uuid)) {
         return file_exists($dir);
     }
+    data_create_relations($resource, $uuid, $data_ls);
     $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . $uuid;
+    if (isset($data_ls['form-key'])) {
+        unset($data_ls['form-key']);
+    }
     if (!isset($data_ls['_created_by'])) {
         load_library('md5');
         load_library('username', 'user');
@@ -261,6 +311,7 @@ function data_delete($resource, $uuid = null) {
         return false;
     }
     if (!empty($uuid)) {
+        _data_normalize_uuid($resource, $uuid);
         $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . $uuid;
         return file_exists($file) && unlink($file);
     }
@@ -280,6 +331,40 @@ function data_delete($resource, $uuid = null) {
     @rmdir($dir);
     return $delete_count;
 }
+
+function data_create_relations(&$resource, &$uuid, $data_ls) {
+    if (strpos($resource, '/') !== false) {
+        return;
+    }
+    $meta = data_meta($resource, $uuid);
+    if (empty($meta)) {
+        return;
+    }
+    if (isset($meta['parent'])) {
+        $parent_resource = $meta['parent']['resource'];
+        $parent_field = $meta['parent']['field'];
+        $parent_uuid = $data_ls[$parent_field] ?? '.unknown';
+        $my_uuid = $parent_resource . '/' . $parent_uuid;
+        _data_normalize_uuid($resource, $my_uuid);
+        if ($parent_uuid !== '.unknown' && !file_exists($resource)) {
+            @mkdir($GLOBALS['SYSTEM']['data_base'] . '/' . $resource, 0750, true);
+        }
+    }
+}
+
+function data_delete_relations($resource, $uuid) {
+    $meta = data_meta($resource, $uuid);
+    if (empty($meta)) {
+        return;
+    }
+    if (isset($meta['children'])) {
+        load_library('utils');
+        foreach ($meta['relations'] as $rel) {
+            rrmdir($GLOBALS['SYSTEM']['data_base'] . '/' . $rel . '/' . $resource . '/' . $uuid);
+        }    
+    }
+}
+
 
 /*
  * Simple search on all fields, given a search term
@@ -404,6 +489,10 @@ function data_resources_list() {
  * Get meta data about a resource
  */
 function data_meta($resource, $items = null) {
+    static $meta_result = [];
+    if (!empty($meta_result[$resource])) {
+        return $meta_result[$resource];
+    }
     if (data_exists($resource, ".meta")) {
         $meta = data_read($resource, ".meta");
     } else {
@@ -415,6 +504,7 @@ function data_meta($resource, $items = null) {
             data_create($resource, ".meta", $meta);
         }
     }
+    $meta_result[$resource] = $meta;
     return $meta;
 }
 
