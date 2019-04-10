@@ -157,6 +157,29 @@ function _data_read_all($resource, $setting = null) {
     return $result;
 }
 
+function data_read_index($resource, $index_name, $index_uuid) {
+    $result = array();
+    $path = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource;
+    $ix_path = $path . '/' . $index_name . '/' . $index_uuid;
+    if (!file_exists($ix_path)) {
+        return $result;
+    }
+    $ixs = @scandir($ix_path);
+    if (!is_array($ixs)) {
+        return $result;
+    }
+    foreach ($ixs as $ix) {
+        if ($ix[0] === '.') {
+            continue;
+        }
+        if (is_dir($path . '/' . $ix)) {
+            continue;
+        }
+        $result[$ix] = data_read($resource, $ix);
+    }
+    return $result;
+}
+
 /**
  * Updates a specific data object file
  */
