@@ -258,7 +258,31 @@ function data_create($resource, $uuid, $data_ls) {
         $data_ls['_modified'] = time();
     }
     $json_data = json_encode($data_ls, JSON_UNESCAPED_UNICODE);
-    return @file_put_contents($file, $json_data) !== false;
+    if (@file_put_contents($file, $json_data) !== false) {
+        $meta = data_meta($resource);
+        if (isset($meta['index']) && is_array($meta['index'])) {
+            foreach($meta['index'] as $index_name) {
+                if (empty($data_ls[$index_name])) {
+                    continue;
+                }
+                $index_uuid = md5($data_ls[$index_name]);
+                if ($index_uuid === $uuid) {
+                    continue; // no need to index
+                }
+                _data_create_index($file, $index_name, $index_uuid);
+            }
+        }
+        return true;
+    }
+    return false;
+}
+
+function _data_create_index($file, $index_name, $index_uuid) {
+    $path = dirname($file) . '/' . $index_name . '/' . $index_uuid . '/';
+    if (!file_exists($path)) {
+        @mkdir($path, 0750, true);
+    }
+    touch($path . basename($file)); //better than symlink (?) because original file should be opened with data_read 
 }
 
 /**

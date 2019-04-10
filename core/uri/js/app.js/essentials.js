@@ -220,7 +220,18 @@ $('body').on('input', 'input[data-live-pk]', function (e) {
     pk_field.val(clean_val);
 });
 
-$('body').on('keydown', 'input[data-input-pk]', function (e) {
+$('body').on('input', 'input[data-live-id]', function (e) {
+    var f = $(this).data('live-id');
+    var id_field = $(this).closest('form').find('input[name=' + f + ']');
+    if (id_field.length !== 1) {
+        return;
+    }
+    var val = $(this).val();
+    var clean_val = val.toLowerCase().trim().replace(/[^0-9a-zA-Z-]/g, '-');
+    id_field.val(clean_val);
+});
+
+$('body').on('keydown', 'input[data-input-pk],input[data-input-id]', function (e) {
     if(/[^0-9a-zA-Z-]/.test(e.key)) {
        return false;
     }
