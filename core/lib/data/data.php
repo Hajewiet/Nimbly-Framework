@@ -283,7 +283,7 @@ function data_create($resource, $uuid, $data_ls) {
     $json_data = json_encode($data_ls, JSON_UNESCAPED_UNICODE);
     if (@file_put_contents($file, $json_data) !== false) {
         $meta = data_meta($resource);
-        if (isset($meta['index']) && is_array($meta['index'])) {
+        if (is_array($meta['index'])) {
             foreach($meta['index'] as $index_name) {
                 if (empty($data_ls[$index_name])) {
                     continue;
@@ -311,40 +311,46 @@ function _data_create_index($file, $index_name, $index_uuid) {
 function _data_delete_index($file, $index_name, $index_uuid) {
     $path = dirname($file) . '/' . $index_name . '/' . $index_uuid . '/' . basename($file);
     if (!file_exists($path)) {
-        return;
+        return 0;
     }
-    unlink($path);
+    return (int) unlink($path);
 }
 
 /**
  * Deletes resource/id or resource/*
  */
 function data_delete($resource, $uuid = null) {
+    $result = 0;
     $dir = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/';
     if (!file_exists($dir)) {
-        return false;
+        return $result;
     }
     if (!empty($uuid)) {
         $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . $uuid;
         if (!file_exists($file)) {
-            return false;
+            return $result;
         }
         $meta = data_meta($resource);
-        if (isset($meta['index'])) {
-            if (isset($meta['index']) && is_array($meta['index'])) {
-                $data_ls = data_read($resource, $uuid);
+        if (isset($meta['index']) || isset($meta['children'])) {
+            $data_ls = data_read($resource, $uuid);
+            if (is_array($meta['index'])) {
                 foreach($meta['index'] as $index_name) {
                     if (empty($data_ls[$index_name])) {
                         continue;
                     }
                     $index_uuid = md5($data_ls[$index_name]);
-                    _data_delete_index($file, $index_name, $index_uuid);
+                    $result += _data_delete_index($file, $index_name, $index_uuid);
                 }
             }   
+            if (is_array($meta['children'])) {
+                foreach($meta['children'] as $child_name) {
+                    $result += _data_delete_children($resource, $uuid, $child_name);
+                }        
+            }
         }
-        return unlink($file);
+        $result += (int) unlink($file);
+        return $result;
     }
-    $delete_count = 0;
     $files = @scandir($dir);
     foreach($files as $file) {
         if ($file[0] === '.' && $file !== ".meta") {
@@ -354,10 +360,30 @@ function data_delete($resource, $uuid = null) {
         if (!is_file($f)) {
             continue;
         }
-        $delete_count += (int) unlink($f);
+        $result += (int) unlink($f);
     }
     @rmdir($dir);
     return $delete_count;
+}
+
+function _data_delete_children($resource, $uuid, $child_name) {
+    $result = 0;
+    $meta = data_meta($child_name);
+    if (!isset($meta['parent']['resource'])) {
+        return $result;
+    }
+    if ($meta['parent']['resource'] !== $resource) {
+        return result;
+    }
+    $field = $meta['parent']['field'];
+    // todo: has index? should maybe always have an index for this relation
+    $children = data_filter(data_read($child_name), $field . ':' . $uuid);
+    if (is_array($children)) {
+        foreach ($children as $uuid => $child) {
+            $result += data_delete($child_name, $uuid);
+        }
+    }
+    return $result;
 }
 
 
