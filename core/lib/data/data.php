@@ -93,10 +93,7 @@ function data_read($resource, $uuid = null, $field = null) {
     }
     $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . $uuid;
     if (!file_exists($file) || is_dir($file)) {
-        $file =  $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . $uuid;
-        if (!file_exists($file) || is_dir($file)) {
-            return null;
-        }
+        return null;
     }
     $contents = file_get_contents($file);
     $result = json_decode($contents, true);
