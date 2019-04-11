@@ -175,7 +175,15 @@ function data_read_index($resource, $index_name, $index_uuid) {
         if (is_dir($path . '/' . $ix)) {
             continue;
         }
-        $result[$ix] = data_read($resource, $ix);
+        $item = data_read($resource, $ix);
+        if (isset($item[$index_name]) && md5($item[$index_name]) === $index_uuid) {
+            $result[$ix] = $item;
+        } else { 
+            //remove index, it's not valid anymore.
+            load_library('log');
+            log_system('removed index ' . $path . '/' . $ix . ': not matching ' . $index_name);
+            unlink($path . '/' . $ix);
+        } 
     }
     return $result;
 }
@@ -478,6 +486,28 @@ function data_filter($data, $filter_str) {
         }
     }
     return $data;
+}
+
+function data_get($resource, $uuid, $index=false, $filter=false) {
+    load_library('md5');
+    $uuid = md5_uuid($uuid);
+    if (data_exists($resource, $uuid)) {
+        return data_read($resource, $uuid);
+    }
+    if ($index !== false) {
+        $items = data_read_index($resource, $index, $uuid);
+    } else {
+        $items = data_read($resource);
+    }
+    if ($filter !== false) {
+        $items = data_filter($items, $filter);
+    }
+    if (count($items) === 1) {
+        return current($items);
+    }
+    load_library('log');
+    log_system('data_get found ' . count($items) . ' items. Expected 1');
+    return false;
 }
 
 
