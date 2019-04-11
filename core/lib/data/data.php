@@ -283,7 +283,7 @@ function data_create($resource, $uuid, $data_ls) {
     $json_data = json_encode($data_ls, JSON_UNESCAPED_UNICODE);
     if (@file_put_contents($file, $json_data) !== false) {
         $meta = data_meta($resource);
-        if (is_array($meta['index'])) {
+        if (isset($meta['index']) && is_array($meta['index'])) {
             foreach($meta['index'] as $index_name) {
                 if (empty($data_ls[$index_name])) {
                     continue;
@@ -333,7 +333,7 @@ function data_delete($resource, $uuid = null) {
         $meta = data_meta($resource);
         if (isset($meta['index']) || isset($meta['children'])) {
             $data_ls = data_read($resource, $uuid);
-            if (is_array($meta['index'])) {
+            if (isset($meta['index']) && is_array($meta['index'])) {
                 foreach($meta['index'] as $index_name) {
                     if (empty($data_ls[$index_name])) {
                         continue;
@@ -342,7 +342,7 @@ function data_delete($resource, $uuid = null) {
                     $result += _data_delete_index($file, $index_name, $index_uuid);
                 }
             }   
-            if (is_array($meta['children'])) {
+            if (isset($meta['children']) && is_array($meta['children'])) {
                 foreach($meta['children'] as $child_name) {
                     $result += _data_delete_children($resource, $uuid, $child_name);
                 }        
