@@ -228,9 +228,6 @@ function data_update($resource, $uuid, $data_update_ls) {
             return false;
         }
         $data_merged_ls['uuid'] = $uuid;
-        if (isset($data_merged_ls['_fkrefs'])) {
-            // update fks for all references
-        } 
     }
 
     // add _modified_by info
@@ -258,11 +255,28 @@ function data_update_pk($resource, $uuid, $pk_value) {
     }
     $path = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/';
     if (rename($path . $uuid, $path . $new_uuid) === true) {
+        $meta = data_meta($resource);
+        if (isset($meta['children']) && is_array($meta['children'])) {
+            foreach ($meta['children'] as $child_name) {
+                data_update_fk($resource, $child_name, $uuid, $new_uuid);
+            }
+        }
         return $new_uuid;
     }
     return false;
 }
 
+function data_update_fk($parent, $child_name, $old_uuid, $new_uuid) {
+    $meta = data_meta($child_name);
+    if (!isset($meta['parent']['resource']) || $meta['parent']['resource'] !== $parent) {
+        return;
+    } 
+    $field = $meta['parent']['field'];
+    $children = data_filter(data_read($child_name), $field . ':' . $old_uuid);
+    foreach (array_keys($children) as $child_id) {
+        data_update($child_name, $child_id, array($field => $new_uuid));
+    }
+}
 
 /**
  * Creates or rewrites a data object file
