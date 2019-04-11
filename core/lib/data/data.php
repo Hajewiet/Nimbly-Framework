@@ -308,6 +308,14 @@ function _data_create_index($file, $index_name, $index_uuid) {
     touch($path . basename($file)); //better than symlink (?) because original file should be opened with data_read 
 }
 
+function _data_delete_index($file, $index_name, $index_uuid) {
+    $path = dirname($file) . '/' . $index_name . '/' . $index_uuid . '/' . basename($file);
+    if (!file_exists($path)) {
+        return;
+    }
+    unlink($path);
+}
+
 /**
  * Deletes resource/id or resource/*
  */
@@ -318,9 +326,24 @@ function data_delete($resource, $uuid = null) {
     }
     if (!empty($uuid)) {
         $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . $uuid;
-        return file_exists($file) && unlink($file);
+        if (!file_exists($file)) {
+            return false;
+        }
+        $meta = data_meta($resource);
+        if (isset($meta['index'])) {
+            if (isset($meta['index']) && is_array($meta['index'])) {
+                $data_ls = data_read($resource, $uuid);
+                foreach($meta['index'] as $index_name) {
+                    if (empty($data_ls[$index_name])) {
+                        continue;
+                    }
+                    $index_uuid = md5($data_ls[$index_name]);
+                    _data_delete_index($file, $index_name, $index_uuid);
+                }
+            }   
+        }
+        return unlink($file);
     }
-
     $delete_count = 0;
     $files = @scandir($dir);
     foreach($files as $file) {
