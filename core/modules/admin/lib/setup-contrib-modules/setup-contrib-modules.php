@@ -3,7 +3,7 @@
 function setup_contrib_modules_sc() {
 
     load_library('set');
-    $all_modules = ['pull']; //todo: automize, configure?
+    $all_modules = ['pull', 'mailgun']; //todo: automize, configure?
     set_variable('data.modules', $all_modules);
 
 	_scmout('Setup contrib modules', 'lightgray');
