@@ -49,14 +49,19 @@ $('body').on('keyup', function(e) {
     }
 });
 
+$('body').on('click', 'a[data-close-modal]', function(e) {
+    e.preventDefault();
+    if (modal.active) {
+        modal.close();
+    }
+});
+
 // handle modal autoselect
 $(document).on('modal_img_select', function (e, opts) {
     modal.handle_img_select(e, opts);
 });
 
 modal.handle_img_select = function (e, data) {
-    console.log('modal.handle_img_select', e, opts);
-
     if (data.event === 'preview') {
         modal.init_img_select_row(data.data);
     } else if (data.event === 'progress') {
