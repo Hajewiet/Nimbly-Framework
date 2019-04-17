@@ -1,5 +1,4 @@
 <h3 class="modal-caption">Select image</h3>
-<a data-close="#modal" class="icon-close">×</a>
 <a class="nb-button" data-upload='{"trigger": "modal_img_select"}'>Upload</a>
 <table class="nb-table" data-select>
     [data .files_meta filter=type:image/jpeg||image/png||image/gif]

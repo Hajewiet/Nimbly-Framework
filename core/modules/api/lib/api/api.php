@@ -19,7 +19,7 @@ function api_method_switch($func_prefix, $resource = null, $uuid = null) {
     return json_result(array('message' => 'METHOD_NOT_ALLOWED'), 405);
  }
 
- function api_access($feature='api', $resource=false) {
+function api_access($feature='api', $resource=false) {
     return get_variable('api_public', false) || api_key_access($feature) || api_user_access($feature, $resource);
 }
 
@@ -66,6 +66,32 @@ function api_json_input($resource) {
     return $data;
 }
 
+function api_check_csrf(&$data) {
+    if (!isset($data['form_key'])) {
+        load_library('log');
+        log_system('api: no csrf key set');
+        return null;
+    }
+    $key = $data['form_key'];
+    load_library("session");
+    $csrf_pass = false;
+    if (session_resume()) {
+        $csrf_pass = isset($_SESSION['key']) && $_SESSION['key'] === $key;
+    } else {
+        $csrf_pass = isset($_COOKIE['key']) && $_COOKIE['key'] === $key;
+    }
+    if ($csrf_pass !== true) {
+        load_library("log");
+        log_system("session key or cookie key does not match form key");
+        return false; //suspicious, could be a CSRF attack.. do nothing.
+    }
+    unset($data['form_key']);
+    if (isset($data['form_id'])) {
+        unset($data['form_id']);
+    }
+    return true;
+}
+
 /*
  * Basic implementation on resource:
  */
@@ -77,6 +103,10 @@ function resource_get($resource) { // get all
 
 function resource_post($resource) { // create new
     $data = api_json_input($resource);
+    $csrf_check = api_check_csrf($data);
+    if ($csrf_check === false) { //can also be null, if no key is set
+        return json_result(array('message' => 'INVALID_DATA'), 400);   
+    }
     $uuid = $data['uuid'];
     if (data_exists($resource, $uuid)) {
         return json_result(array('message' => 'RESOURCE_EXISTS'), 409);
@@ -94,6 +124,10 @@ function resource_post($resource) { // create new
 
 function resource_put($resource) { // update multiple
     $data = api_json_input($resource);
+    $csrf_check = api_check_csrf($data);
+    if ($csrf_check === false) { //can also be null, if no key is set
+        return json_result(array('message' => 'INVALID_DATA'), 400);   
+    }
     $result = data_update($resource, null, $data);
     if (is_array($result)) {
         return json_result(array(
@@ -126,6 +160,10 @@ function resource_id_post($resource, $uuid) { // create new with uuid
         return json_result(array('message' => 'RESOURCE_EXISTS'), 409);
     }
     $data = api_json_input($resource);
+    $csrf_check = api_check_csrf($data);
+    if ($csrf_check === false) { //can also be null, if no key is set
+        return json_result(array('message' => 'INVALID_DATA'), 400);   
+    }
     $data['uuid'] = $uuid;
     $result = data_create($resource, $uuid, $data);
     if ($result) {
@@ -140,6 +178,10 @@ function resource_id_post($resource, $uuid) { // create new with uuid
 
 function resource_id_put($resource, $uuid) { // update one
     $data = api_json_input($resource);
+    $csrf_check = api_check_csrf($data);
+    if ($csrf_check === false) { //can also be null, if no key is set
+        return json_result(array('message' => 'INVALID_DATA'), 400);   
+    }
     $data['uuid'] = $uuid;
     $result = data_update($resource, $uuid, $data);
     if (is_array($result)) {
