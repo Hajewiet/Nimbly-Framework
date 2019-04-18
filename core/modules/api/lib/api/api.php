@@ -96,20 +96,20 @@ function api_check_csrf(&$data) {
  * Basic implementation on resource:
  */
 
-function resource_get($resource) { // get all
+function resource_get($resource, $final=true) { // get all
     $result = data_read($resource);
-    return json_result(array($resource => $result, 'count' => count($result)));
+    return json_result(array($resource => $result, 'count' => count($result)), $final);
 }
 
-function resource_post($resource) { // create new
+function resource_post($resource, $final=true) { // create new
     $data = api_json_input($resource);
     $csrf_check = api_check_csrf($data);
     if ($csrf_check === false) { //can also be null, if no key is set
-        return json_result(array('message' => 'INVALID_DATA'), 400);   
+        return json_result(array('message' => 'INVALID_DATA'), 400, $final);   
     }
     $uuid = $data['uuid'];
     if (data_exists($resource, $uuid)) {
-        return json_result(array('message' => 'RESOURCE_EXISTS'), 409);
+        return json_result(array('message' => 'RESOURCE_EXISTS'), 409, $final);
     }
 
     if (data_create($resource, $uuid, $data)) {
@@ -117,16 +117,16 @@ function resource_post($resource) { // create new
             $resource => array($uuid => $data),
             'count' => 1,
             'message' => 'RESOURCE_CREATED'),
-        201);
+        201, $final);
     }
-    return json_result(array('message' => 'RESOURCE_CREATE_FAILED'), 500);
+    return json_result(array('message' => 'RESOURCE_CREATE_FAILED'), 500, $final);
 }
 
-function resource_put($resource) { // update multiple
+function resource_put($resource, $final=true) { // update multiple
     $data = api_json_input($resource);
     $csrf_check = api_check_csrf($data);
     if ($csrf_check === false) { //can also be null, if no key is set
-        return json_result(array('message' => 'INVALID_DATA'), 400);   
+        return json_result(array('message' => 'INVALID_DATA'), 400, $final);   
     }
     $result = data_update($resource, null, $data);
     if (is_array($result)) {
@@ -134,35 +134,35 @@ function resource_put($resource) { // update multiple
             $resource => $result,
             'count' => count($result),
             'message' => 'RESOURCE_UPDATED'
-        ), 201);
+        ), 201, $final);
     }
-    return json_result(array('message' => 'RESOURCE_UPDATE_FAILED'), 500);
+    return json_result(array('message' => 'RESOURCE_UPDATE_FAILED'), 500, $final);
 }
 
-function resource_delete($resource) { // delete all
+function resource_delete($resource, $final=true) { // delete all
     $delete_count = data_delete($resource);
     if ($delete_count !== false) {
-        return json_result(array('message' => 'RESOURCE_DELETED', 'count' => (int)$delete_count));
+        return json_result(array('message' => 'RESOURCE_DELETED', 'count' => (int)$delete_count), 200, $final);
     }
-    return json_result(array('message' => 'RESOURCE_DELETE_FAILED'), 500);
+    return json_result(array('message' => 'RESOURCE_DELETE_FAILED'), 500, $final);
 }
 
 /*
  * Basic implementation on resource item:
  */
 
-function resource_id_get($resource, $uuid) { // read one
-    return json_result(array($resource => array($uuid => data_read($resource, $uuid)), 'count' => 1));
+function resource_id_get($resource, $uuid, $final=true) { // read one
+    return json_result(array($resource => array($uuid => data_read($resource, $uuid)), 'count' => 1), 200, $final);
 }
 
-function resource_id_post($resource, $uuid) { // create new with uuid
+function resource_id_post($resource, $uuid, $final=true) { // create new with uuid
     if (data_exists($resource, $uuid)) {
-        return json_result(array('message' => 'RESOURCE_EXISTS'), 409);
+        return json_result(array('message' => 'RESOURCE_EXISTS'), 409, $final);
     }
     $data = api_json_input($resource);
     $csrf_check = api_check_csrf($data);
     if ($csrf_check === false) { //can also be null, if no key is set
-        return json_result(array('message' => 'INVALID_DATA'), 400);   
+        return json_result(array('message' => 'INVALID_DATA'), 400, $final);   
     }
     $data['uuid'] = $uuid;
     $result = data_create($resource, $uuid, $data);
@@ -171,16 +171,16 @@ function resource_id_post($resource, $uuid) { // create new with uuid
             $resource => array($uuid => $result),
             'count' => 1,
             'message' => 'RESOURCE_CREATED'
-        ), 201);
+        ), 201, $final);
     }
-    return json_result(array('message' => 'RESOURCE_CREATE_FAILED'), 500);
+    return json_result(array('message' => 'RESOURCE_CREATE_FAILED'), 500, $final);
 }
 
-function resource_id_put($resource, $uuid) { // update one
+function resource_id_put($resource, $uuid, $final=true) { // update one
     $data = api_json_input($resource);
     $csrf_check = api_check_csrf($data);
     if ($csrf_check === false) { //can also be null, if no key is set
-        return json_result(array('message' => 'INVALID_DATA'), 400);   
+        return json_result(array('message' => 'INVALID_DATA'), 400, $final);   
     }
     $data['uuid'] = $uuid;
     $result = data_update($resource, $uuid, $data);
@@ -189,14 +189,14 @@ function resource_id_put($resource, $uuid) { // update one
             $resource => array($uuid => $result),
             'count' => 1,
             'message' => 'RESOURCE_UPDATED'
-        ), 201);
+        ), 201, $final);
     }
-    return json_result(array('message' => 'RESOURCE_UPDATE_FAILED'), 500);
+    return json_result(array('message' => 'RESOURCE_UPDATE_FAILED'), 500, $final);
 }
 
-function resource_id_delete($resource, $uuid) { // delete one
+function resource_id_delete($resource, $uuid, $final=true) { // delete one
     if (data_delete($resource, $uuid)) {
-        return json_result(array('message' => 'RESOURCE_DELETED', 'count' => 1));
+        return json_result(array('message' => 'RESOURCE_DELETED', 'count' => 1), 200, $final);
     }
-    return json_result(array('message' => 'RESOURCE_DELETE_FAILED'), 500);
+    return json_result(array('message' => 'RESOURCE_DELETE_FAILED'), 500, $final);
 }

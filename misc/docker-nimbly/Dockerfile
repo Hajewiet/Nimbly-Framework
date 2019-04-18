@@ -4,7 +4,7 @@ FROM ubuntu:latest
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
 	&& apt-get -y install apache2 \
-	&& apt-get -y install php php-mbstring php-mysqlnd php-gd php-gmp \
+	&& apt-get -y install php php-mbstring php-mysqlnd php-gd php-gmp php-curl \
 	&& apt-get -y install libapache2-mod-php
 
 # Add scripts and configuration files

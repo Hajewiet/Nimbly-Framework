@@ -5,16 +5,19 @@ function json_sc($params) {
     json_result($params, $code);
 }
 
-function json_result($result, $code = 200) {
-    load_library('header');
-    header_sent('json');
-    http_response_code($code);
+function json_result($result, $code = 200, $final=true) {
     $result['code'] = $code;
     $result['success'] = $code < 400;
     $result['status'] = $code < 400? 'ok' : 'error';
     $result['memory_usage'] = sprintf("%01.0fKb", memory_get_peak_usage() / 1024);
     $result['execution_time'] = sprintf("%01.3fs", microtime(true) - $GLOBALS['SYSTEM']['request_time']);
-    exit(json_encode($result, JSON_UNESCAPED_UNICODE));
+    if ($final) {
+        load_library('header');
+        header_sent('json');
+        http_response_code($code);
+        exit(json_encode($result, JSON_UNESCAPED_UNICODE));
+    }
+    return $result;
 }
 
 function json_input($create_uuid = true, $pk_field = 'pk') {
