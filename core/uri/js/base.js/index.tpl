@@ -1,6 +1,6 @@
 [header js cached]
 var base_url = "[base-url]";
-[include [cur-path]/base.js]
-[include [cur-path]/ress.js]
-[include [cur-path]/script.js]
+[include [uri-path]/base.js]
+[include [uri-path]/ress.js]
+[include [uri-path]/script.js]
 [cache type=js]

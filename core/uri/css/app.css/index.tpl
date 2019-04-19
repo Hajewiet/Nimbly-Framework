@@ -1,3 +1,3 @@
 [header css cached]
-[include file=[cur-path]/css/style.css]
+[include file=[uri-path]/css/style.css]
 [cache type=css]
