@@ -45,12 +45,30 @@ p {
             border: 1px solid #e6e6e6;
             border-radius: 4px;
             height: 32px;
-            padding: 0 10px;
             width: 100%;
+            padding: 0 10px;
             margin: 5px 0 20px;
             vertical-align: top;
             transition: border 0.1s linear;
         }
+
+        &:focus {
+            border: 1px solid $admin-blue;
+        }
+    }
+
+    textarea {
+        font-family: $admin-text;
+        font-size: 14px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: 100%;
+        padding: 8px 10px;
+        margin: 5px 0 20px;
+        background-color: #fff;
+        border: 1px solid #e6e6e6;
+        border-radius: 4px;
+        transition: border 0.1s linear;
 
         &:focus {
             border: 1px solid $admin-blue;
