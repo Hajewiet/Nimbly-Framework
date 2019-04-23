@@ -7,12 +7,15 @@ function url_sc($params=null) {
 	} else if (current($params) === "relative") {
 		return $GLOBALS['SYSTEM']['request_uri'];
 	} else {
-		return url_absolute($GLOBALS['SYSTEM']['request_uri']);
+		$url = current($params) ?? $GLOBALS['SYSTEM']['request_uri'];
+		return url_absolute($url);
 	}
-	
 }
 
 function url_absolute($relative_url) {
+	if ($relative_url === '(empty)') {
+		$relative_url = '';
+	}
     return sprintf("%s://%s%s%s%s", 
             empty($_SERVER['HTTPS'])? "http" : "https",
             $_SERVER['SERVER_NAME'],

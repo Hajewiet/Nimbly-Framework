@@ -1,5 +1,5 @@
 [header js cached]
-[include [cur-path]/editor.js]
-[include [cur-path]/uploader.js]
+[include [uri-path]/editor.js]
+[include [uri-path]/uploader.js]
 [cache type=js]
 
