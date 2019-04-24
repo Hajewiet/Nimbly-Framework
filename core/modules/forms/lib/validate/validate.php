@@ -103,6 +103,11 @@ function _validate_password($input) {
     return true;
 }
 
+function _validate_text($input) {
+  $allowed = array(' '); 
+  return _validate_alphanumeric(str_replace($allowed, '', $input));
+}
+
 function _validate_alphanumeric($input) {
     $result = ctype_alnum($input);
     if ($result !== true) {
