@@ -191,7 +191,9 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 #modal.nb-close { display: none; }
 
-#modal-content { max-width: 680px; min-width: 480px; background: white; height: 100%; padding: 50px 10px 10px 10px; position: relative; border-radius: 4px; }
+#modal-content { max-width: 680px; min-width: 480px; background: white; height: 100%; padding: 50px 20px 20px; position: relative; border-radius: 4px; }
+
+@media (min-width: 1000px) { #modal-content { padding: 50px 40px 40px; } }
 
 #modal-content .icon-close { position: absolute; top: 0; right: 0; padding: 10px; font-size: 20px; line-height: 20px; cursor: pointer; }
 

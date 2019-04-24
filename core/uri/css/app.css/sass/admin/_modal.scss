@@ -21,9 +21,13 @@
     min-width: 480px;
     background: white;
     height: 100%;
-    padding: 50px 10px 10px 10px;
+    padding: 50px 20px 20px;
     position: relative;
     border-radius: 4px;
+
+    @include breakpoint(tablet) {
+        padding: 50px 40px 40px;
+    }
 
     .icon-close {
         position: absolute;
