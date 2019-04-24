@@ -117,6 +117,12 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 .nb-icon-down { background-image: url("../img/icon-down-white.svg"); }
 
+.nb-icon-facebook { background-image: url("../img/icon-facebook.svg"); }
+
+.nb-icon-twitter { background-image: url("../img/icon-twitter.svg"); }
+
+.nb-icon-google { background-image: url("../img/icon-google.svg"); }
+
 [data-close], [data-open], [data-toggle], [data-delete], [data-push], [data-post], [data-put], [data-link], [data-onclick], [data-get] { cursor: pointer; }
 
 .nb-sortable { cursor: move; }
