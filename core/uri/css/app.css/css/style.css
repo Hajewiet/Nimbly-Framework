@@ -201,7 +201,7 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 #modal-content .modal-content { overflow-y: auto; height: 100%; }
 
-#modal-content .social-accounts { margin-bottom: 30px; }
+#modal-content .social-account { margin-bottom: 30px; }
 
 #modal-content p { margin-bottom: 20px; }
 
