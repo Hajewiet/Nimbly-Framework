@@ -123,6 +123,8 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 .nb-icon-google { background-image: url("../img/icon-google.svg"); }
 
+.nb-icon-btn { padding: 0 20px 0 36px; background-position: left 7px center; background-repeat: no-repeat; background-size: 20px 20px; width: auto; }
+
 [data-close], [data-open], [data-toggle], [data-delete], [data-push], [data-post], [data-put], [data-link], [data-onclick], [data-get] { cursor: pointer; }
 
 .nb-sortable { cursor: move; }
