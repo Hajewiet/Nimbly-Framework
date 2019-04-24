@@ -47,7 +47,7 @@ p {
             height: 32px;
             width: 100%;
             padding: 0 10px;
-            margin: 5px 0 20px;
+            margin: 5px 0;
             vertical-align: top;
             transition: border 0.1s linear;
         }
@@ -100,6 +100,7 @@ p {
         font-family: $admin-text;
         display: block;
         width: 100%;
+        margin: 0 0 10px;
 
         &.nb-close {
             display: none;

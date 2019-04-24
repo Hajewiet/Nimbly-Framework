@@ -10,7 +10,7 @@ p { font-size: 14px; }
 
 .nb-form { max-width: 680px; }
 
-.nb-form input[type="text"], .nb-form input[type="email"], .nb-form input[type="number"], .nb-form input[type="password"], .nb-form input[type="search"], .nb-form input[type="date"] { font-family: sans-serif; font-size: 14px; -webkit-appearance: none; -moz-appearance: none; background-color: #fff; border: 1px solid #e6e6e6; border-radius: 4px; height: 32px; width: 100%; padding: 0 10px; margin: 5px 0 20px; vertical-align: top; -webkit-transition: border 0.1s linear; transition: border 0.1s linear; }
+.nb-form input[type="text"], .nb-form input[type="email"], .nb-form input[type="number"], .nb-form input[type="password"], .nb-form input[type="search"], .nb-form input[type="date"] { font-family: sans-serif; font-size: 14px; -webkit-appearance: none; -moz-appearance: none; background-color: #fff; border: 1px solid #e6e6e6; border-radius: 4px; height: 32px; width: 100%; padding: 0 10px; margin: 5px 0; vertical-align: top; -webkit-transition: border 0.1s linear; transition: border 0.1s linear; }
 
 .nb-form input:focus { border: 1px solid #0074D9; }
 
@@ -20,7 +20,7 @@ p { font-size: 14px; }
 
 .nb-form select { font-family: sans-serif; font-size: 14px; -webkit-appearance: none; -moz-appearance: none; background-color: #fff; border: 1px solid #e6e6e6; border-radius: 4px; height: 32px; padding: 6px 10px; width: 100%; margin: 5px 0 20px; background-image: url("../img/down.svg"); background-repeat: no-repeat; background-position: right 15px center; background-size: 10px 5px; vertical-align: top; }
 
-.nb-form label { font-size: 11px; text-transform: uppercase; font-family: sans-serif; display: block; width: 100%; }
+.nb-form label { font-size: 11px; text-transform: uppercase; font-family: sans-serif; display: block; width: 100%; margin: 0 0 10px; }
 
 .nb-form label.nb-close { display: none; }
 
@@ -200,6 +200,10 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 #modal-content .modal-caption { position: absolute; top: 0; right: 0; left: 0; font-size: 15px; line-height: 40px; text-align: center; text-transform: uppercase; }
 
 #modal-content .modal-content { overflow-y: auto; height: 100%; }
+
+#modal-content .social-accounts { margin-bottom: 30px; }
+
+#modal-content p { margin-bottom: 20px; }
 
 .small-screen #modal-content { min-width: 100%; }
 
