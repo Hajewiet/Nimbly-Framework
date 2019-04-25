@@ -117,11 +117,11 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 .nb-icon-down { background-image: url("../img/icon-down-white.svg"); }
 
-.nb-icon-facebook { background-image: url("../img/icon-facebook.svg"); background-color: #3C5A99; }
+.nb-icon-facebook { background-image: url("../img/icon-facebook.svg"); background-color: #3C5A99; min-width: 200px; }
 
-.nb-icon-twitter { background-image: url("../img/icon-twitter.svg"); background-color: #00aced; }
+.nb-icon-twitter { background-image: url("../img/icon-twitter.svg"); background-color: #00aced; min-width: 200px; }
 
-.nb-icon-google { background-image: url("../img/icon-google.svg"); background-color: #4285F4; }
+.nb-icon-google { background-image: url("../img/icon-google.svg"); background-color: #4285F4; min-width: 200px; }
 
 .nb-icon-btn { padding: 0 20px 0 36px; background-position: left 7px center; background-repeat: no-repeat; background-size: 20px 20px; width: auto; }
 
