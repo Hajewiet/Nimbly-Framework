@@ -148,6 +148,22 @@ function persist_login($email, $password) {
     return persist_login_error();
 }
 
+function persist_oauth_login($email) {
+    run_library('session');
+    $uuid = md5($email);
+    if (!data_exists('users', $uuid)) {
+        return persist_login_error();
+    }
+    $user_data = data_read('users', $uuid);
+    if (_persist_user_roles($email)) {
+        //login success
+        _persist_user_features($email);
+        $_SESSION['username'] = $email;
+        return true;
+    }
+    return persist_login_error();
+}
+
 function _persist_user_roles($name) {
     $roles = load_user_roles($name);
     foreach ($_SESSION['roles'] as $role => $value) {
