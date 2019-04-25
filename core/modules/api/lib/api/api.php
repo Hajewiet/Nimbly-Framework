@@ -14,7 +14,11 @@ function api_method_switch($func_prefix, $resource = null, $uuid = null) {
     }
     $func_name = "{$func_prefix}_{$method}";
     if (function_exists($func_name)) {
-        return call_user_func($func_name, $resource, $uuid);
+        if (empty($uuid)) {
+            return call_user_func($func_name, $resource);
+        } else {
+            return call_user_func($func_name, $resource, $uuid);
+        }
     }
     return json_result(array('message' => 'METHOD_NOT_ALLOWED'), 405);
  }
