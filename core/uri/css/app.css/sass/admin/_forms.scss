@@ -207,11 +207,12 @@ input[type="submit"] {
     }
 
     &.icon-button {
-        width: 34px;
+        width: 30px;
+        height: 30px;
         padding: 0;
-        border-radius: 16px;
+        border-radius: 15px;
         background-position: center;
-        background-size: 20px 20px;
+        background-size: 18px 18px;
         background-repeat: no-repeat;
     }
 
