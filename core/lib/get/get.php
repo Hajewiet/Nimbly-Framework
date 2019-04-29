@@ -32,6 +32,8 @@ function get_sc($params, $default = null) {
         $result = $_SESSION['variables'][$key];
     } else if (isset($GLOBALS['SYSTEM']['variables'][$key])) {
         $result = $GLOBALS['SYSTEM']['variables'][$key];
+    } else if (isset($_COOKIE[$key])) {
+        $result = $_COOKIE[$key];
     } else {
         $req_get = filter_input(INPUT_GET, $key, FILTER_SANITIZE_STRING);
         if (isset($req_get)) {

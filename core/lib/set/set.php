@@ -17,7 +17,7 @@ function set_sc($params) {
     }
     foreach ($params as $key => $value) {
         if ($session) {
-            set_session_variable($key, $value, $if_exists);
+            persist_variable($key, $value, $if_exists);
         } else {
             set_variable($key, $value, $if_exists);
         }
@@ -35,13 +35,26 @@ function set_variable($rkey, $value, $if_exists = true) {
     }
 }
 
+// store variable in session or cookie
+function persist_variable($key, $value, $if_exists=true) {
+    load_library('session');
+    if (session_resume() && isset($_SESSION['variables'])) {
+        set_session_variable($key, $value, $if_exists);
+    } else if (empty($_COOKIE[$key]) || $if_exists === true) {
+        setcookie($key, $value, time() + (30*86400), "/");
+    } else if (is_string($if_exists)) {
+        setcookie($key, $_COOKIE[$key] . $if_exists . $value, time() + (30*86400), "/");
+    }
+}
+
 function set_session_variable($rkey, $value, $if_exists=true) {
     run_library("session");
     $key = preg_replace('/[^a-zA-Z0-9._-]/', '_', $rkey);
     if (empty($_SESSION['variables'][$key]) || $if_exists === true) {
         $_SESSION['variables'][$key] = $value;
         return;
-    } if (is_string($if_exists)) {
+    } 
+    if (is_string($if_exists)) {
         $_SESSION['variables'][$key] .= $if_exists . $value;
     }
 }
