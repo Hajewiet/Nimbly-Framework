@@ -41,6 +41,19 @@
         &.action-cell {
             text-align: right;
             font-size: 0;
+
+            .icon-button {
+                background-color: transparent;
+            }
+
+            .nb-button {
+                &.delete {
+                    background-image: url('../img/icon-delete-dark.svg');
+                }
+                &.edit {
+                    background-image: url('../img/icon-edit-dark.svg');
+                }
+            }
         }
 
         &.img-thumb {

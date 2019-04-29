@@ -332,6 +332,12 @@ a.editor.add-img-icon { position: absolute; width: 30px; height: 30px; left: -40
 
 .nb-table td.action-cell, .nb-table th.action-cell { text-align: right; font-size: 0; }
 
+.nb-table td.action-cell .icon-button, .nb-table th.action-cell .icon-button { background-color: transparent; }
+
+.nb-table td.action-cell .nb-button.delete, .nb-table th.action-cell .nb-button.delete { background-image: url("../img/icon-delete-dark.svg"); }
+
+.nb-table td.action-cell .nb-button.edit, .nb-table th.action-cell .nb-button.edit { background-image: url("../img/icon-edit-dark.svg"); }
+
 .nb-table td.img-thumb img, .nb-table th.img-thumb img { width: auto; height: 80px; cursor: pointer; }
 
 .gallery-image-row .editor.img-wrapper { margin: 0; }
