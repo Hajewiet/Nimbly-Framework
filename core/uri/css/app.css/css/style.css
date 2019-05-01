@@ -213,13 +213,11 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 @media (min-width: 1000px) { #modal-content .social-account { -webkit-box-orient: horizontal; -webkit-box-direction: normal; -ms-flex-direction: row; flex-direction: row; } }
 
-#modal-content .social-account a { min-width: auto; -webkit-box-flex: 1; -ms-flex: 1; flex: 1; margin: 0 5px; }
+#modal-content .social-account a { min-width: auto; -webkit-box-flex: 1; -ms-flex: 1; flex: 1; margin: 0 0 5px; }
 
-@media (min-width: 1000px) { #modal-content .social-account a { margin: 0 0 5px; } }
+@media (min-width: 1000px) { #modal-content .social-account a { margin: 0 5px; } }
 
-#modal-content .social-account input[type="button"] { width: 100%; }
-
-@media (min-width: 1000px) { #modal-content .social-account input[type="button"] { width: auto; } }
+#modal-content input[type="button"] { width: 100%; }
 
 #modal-content p { margin-bottom: 20px; }
 

@@ -67,20 +67,16 @@
         a {
             min-width: auto;
             flex: 1;
-            margin: 0 5px;
+            margin: 0 0 5px;
 
             @include breakpoint(tablet) {
-                margin: 0 0 5px;
+                margin: 0 5px;
             }
         }
+    }
 
-        input[type="button"] {
-            width: 100%;
-
-            @include breakpoint(tablet) {
-                width: auto;
-            }
-        }
+    input[type="button"] {
+        width: 100%;
     }
 
     p {
