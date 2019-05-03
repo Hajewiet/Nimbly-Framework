@@ -10,23 +10,20 @@ function group_access_sc($params) {
     }
 }
 
-function load_user_groups($username=null) {
-    if ($username === null) {
-        load_library("username", "user");
-        $username = username_get();
+function load_user_groups($user=null) {
+    if (empty($user)) {
+        load_library("get-user", "user");
+        $user = get_user();
     }
     load_library('data');
-    $groups = data_load('users', $username, 'groups');
-    if (!empty($groups)) {
-        $result = explode(',', $groups);
-    } else {
-        $result = array();
+    if (empty($user['groups'])) {
+        return [];
     }
-    return $result;
+    return explode(',', $user['groups']);
 }
 
-function user_in_group($groupname, $username = null) {
-    $groups = load_user_groups($username);
+function user_in_group($groupname, $user = null) {
+    $groups = load_user_groups($user);
     return is_array($groups) && in_array($groupname, $groups);
 }
 
