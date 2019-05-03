@@ -3,6 +3,7 @@
 function logout_sc($params) {
     run_library('session');
     run_library('redirect');
+    $_SESSION = array();
     $_SESSION['roles'] = array('anonymous' => true);
     $_SESSION['features'] = array();
     $_SESSION['username'] = 'anonymous';

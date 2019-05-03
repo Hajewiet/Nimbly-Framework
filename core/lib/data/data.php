@@ -75,10 +75,19 @@ function data_list($resource, $uuid = null) {
     }
     $path = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource;
     $all = @scandir($path);
-    if (empty($all)) {
-        return null;
+    $result = [];
+    if (is_array($all)) {
+        foreach ($all as $uuid) {
+            if ($uuid[0] === '.') {
+                continue;
+            }
+            if (is_dir($path . '/' . $uuid)) {
+                continue;
+            }
+            $result[$uuid] = $uuid;
+        }
     }
-    return preg_grep('/^([^.])/', $all);
+    return $result;
 }
 
 /**

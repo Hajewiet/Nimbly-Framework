@@ -231,7 +231,7 @@ $('body').on('input', 'input[data-live-id]', function (e) {
     id_field.val(clean_val);
 });
 
-$('body').on('keydown', 'input[data-input-pk],input[data-input-id]', function (e) {
+$('body').on('keydown', 'input[data-input-id]', function (e) {
     if(/[^0-9a-zA-Z-]/.test(e.key)) {
        return false;
     }

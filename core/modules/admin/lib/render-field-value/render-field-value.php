@@ -92,3 +92,7 @@ function render_field_password($value) {
 function render_field_parent($value) {
     return render_field_select($value);
 }
+
+function render_field_slug($value) {
+    return render_field_text($value);
+}
