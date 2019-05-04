@@ -217,9 +217,9 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 #modal-content form, #modal-content .nb-form { padding: 0 0 10px; }
 
-#modal-content .signup-wrapper { max-width: 320px; margin: 0 auto; }
+#modal-content .signup-wrapper, #modal-content #signup-wrapper { max-width: 320px; margin: 0 auto; }
 
-#modal-content .signup-wrapper a, #modal-content .signup-wrapper .button { width: 100%; }
+#modal-content .signup-wrapper a, #modal-content .signup-wrapper .button, #modal-content #signup-wrapper a, #modal-content #signup-wrapper .button { width: 100%; }
 
 .small-screen #modal-content { min-width: 100%; }
 
