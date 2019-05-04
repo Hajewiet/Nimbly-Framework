@@ -1,2 +1,2 @@
 [module user]
-[logout redirect="login"]
+[logout redirect="[base-url]/"]
