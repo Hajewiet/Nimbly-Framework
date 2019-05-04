@@ -24,6 +24,7 @@
     padding: 50px 20px 20px;
     position: relative;
     border-radius: 4px;
+    overflow: auto;
 
     @include breakpoint(tablet) {
         padding: 50px 40px 40px;
@@ -48,11 +49,6 @@
         line-height: 40px;
         text-align: center;
         text-transform: uppercase;
-    }
-
-    .modal-content {
-        overflow-y: auto;
-        height: 100%;
     }
 
     .social-account {
@@ -81,6 +77,20 @@
 
     p {
         margin-bottom: 20px;
+    }
+
+    form,
+    .nb-form {
+        padding: 0 0 10px;
+        max-width: 320px;
+        margin: 0 auto;
+    }
+
+    .signup-wrapper {
+        a,
+        .button {
+            width: 100%;
+        }
     }
 }
 
