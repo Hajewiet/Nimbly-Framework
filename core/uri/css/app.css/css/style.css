@@ -207,19 +207,17 @@ img[data-img-uuid].nb-img-loaded { opacity: 1; }
 
 #modal-content .modal-caption { position: absolute; top: 0; right: 0; left: 0; font-size: 15px; line-height: 40px; text-align: center; text-transform: uppercase; }
 
-#modal-content .social-account { margin-bottom: 30px; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; }
-
-@media (min-width: 1000px) { #modal-content .social-account { -webkit-box-orient: horizontal; -webkit-box-direction: normal; -ms-flex-direction: row; flex-direction: row; } }
+#modal-content .social-account { margin-bottom: 20px; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; }
 
 #modal-content .social-account a { min-width: auto; -webkit-box-flex: 1; -ms-flex: 1; flex: 1; margin: 0 0 5px; }
-
-@media (min-width: 1000px) { #modal-content .social-account a { margin: 0 5px; } }
 
 #modal-content input[type="button"] { width: 100%; }
 
 #modal-content p { margin-bottom: 20px; }
 
-#modal-content form, #modal-content .nb-form { padding: 0 0 10px; max-width: 320px; margin: 0 auto; }
+#modal-content form, #modal-content .nb-form { padding: 0 0 10px; }
+
+#modal-content .signup-wrapper { max-width: 320px; margin: 0 auto; }
 
 #modal-content .signup-wrapper a, #modal-content .signup-wrapper .button { width: 100%; }
 

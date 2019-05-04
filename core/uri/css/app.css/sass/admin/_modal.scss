@@ -52,22 +52,14 @@
     }
 
     .social-account {
-        margin-bottom: 30px;
+        margin-bottom: 20px;
         display: flex;
         flex-direction: column;
-
-        @include breakpoint(tablet) {
-            flex-direction: row;
-        }
 
         a {
             min-width: auto;
             flex: 1;
             margin: 0 0 5px;
-
-            @include breakpoint(tablet) {
-                margin: 0 5px;
-            }
         }
     }
 
@@ -82,11 +74,12 @@
     form,
     .nb-form {
         padding: 0 0 10px;
-        max-width: 320px;
-        margin: 0 auto;
     }
 
     .signup-wrapper {
+        max-width: 320px;
+        margin: 0 auto;
+
         a,
         .button {
             width: 100%;
