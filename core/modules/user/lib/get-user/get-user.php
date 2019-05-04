@@ -6,9 +6,9 @@ function get_user_sc($params) {
 }
 
 function get_user($uuid=false) {
-	static $result = false;
-	if (!empty($result)) {
-		return $result;
+	static $users = [];
+	if (!empty($users[$uuid])) {
+		return $users[$uuid];
 	}
 	load_library('session');
 	if (empty($uuid) && session_resume() && !empty($_SESSION['username'])) {
@@ -17,6 +17,6 @@ function get_user($uuid=false) {
 	if (empty($uuid)) {
 		return $result;
 	}
-	$result = data_read("users", $uuid);
-	return $result;
+	$users[$uuid] = data_read("users", $uuid);
+	return $users[$uuid];
 }
