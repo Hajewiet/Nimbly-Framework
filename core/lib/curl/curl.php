@@ -1,6 +1,6 @@
 <?php
 
-function _curl_init($url, $headers) {
+function _curl_init($url, $headers=false) {
 	$ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
