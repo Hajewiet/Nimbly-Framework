@@ -17,6 +17,7 @@ function get_user($uuid=false) {
 	if (empty($uuid)) {
 		return $result;
 	}
+	load_library('data');
 	$users[$uuid] = data_read("users", $uuid);
 	return $users[$uuid];
 }
