@@ -323,6 +323,8 @@ function data_create($resource, $uuid, $data_ls) {
                 _data_create_index($file, $index_name, $index_uuid);
             }
         }
+        load_library('trigger');
+        trigger('data-create', ['resource' => $resource, 'uuid' => $uuid, 'data' => $data_ls]);
         return true;
     }
     return false;
