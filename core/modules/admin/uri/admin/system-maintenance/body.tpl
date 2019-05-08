@@ -46,8 +46,12 @@ Disk space total: [disk-space-total]Gb</p>
 			<td>Show nimbly system info, including current set variables, session and <a href='[base-url]/admin/debug/php'>PHP Info</a>.</td>
 		</tr>
 		<tr>
-			<td><a href='[base-url]/admin/log'>Log files</a></td>
-			<td>Show system log files.</td>
+			<td><a href='[base-url]/admin/log'>PHP Error Log</a></td>
+			<td>Show php error log file.</td>
+		</tr>
+		<tr>
+			<td><a href='[base-url]/admin/.log-entries'>System log entries</a></td>
+			<td>Show system log entries.</td>
 		</tr>
 		<tr>
 			<td><a href='[base-url]/admin/shortcodes'>Shortcodes</a></td>

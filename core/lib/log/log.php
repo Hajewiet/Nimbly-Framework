@@ -11,15 +11,16 @@ function log_system($str) {
     if (is_array($str)) {
         $str = print_r($str, true);
     }
-    $path = $GLOBALS['SYSTEM']['file_base'] . 'ext/data/.tmp/logs';
-    $file = $path . '/system.log';
-    $msg = PHP_EOL . date("c") . ' ' . $str . PHP_EOL;
-    if (file_exists($file)) {
-        error_log($msg, 3, $file);
+    load_library('data');
+    $uuid = md5($str);
+    if (data_exists('.log-entries', $uuid)) {
+        $data = data_read('.log-entries', $uuid);
+        $data['count'] = isset($data['count']) ? (int)$data['count'] + 1 : 1;
+        data_update('.log-entries', $uuid, $data);
     } else {
-        @mkdir($path, 0750, true);
-        error_log(date("c") . " Created logfile" . PHP_EOL . PHP_EOL, 3, $file);
-        error_log($msg, 3, $file);
-        chmod($file, 0640);
+        data_create('.log-entries', $uuid, [
+            'msg' => $str,
+            'count' => 1
+        ]);
     }
 }
