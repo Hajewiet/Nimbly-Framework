@@ -15,7 +15,7 @@ function get_user($uuid=false) {
 		$uuid = md5($_SESSION['username']);
 	}
 	if (empty($uuid)) {
-		return $result;
+		return false;
 	}
 	load_library('data');
 	$users[$uuid] = data_read("users", $uuid);
