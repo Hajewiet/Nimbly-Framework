@@ -308,6 +308,7 @@ function data_create($resource, $uuid, $data_ls) {
         $data_ls['_created'] = time();
         $data_ls['_modified'] = time();
     }
+    $data_ls['uuid'] = $uuid;
     $json_data = json_encode($data_ls, JSON_UNESCAPED_UNICODE);
     if (@file_put_contents($file, $json_data) !== false) {
         $meta = data_meta($resource);
