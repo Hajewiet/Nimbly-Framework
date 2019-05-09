@@ -295,13 +295,9 @@ function data_create($resource, $uuid, $data_ls) {
     if (empty($uuid)) {
         return file_exists($dir);
     }
-
-    $meta = data_meta($resource); 
-    $validate = empty($meta['validate']) || _data_validate($resource, $uuid, $data_ls);
-    if ($validate !== true) {
+    if (_data_validate($resource, $uuid, $data_ls) !== true) {
         return false;
     }
-
     $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . $uuid;
     if (isset($data_ls['form-key'])) {
         unset($data_ls['form-key']);
@@ -318,6 +314,7 @@ function data_create($resource, $uuid, $data_ls) {
     $data_ls['uuid'] = $uuid;
     $json_data = json_encode($data_ls, JSON_UNESCAPED_UNICODE);
     if (@file_put_contents($file, $json_data) !== false) {
+        $meta = data_meta($resource); 
         if (isset($meta['index']) && is_array($meta['index'])) {
             foreach($meta['index'] as $index_name) {
                 if (empty($data_ls[$index_name])) {
@@ -568,7 +565,7 @@ function data_resources_list() {
 /*
  * Get meta data about a resource
  */
-function data_meta($resource, $items = null) {
+function data_meta($resource) {
     static $meta_result = [];
     if (!empty($meta_result[$resource])) {
         return $meta_result[$resource];
@@ -576,13 +573,8 @@ function data_meta($resource, $items = null) {
     if (data_exists($resource, ".meta")) {
         $meta = data_read($resource, ".meta");
     } else {
-        if ($items === null) {
-            $items = data_read($resource);
-        }
-        $meta = _data_meta_build($items);
-        if ($meta !== false) {
-            data_create($resource, ".meta", $meta);
-        }
+        $meta = _data_meta_build($resource);
+        data_create($resource, ".meta", $meta);
     }
     $meta_result[$resource] = $meta;
     return $meta;
@@ -598,23 +590,8 @@ function data_create_resource($resource, $meta) {
 /*
  * Build meta data by inspecting the entities (not ideal)
  */
-function _data_meta_build($items) {
-   if (empty($items)) {
-        return false;
-    }
-    $meta = array();
-    $fields = array_keys(current($items));
-    $exclude = array("uuid", "salt", "_created_by", "_modified", "_created");
-    $fields = array_diff($fields, $exclude);
-    $fields = array_fill_keys($fields, array('type' => 'text', 'name' => ''));
-    foreach ($fields as $k => $v) {
-        if (!empty($k) && $k[0] === '_') {
-            unset($fields[$k]);
-            continue;
-        }
-        $fields[$k]['name'] = $k;
-    }
-    $meta['fields'] = $fields;
+function _data_meta_build($resource) {
+    $meta = ['fields' => false];
     return $meta;
 }
 
@@ -656,6 +633,9 @@ function data_field_contains($object, $field_name, $val) {
 
 function _data_validate($resource, $uuid, &$data_ls) {
     $result = true;
+    if ($uuid === '.meta') {
+        return $result;
+    }
     $meta = data_meta($resource);
     if (empty($meta['validate'])) {
         return $result;
