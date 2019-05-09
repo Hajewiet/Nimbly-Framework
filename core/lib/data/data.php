@@ -295,6 +295,7 @@ function data_create($resource, $uuid, $data_ls) {
     if (empty($uuid)) {
         return file_exists($dir);
     }
+
     if (_data_validate($resource, $uuid, $data_ls) !== true) {
         return false;
     }
@@ -591,8 +592,7 @@ function data_create_resource($resource, $meta) {
  * Build meta data by inspecting the entities (not ideal)
  */
 function _data_meta_build($resource) {
-    $meta = ['fields' => false];
-    return $meta;
+    return ['fields' => false];
 }
 
 /*
@@ -632,23 +632,24 @@ function data_field_contains($object, $field_name, $val) {
 }
 
 function _data_validate($resource, $uuid, &$data_ls) {
-    $result = true;
     if ($uuid === '.meta') {
-        return $result;
+        return true;
     }
     $meta = data_meta($resource);
     if (empty($meta['validate'])) {
-        return $result;
+        return true;
     }
     $validation_rules = $meta['validate'];
     foreach ($validation_rules as $rule => $fields) {
         foreach ($fields as $field) {
             if ($rule === 'index-auto-suffix') {
-                $result &= _data_index_auto_suffix($resource, $uuid, $data_ls, $field);
+                if (_data_index_auto_suffix($resource, $uuid, $data_ls, $field) !== true) {
+                    return false;
+                }
             }
         }
     }
-    return $result;
+    return true;
 }
 
 function _data_index_auto_suffix($resource, $uuid, &$data_ls, $field) {
