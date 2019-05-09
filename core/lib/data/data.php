@@ -241,7 +241,7 @@ function data_update($resource, $uuid, $data_update_ls) {
     load_library('username', 'user');
     $data_merged_ls['_modified_by'] = md5_uuid(username_get());
     $data_merged_ls['_modified'] = time();
-
+    _data_validate($resource, $uuid, $data_merged_ls);
     if (data_create($resource, $uuid, $data_merged_ls)) {
         return $data_merged_ls;
     }
@@ -295,6 +295,13 @@ function data_create($resource, $uuid, $data_ls) {
     if (empty($uuid)) {
         return file_exists($dir);
     }
+
+    $meta = data_meta($resource); 
+    $validate = empty($meta['validate']) || _data_validate($resource, $uuid, $data_ls);
+    if ($validate !== true) {
+        return false;
+    }
+
     $file = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . $uuid;
     if (isset($data_ls['form-key'])) {
         unset($data_ls['form-key']);
@@ -311,7 +318,6 @@ function data_create($resource, $uuid, $data_ls) {
     $data_ls['uuid'] = $uuid;
     $json_data = json_encode($data_ls, JSON_UNESCAPED_UNICODE);
     if (@file_put_contents($file, $json_data) !== false) {
-        $meta = data_meta($resource);
         if (isset($meta['index']) && is_array($meta['index'])) {
             foreach($meta['index'] as $index_name) {
                 if (empty($data_ls[$index_name])) {
@@ -646,4 +652,43 @@ function data_field_contains($object, $field_name, $val) {
         return true;
     }
     return false;
+}
+
+function _data_validate($resource, $uuid, &$data_ls) {
+    $result = true;
+    $meta = data_meta($resource);
+    if (empty($meta['validate'])) {
+        return $result;
+    }
+    $validation_rules = $meta['validate'];
+    foreach ($validation_rules as $rule => $fields) {
+        foreach ($fields as $field) {
+            if ($rule === 'index-auto-suffix') {
+                $result &= _data_index_auto_suffix($resource, $uuid, $data_ls, $field);
+            }
+        }
+    }
+    return $result;
+}
+
+function _data_index_auto_suffix($resource, $uuid, &$data_ls, $field) {
+    if (empty($data_ls[$field])) {
+        return true;
+    }
+    $field_value = $data_ls[$field];
+    $x = 0;
+    do {
+        $items = data_read_index($resource, $field, md5($data_ls[$field]));
+        if (empty($items)) {
+            return true;
+        }
+
+        if (count($items) === 1 && key($items) === $uuid) {
+            return true; // that's us!
+        }
+
+        // create a new value for this field and try again
+        $x++;
+        $data_ls[$field] = $field_value . '-' . $x;
+    } while (true);
 }

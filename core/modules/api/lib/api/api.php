@@ -115,7 +115,9 @@ function resource_post($resource, $final=true) { // create new
     if (data_exists($resource, $uuid)) {
         return json_result(array('message' => 'RESOURCE_EXISTS'), 409, $final);
     }
-
+    if (!_data_validate($resource, $uuid, $data)) {
+        return json_result(array('message' => 'INVALID_DATA'), 400, $final);  
+    }
     if (data_create($resource, $uuid, $data)) {
         return json_result(array(
             $resource => array($uuid => $data),
