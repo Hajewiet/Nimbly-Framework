@@ -54,12 +54,12 @@ $('body').on('click', 'a[href="#"]', function (e) {
 });
 
 /*  Add click event to elements with a data-link */
-$('[data-link]').click(function () {
+$('body').on('click', '[data-link]', function () {
     window.location.href = $(this).data('link');
 });
 
 /*  Add click event to elements with a data-mailto */
-$('[data-mailto]').click(function () {
+$('body').on('click', '[data-mailto]', function () {
     $lnk = $(this).clone();
     $lnk.find('span span,i,b,strong,small').remove();
     window.location.href = 'mailto:' + $lnk.text();
@@ -67,13 +67,11 @@ $('[data-mailto]').click(function () {
 });
 
 /*  Add click event to a elements with a data-submit */
-$('a[data-submit],button[data-submit]').on("click", (function (e) {
+$('body').on('click', 'a[data-submit],button[data-submit]', function (e) {
     e.preventDefault();
     var me = $(this);
-    if (me.data('confirm') !== undefined) {
-        if (confirm(me.data('confirm')) !== true) {
-            return;
-        }
+    if (me.data('confirm') !== undefined && confirm(me.data('confirm')) !== true) {
+        return;
     }
     var frm = me.data('submit');
     var redirect_url = me.attr('href');
@@ -97,7 +95,7 @@ $('a[data-submit],button[data-submit]').on("click", (function (e) {
             }
         }
     });
-}));
+});
 
 function trigger_validate(frm) {
     if (!frm[0].checkValidity()) {
