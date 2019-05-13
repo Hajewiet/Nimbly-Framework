@@ -38,9 +38,9 @@ if (false === file_put_contents($htaccess_file, $htaccess_content)) {
 
 $sitename = post_get("sitename");
 set_variable('site-name', $sitename);
-$tpl_file = $GLOBALS['SYSTEM']['file_base'] . 'ext/tpl/site-name';
+$tpl_file = $GLOBALS['SYSTEM']['file_base'] . 'ext/tpl/init';
 @mkdir($tpl_file, 0750, true);
-if (false == file_put_contents($tpl_file . '/index.tpl', $sitename)) {
+if (false == file_put_contents($tpl_file . '/index.tpl', '[set site-name="' . $sitename . '"]')) {
   set_variable("sitename_ok", "fail");
 } else {
   set_variable("sitename_ok", "ok");
@@ -64,7 +64,7 @@ if (false === file_put_contents($readme_file, $readme_content)) {
  */
 
 $gitignore_content = run_buffered(realpath(dirname(__FILE__)) . "/.gitignore.tpl");
-$gitignore_content = $GLOBALS['SYSTEM']['file_base'] . 'ext/..gitigore';
+$gitignore_file = $GLOBALS['SYSTEM']['file_base'] . 'ext/.gitignore';
 if (false === file_put_contents($gitignore_file, $gitignore_content)) {
     set_variable("gitignore_ok", "fail");
 } else {
