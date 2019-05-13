@@ -40,7 +40,11 @@ $sitename = post_get("sitename");
 set_variable('site-name', $sitename);
 $tpl_file = $GLOBALS['SYSTEM']['file_base'] . 'ext/tpl/site-name';
 @mkdir($tpl_file, 0750, true);
-@file_put_content($tpl_file . '/index.tpl', $sitename);
+if (false == file_put_contents($tpl_file . '/index.tpl', $sitename)) {
+  set_variable("sitename_ok", "fail");
+} else {
+  set_variable("sitename_ok", "ok");
+}
 
 /*
  * Create readme file
