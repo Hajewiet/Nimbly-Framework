@@ -1,6 +1,9 @@
 <p>
 <ul>
+	<li>Site name: [site-name]</li>
     <li>[text htaccess_created_[htaccess_ok]]</li>
+    <li>[text readme_created_[raedme_ok]]</li>
+    <li>[text gitignore_created_[gitignore_ok]]</li>
     <li>[text user_created_[user_ok]]</li>
 </ul>
 </p>

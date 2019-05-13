@@ -70,6 +70,18 @@ msgstr = "Successfully configured main htaccess file."
 msgid = "htaccess_created_fail"
 msgstr = "Could not create or overwrite htaccess file. Please configure the htaccess file manually."
 
+msgid = "readme_created_ok"
+msgstr = "Successfully created readme.md file"
+
+msgid = "readme_created_fail"
+msgstr = "Could not create or overwrite readme file. Please create or modify the file manually."
+
+msgid = "gitignore_created_ok"
+msgstr = "Successfully created gitignore file"
+
+msgid = "gitignore_created_fail"
+msgstr = "Could not create or overwrite gitignore file. Please create or modify the file manually."
+
 msgid = "user_created_ok"
 msgstr = "Created admin account with email <strong>[get sticky.email]</strong>."
 

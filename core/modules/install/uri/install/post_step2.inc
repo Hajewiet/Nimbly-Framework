@@ -32,14 +32,22 @@ if (false === file_put_contents($htaccess_file, $htaccess_content)) {
     set_variable("htaccess_ok", "ok");
 }
 
-/*
- * Create readme file
+/* 
+ * Persist site name
  */
 
 $sitename = post_get("sitename");
 set_variable('site-name', $sitename);
+$tpl_file = $GLOBALS['SYSTEM']['file_base'] . 'ext/tpl/site-name';
+@mkdir($tpl_file, 0750, true);
+@file_put_content($tpl_file . '/index.tpl', $sitename);
+
+/*
+ * Create readme file
+ */
+
 $readme_content = run_buffered(realpath(dirname(__FILE__)) . "/readme.md.tpl");
-$readme_file = $GLOBALS['SYSTEM']['file_base'] . '.htaccess';
+$readme_file = $GLOBALS['SYSTEM']['file_base'] . 'ext/readme.md';
 if (false === file_put_contents($readme_file, $readme_content)) {
     set_variable("readme_ok", "fail");
 } else {
@@ -52,7 +60,7 @@ if (false === file_put_contents($readme_file, $readme_content)) {
  */
 
 $gitignore_content = run_buffered(realpath(dirname(__FILE__)) . "/.gitignore.tpl");
-$gitignore_content = $GLOBALS['SYSTEM']['file_base'] . '.gitigone';
+$gitignore_content = $GLOBALS['SYSTEM']['file_base'] . 'ext/..gitigore';
 if (false === file_put_contents($gitignore_file, $gitignore_content)) {
     set_variable("gitignore_ok", "fail");
 } else {
