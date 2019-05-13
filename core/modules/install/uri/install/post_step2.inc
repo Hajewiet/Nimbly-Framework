@@ -33,6 +33,34 @@ if (false === file_put_contents($htaccess_file, $htaccess_content)) {
 }
 
 /*
+ * Create readme file
+ */
+
+$sitename = post_get("sitename");
+set_variable('site-name', $sitename);
+$readme_content = run_buffered(realpath(dirname(__FILE__)) . "/readme.md.tpl");
+$readme_file = $GLOBALS['SYSTEM']['file_base'] . '.htaccess';
+if (false === file_put_contents($readme_file, $readme_content)) {
+    set_variable("readme_ok", "fail");
+} else {
+    chmod($readme_file, 0640);
+    set_variable("readme_ok", "ok");
+}
+
+/*
+ * Create .gitignore file
+ */
+
+$gitignore_content = run_buffered(realpath(dirname(__FILE__)) . "/.gitignore.tpl");
+$gitignore_content = $GLOBALS['SYSTEM']['file_base'] . '.gitigone';
+if (false === file_put_contents($gitignore_file, $gitignore_content)) {
+    set_variable("gitignore_ok", "fail");
+} else {
+    chmod($gitignore_file, 0640);
+    set_variable("gitignore_ok", "ok");
+}
+
+/*
  * Create core routes
  */
 
