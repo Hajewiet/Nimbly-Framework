@@ -41,10 +41,12 @@ set_variable('site-name', $sitename);
 $tpl_file = $GLOBALS['SYSTEM']['file_base'] . 'ext/tpl/init';
 @mkdir($tpl_file, 0750, true);
 $tpl_file .= '/index.tpl';
-if (!file_exists($tpl_file) && !file_put_contents($tpl_file . '/index.tpl', '[set site-name="' . $sitename . '"]')) {
-  set_variable("sitename_ok", "fail");
-} else {
+if (file_exists($tpl_file)) {
   set_variable("sitename_ok", "ok");
+} else if (file_put_contents($tpl_file, '[set site-name="' . $sitename . '"]')) {
+  set_variable("sitename_ok", "ok");
+} else {
+  set_variable("sitename_ok", "fail");
 }
 
 /*
