@@ -88,7 +88,8 @@ $routes = [
     ["route" => "admin/(resource)/add", "order" => 300],
     ["route" => "admin/pages/(id)", "order" => 200],
     ["route" => "admin/files/(id)", "order" => 200],
-    ["route" => "img/(id)", "order" => 500]
+    ["route" => "img/(id)", "order" => 500],
+    ["route" => "password-reset/(uuid)/(key)", "order" => 200]
 ];
 
 foreach ($routes as $route) {
