@@ -83,16 +83,21 @@ $('body').on('click', 'a[data-submit],button[data-submit]', function (e) {
     $.ajax({
         type: 'post',
         url: $(frm).attr('action'),
-        data: $(frm).serialize(),
-        success: function (data) {
-            if (typeof (redirect_url) !== "undefined") {
-                window.location.href = redirect_url;
-            } else {
-                me.removeClass("in-progress").addClass("success");
-                if (trigger_event !== "undefined") {
-                    $(document).trigger(trigger_event, data);
-                }
+        data: $(frm).serialize()
+    }).done(function(data) {
+        console.log('xhr success', data);
+        if (typeof (redirect_url) !== "undefined" && redirect_url !== '#' && redirect_url !== '.') {
+            window.location.href = redirect_url;
+        } else {
+            me.removeClass("in-progress").addClass("success");
+            if (trigger_event && trigger_event !== "undefined") {
+                $(document).trigger(trigger_event, data);
             }
+        }
+    }).fail(function(xhr, status, errorThrown) {
+        console.log('submit fail', xhr, status, errorThrown);
+        if ('message' in xhr.responseJSON) {
+            api_then({"msg": xhr.responseJSON.message});
         }
     });
 });
