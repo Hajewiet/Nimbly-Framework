@@ -14,16 +14,24 @@ if (empty($user)) {
 	return json_result(['message' => $msg] , 200);
 }
 
-load_library('email');
+load_libraries(['url', 'email', 'log']);
+if ($user['email'] !== $email) {
+	log_system('Error: entered email does not match user email');
+	return json_result(['message' => $msg] , 200);
+}
+
 set_variable('name', $user['name']);
 set_variable('email', $email);
 set_variable('url', url_absolute('password-reset'));
 $cfg = data_read('.settings', 'password-reset-email');
 if (empty($cfg)) {
 	log_system('Error: could not send email. setting `password-reset-email` is empty');
-	return;
+	return json_result(['message' => $msg] , 200);
 }
-$cfg['recipient'] = $data['email'];
+$cfg['recipient'] = $email;
 if (!email($cfg)) {
 	log_system('Error: could not send email. Email function failed.');
+	return json_result(['message' => $msg] , 200);
 }  
+
+return json_result(['message' => $msg] , 200);
