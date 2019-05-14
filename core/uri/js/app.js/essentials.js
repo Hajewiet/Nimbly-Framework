@@ -76,7 +76,9 @@ $('body').on('click', 'a[data-submit],button[data-submit]', function (e) {
     var frm = me.data('submit');
     var redirect_url = me.attr('href');
     var trigger_event = me.data("trigger");
-    if (trigger_validate($(frm))) {
+    $frm = $(frm);
+    $frm.find('div.form-alert').remove();
+    if (trigger_validate($frm)) {
         return;
     }
     me.addClass("in-progress");
@@ -97,7 +99,8 @@ $('body').on('click', 'a[data-submit],button[data-submit]', function (e) {
     }).fail(function(xhr, status, errorThrown) {
         console.log('submit fail', xhr, status, errorThrown);
         if ('message' in xhr.responseJSON) {
-            api_then({"msg": xhr.responseJSON.message});
+            //api_then({"msg": xhr.responseJSON.message});
+            $frm.append('<div class="form-alert">' + xhr.responseJSON.message + '</div>');
         }
     });
 });
