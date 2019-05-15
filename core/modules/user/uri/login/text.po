@@ -3,6 +3,3 @@ msgstr "Invalid email or password. Please try again."
 
 msgid "validate_login_failed"
 msgstr "Oops. Could not login."
-
-msgid "user_logged_out"
-msgstr "You have been logged out"

@@ -1,0 +1,2 @@
+msgid "user_logged_out"
+msgstr "You have been logged out"
