@@ -41,7 +41,12 @@ $('body').on('click', '[data-modal]', function(e) {
 
 // handle modal select (single)
 $('body').on('click', '#modal [data-select] [data-uuid]', function () {
-    modal.handle_select($(this));
+    var opts = modal.options;
+    opts.uuid = $(this).data('uuid');
+    opts.modal_uid = $('#modal').data('uid');
+    opts.name = $(this).data('name');
+    modal.close();
+    $(document).trigger('data-select', opts);
 });
 
 $('body').on('click', '#modal', function(e) {
@@ -93,19 +98,10 @@ modal.handle_img_upload_done = function(data) {
     $img.attr('src', base_url + '/img/' + data.data.uuid + '/100x50f');
     $('.file-upload-row .file-upload-row-buttons .nb-close').removeClass('nb-close');
     modal.reset_img_select();
-    var uuid = data.data.uuid;
-    var name = data.data.name;
-    var p = $urow.closest('[data-select]');
-    var old_uuid = p.data('select');
-    p.find("[data-uuid='" + old_uuid + "']").removeClass('selected');
-    p.data('select', uuid);
-    p.attr('data-select', uuid);
-    $urow.addClass('selected');
     var opts = modal.options;
-    opts.uuid = uuid;
+    opts.uuid = data.data.uuid;
     opts.modal_uid = $('#modal').data('uid');
-    opts.prev = old_uuid;
-    opts.name = name;
+    opts.name = data.data.name;
     modal.close();
     $(document).trigger('data-select', opts);
 }

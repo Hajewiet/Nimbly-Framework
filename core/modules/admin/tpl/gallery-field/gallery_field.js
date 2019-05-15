@@ -17,7 +17,7 @@ gallery_field.init = function(opts) {
 	$table.on('click', 'a[data-move-down]', gallery_field.move_down);
 	gallery_field.refresh($table);
 	$(document).on(opts.name + '_upload', gallery_field.handle_upload);
-	$(document).on('data-select', gallery_field.handle_image_select)
+	$(document).on('data-select', gallery_field.handle_image_select);
 }
 
 gallery_field.data_context = function(opts, x) {
@@ -148,6 +148,19 @@ gallery_field.add_data = function($table, img_uuid, img_name) {
 	gallery_field.refresh($table);
 }
 
+gallery_field.update_data = function(data) {
+	var $img = $('[data-edit-uuid=' + data.resource_uuid + '] img[data-edit-img=' + data.modal_uid + ']');
+	var $row = $img.closest('tr');
+  	$table = $row.closest('table').find('tbody');
+  	var opts = $table.data('opts');
+  	var ix = parseInt($img.closest('tr').find('td:first').text()) - 1;
+  	opts.images[ix] = data.uuid;
+  	opts.image_names[ix] = data.name;
+  	$table.data('opts', opts);
+  	gallery_field.update_row($table, $row, ix);
+  	gallery_field.refresh($table);
+}
+
 gallery_field.handle_upload = function(e, data) {
 	$uploader = $('#' + e.type);
 	if (data.event === 'preview') {
@@ -168,9 +181,14 @@ gallery_field.handle_upload = function(e, data) {
 }
 
 gallery_field.handle_image_select = function(e, data) {
+	if (!data.uuid || !data.name) {
+		return;
+	}
 	$selectbtn = $('#' + data.uid);
-	if (data.uuid && data.name) {
+	if ($selectbtn.length === 1) {
 		$table = $selectbtn.closest('table').find('tbody');
 		gallery_field.add_data($table, data.uuid, data.name);
+	} else {
+		gallery_field.update_data(data);
 	}
 }

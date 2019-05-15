@@ -478,6 +478,7 @@ $(document).on('data-select', function(e, o) {
     img.attr('src', base_url + '/img/' + o.uuid + '/medium');
     img.data('edit-changed', true);
     img.data('img-uuid', o.uuid);
+    img.attr('data-img-uuid', o.uuid);
     img.data('empty', false);
     img.siblings('.clear-img-icon').removeClass('nb-close');
     editor.inputs++;
