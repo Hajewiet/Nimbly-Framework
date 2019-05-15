@@ -8,7 +8,14 @@ modal.open = function(opts) {
         modal.create();
     }
     $('#modal').data('uid', opts.uid);
-    $('#modal-content').load(base_url + '/.modal/' + opts.url);
+    $('#modal').data('original-url', window.location.href);
+    $('#modal-content').html('');
+    $('#modal-content').load(base_url + '/.modal/' + opts.url, function() {
+        var ctx = {
+            'original_url' : window.location.pathname.substr(1)
+        };
+        $('#modal-content').html(nb_populate_template('modal-content', ctx));    
+    });
     $('#modal').removeClass('nb-close');
     modal.active = true;
     modal.options = opts;

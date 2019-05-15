@@ -1,8 +1,11 @@
 <?php
 
 function get_user_sc($params) {
-	$uuid = get_param_value($params, 'uuid', current($params));
-	return get_user($uuid);
+	$uuid = get_param_value($params, 'uuid', false);
+	$user = get_user($uuid);
+	load_library('set');
+	$var = get_param_value($params, 'var', 'user');
+	set_variable_dot($var, $user);
 }
 
 function get_user($uuid=false) {

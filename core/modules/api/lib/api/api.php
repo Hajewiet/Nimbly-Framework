@@ -64,6 +64,9 @@ function api_json_input($resource) {
         $data['salt'] = salt_sc();
         $fs = explode(',', $meta['encrypt']);
         foreach ($fs as $f) {
+            if (!isset($data[$f])) {
+                continue;
+            }
             $data[$f] = encrypt($data[$f], $data['salt']);
         }
     }
