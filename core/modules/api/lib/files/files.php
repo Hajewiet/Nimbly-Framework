@@ -35,6 +35,13 @@ function files_post() { // create a new file and it's meta data
         $exif_data = exif_get($from);
         $meta = array_merge($meta, $exif_data);
     }
+    if (exif_imagetype($from) !== false) {
+        list($width, $height) = getimagesize($from);
+        $meta['width'] = $width;
+        $meta['height'] = $height;
+        $meta['orientation'] = $width >= $height ? 'landscape' : 'portrait';
+        $meta['aspect_ratio'] = $width / $height;
+    }
     if (data_create('.files_meta', $uuid, $meta) && move_uploaded_file($from, $dir . $uuid) === true) {
         return json_result(array("files" => $meta, 'count' => 1, 'message' => 'RESOURCE_CREATED'), 201);
     }
