@@ -25,6 +25,7 @@
     position: relative;
     border-radius: 4px;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
 
     @include breakpoint(tablet) {
         padding: 50px 40px 40px;
