@@ -1,24 +1,24 @@
 <?php
 
 function uuid2name_sc($params) {
+	static $results = [];
 	$resource = get_param_value($params, 'resource', current($params));
 	$uuid = get_param_value($params, 'uuid', end($params));
+	$hkey = md5($resource . $uuid);
+	if (isset($results[$hkey])) {
+		echo $results[$hkey];
+		return;
+	}
 	$data = data_read($resource, $uuid);
 	if (empty($data)) {
-		echo '(Empty)';
-		return;
+		$result = '(Empty)';
+	} else if (isset($data['title'])) {
+		$result = $data['title'];
+	} else if (isset($data['name'])) {
+		$result = $data['name'];
+	} else if (!empty($uuid) && !empty($resource)) {
+		$result = $resource . '.' . $uuid;
 	}
-	if (isset($data['title'])) {
-		echo $data['title'];
-		return;
-	}
-	if (isset($data['name'])) {
-		echo $data['name'];
-		return;
-	}
-	if (!empty($uuid) && !empty($resource)) {
-		echo $resource . '.' . $uuid;
-		return;
-	}
-	echo '(Unknown)';
+	$results[$hkey] = $result;
+	echo $result;
 }

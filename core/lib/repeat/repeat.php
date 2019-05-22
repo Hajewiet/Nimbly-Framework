@@ -16,8 +16,9 @@ function repeat_sc($params) {
     
     if (get_param_value($params, "num", false) !== false) {
         $max = intval(get_param_value($params, "num", 0));
+        $start = intval(get_param_value($params, "start", 1));
         $data = [];
-        for ($i = 1; $i <= $max; $i++) {
+        for ($i = $start; $i <= $max; $i++) {
             $data[$i] = $i;
         }
     } else if (!is_array($data) && is_string($data)) {
