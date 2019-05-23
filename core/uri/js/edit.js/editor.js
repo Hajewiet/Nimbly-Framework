@@ -9,8 +9,12 @@ editor.active = null;
 editor.autoenabled = false;
 editor.modal_uuid = null;
 editor.autosave = true;
+editor.init_done = false;
 
 editor.enable = function(e) {
+  if (editor.init_done === false) {
+    editor.init();
+  }
   if (editor.enabled === true) {
     return;
   }
@@ -172,11 +176,19 @@ editor._in_scope = function($scope, elem) {
   return $scope[0] === $elem_scope[0];
 };
 
-if (
-  $('[data-edit-field]').length ||
-  $('[data-edit-img]').length ||
-  $('[data-edit-wysiwyg]').length
-) {
+
+editor.init = function() {
+  if (editor.init_done === true) {
+    return;
+  }
+  if ($('[data-edit-field]').length < 1 
+    && $('[data-edit-img]').length < 1  
+    && $('[data-edit-wysiwyg]').length < 1) {
+    return;
+  }
+
+  editor.init_done = true;
+  
   // load medium editor style sheet
   $('head').append('<link>');
   var css = $('head').children(':last');
@@ -531,3 +543,5 @@ $(document).mousedown(function(event) {
 
   editor.disable();
 });
+
+editor.init();

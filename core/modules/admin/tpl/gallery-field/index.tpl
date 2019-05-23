@@ -6,12 +6,7 @@
 	<tfoot>
 		<tr>
 			<td colspan=4 id="[item.key]_upload">
-				<div style="position:relative; height: 20px; margin-bottom: 20px;" class="progress-wrapper nb-close">
-					<div class="progress-bar-bg">
-						<div class="progress-bar" style="width:0%");></div>
-					</div>
-					<div class="progress-bar-text"></div>
-				</div>
+				[progress-bar]
 				<button class="nb-button" data-upload='{"trigger": "[item.key]_upload"}'>Upload photo</button>
 				<button class="nb-button" id="[item.key]_select" data-modal='{"url": "img-select", "uid": "[item.key]_select"}'>Select photo</button>
 			</td>

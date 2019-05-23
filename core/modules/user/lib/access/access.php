@@ -190,6 +190,11 @@ function _persist_user_features($name) {
             $_SESSION['features'][$v] = true;
         }
     }
+    $_SESSION['features']['api_put_users_' . md5($name)] = true;
+    if (user_has_role($name, 'admin')) {
+        $_SESSION['features']['(none)'] = false;
+        $_SESSION['features']['(all)'] = true;
+        }
 }
 
 function timesafe_strcmp($safe, $user) {
