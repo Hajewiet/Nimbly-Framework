@@ -245,6 +245,10 @@ editor.init = function() {
 
     $('body').on('click', 'a[data-clear-img]', function(e) {
       e.preventDefault();
+      var me = $(this);
+      if (me.data('confirm') !== undefined && confirm(me.data('confirm')) !== true) {
+        return;
+      }
       var $img = $(this).siblings('img:first');
       var uuid = $img.data('img-uuid');
       $img.data('edit-changed', true);
@@ -364,13 +368,13 @@ editor.enable_img = function(elem, ix) {
     elem
       .parent()
       .append(
-        '<a href="#" class="clear-img-icon nb-button icon-button nb-close" data-clear-img></a>'
+        '<a href="#" class="clear-img-icon nb-button icon-button nb-close" data-clear-img data-confirm="Press OK to delete image."></a>'
       );
   } else {
     elem
       .parent()
       .append(
-        '<a href="#" class="clear-img-icon nb-button icon-button delete" data-clear-img></a>'
+        '<a href="#" class="clear-img-icon nb-button icon-button delete" data-clear-img data-confirm="Press OK to delete image."></a>'
       );
   }
 
