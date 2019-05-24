@@ -136,7 +136,8 @@ function persist_login($email, $password) {
     load_library('encrypt');
     $pw_typed = encrypt($password, $user_data['salt']);
     $pw_stored = $user_data['password'];
-    if (timesafe_strcmp($pw_stored, $pw_typed) !== true) {
+    //hash_equals: time safe
+    if (hash_equals($pw_stored, $pw_typed) !== true) { 
         //password fail
         return persist_login_error();
     } else if (_persist_user_roles($email)) {
@@ -195,18 +196,6 @@ function _persist_user_features($name) {
         $_SESSION['features']['(none)'] = false;
         $_SESSION['features']['(all)'] = true;
         }
-}
-
-function timesafe_strcmp($safe, $user) {
-    $safe .= chr(0);
-    $user .= chr(0);
-    $safe_len = strlen($safe);
-    $user_len = strlen($user);
-    $result = $safe_len - $user_len;
-    for ($i = 0; $i < $user_len; $i++) {
-        $result |= (ord($safe[$i % $safe_len]) ^ ord($user[$i]));
-    }
-    return $result === 0;
 }
 
 function user_has_role($username, $role) {

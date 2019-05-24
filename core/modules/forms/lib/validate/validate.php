@@ -98,7 +98,10 @@ function _validate_email($input) {
 function _validate_password($input) {
     $result = _validate_length($input);
     if ($result !== true) {
-        return $result;
+      return $result;
+    }
+    if (strlen($input) < 5) {
+      return "[text validate_too_short]";
     }
     return true;
 }
