@@ -21,7 +21,7 @@ if ($user['email'] !== $email) {
 	return json_result(['message' => $msg] , 200);
 }
 
-run_template('[init-email]');
+run_single_sc('init-email');
 load_libraries(['url', 'email', 'log', 'uuid']);
 $reset_token = $user['password_reset_token'] ?? uuid_sc();
 $user['password_reset_token'] = $reset_token;

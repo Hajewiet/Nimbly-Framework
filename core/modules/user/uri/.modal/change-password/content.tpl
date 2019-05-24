@@ -1,6 +1,6 @@
 <h3 class="modal-caption">Create new password</h3>
 <a data-close="#modal" class="icon-close">×</a>
-<div class="signup-wrapper">
+<div class="form-wrapper">
     <form name="change-password" action="[url]" method="post" accept-charset="utf-8">
         [form-key change-password]
         <label>

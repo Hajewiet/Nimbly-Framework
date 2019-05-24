@@ -24,7 +24,6 @@
 
 <script>
     $(document).on('modal_password_reset', function(e, data) {
-        console.log('modal_password_reset', data);
         $('#modal form[name=forgot-password]').addClass('nb-close');
         $('#password-reset-success-message').removeClass('nb-close');
     });

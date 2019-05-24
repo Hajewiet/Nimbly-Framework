@@ -1,0 +1,2 @@
+msgid "validate_invalid_email_or_password"
+msgstr "Invalid email or password. Please try again."

@@ -1,6 +1,5 @@
 [module user forms]
-[set page-title="Reset your password"]
+[set page-title="Your email has been changed"]
 [set login-url="(empty)"]
 [init]
-[post]
 [html]
