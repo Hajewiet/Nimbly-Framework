@@ -61,8 +61,8 @@ function thumbnail_create($uuid, $size, $ratio=0, $mode='h') {
     $asp = $org_w / $org_h;
     $org_x = 0;
     $org_y = 0;
-    $max_w = min(get_variable('img_max_w', 1920), $org_w * $MAX_UPSCALE); // max enlarging
-    $max_h = min(get_variable('img_max_h', 1080), $org_h * $MAX_UPSCALE);
+    $max_w = min(get_variable('max_img_w', 1920), $org_w * $MAX_UPSCALE); // max enlarging
+    $max_h = min(get_variable('max_img_h', 1080), $org_h * $MAX_UPSCALE);
 
     //3: Calc thumbnail size given height and aspect ratio
     $no_ratio = empty($ratio) || ($ratio < 0) || (abs($asp - $ratio) < 0.01) || $mode === 'f';
