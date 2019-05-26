@@ -165,7 +165,7 @@ function _data_read_all($resource, $setting = null) {
 }
 
 function data_indexed($resource, $index_name, $index_uuid) {
-    return file_exists($GLOBALS['SYSTEM']['data_base'] . '/' . $resource '/' . $index_name . '/' . $index_uuid);
+    return file_exists($GLOBALS['SYSTEM']['data_base'] . '/' . $resource . '/' . $index_name . '/' . $index_uuid);
 }
 
 function data_read_index($resource, $index_name, $index_uuid) {
