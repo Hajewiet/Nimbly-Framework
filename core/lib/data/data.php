@@ -1,7 +1,6 @@
 <?php
 
 $GLOBALS['SYSTEM']['data_base'] = $GLOBALS['SYSTEM']['file_base'] . 'ext/data';
-load_library('data-sort');
 
 /**
  * Implements [data] shortcode
@@ -29,6 +28,7 @@ function data_sc($params) {
 
     $sort = get_param_value($params, "sort", false);
     if ($sort) {
+        load_library('data-sort');
         $result = data_sort_param($result, $sort);
     }
 
@@ -42,8 +42,9 @@ function data_sc($params) {
         $result = data_filter($result, $filter);
     }
 
-    load_library("set");
+    
     $data_var = data_var($resource, $uuid, $op);
+    load_library('set');
     set_variable($data_var, $result);
     if (!empty($uuid) && !empty($var_id)) {
         set_variable_dot($var_id, $result);
@@ -129,7 +130,7 @@ function data_read($resource, $uuid = null, $field = null) {
 }
 
 function data_cached_read($resource, $uuid = null, $field = null) {
-    load_library("get");
+    load_library('get');
     $data_var = data_var($resource, $uuid);
     $result = get_variable($data_var);
     if (empty($result)) {
@@ -163,6 +164,10 @@ function _data_read_all($resource, $setting = null) {
     return $result;
 }
 
+function data_indexed($resource, $index_name, $index_uuid) {
+    return file_exists($GLOBALS['SYSTEM']['data_base'] . '/' . $resource '/' . $index_name . '/' . $index_uuid);
+}
+
 function data_read_index($resource, $index_name, $index_uuid) {
     $result = array();
     $path = $GLOBALS['SYSTEM']['data_base'] . '/' . $resource;
@@ -174,6 +179,7 @@ function data_read_index($resource, $index_name, $index_uuid) {
     if (!is_array($ixs)) {
         return $result;
     }
+    load_library('md5');
     foreach ($ixs as $ix) {
         if ($ix[0] === '.') {
             continue;
@@ -182,7 +188,7 @@ function data_read_index($resource, $index_name, $index_uuid) {
             continue;
         }
         $item = data_read($resource, $ix);
-        if (isset($item[$index_name]) && md5($item[$index_name]) === $index_uuid) {
+        if (isset($item[$index_name]) && md5_uuid($item[$index_name]) === $index_uuid) {
             $result[$ix] = $item;
         } else { 
             //remove index, it's not valid anymore.
@@ -252,7 +258,8 @@ function data_update_pk($resource, $uuid, $pk_value) {
     if (empty($pk_value)) {
         return $uuid;
     }
-    $new_uuid = md5($pk_value);
+    load_library('md5');
+    $new_uuid = md5_uuid($pk_value);
     if ($new_uuid === $uuid) {
         return $uuid;
     }
@@ -317,11 +324,12 @@ function data_create($resource, $uuid, $data_ls) {
     if (@file_put_contents($file, $json_data) !== false) {
         $meta = data_meta($resource); 
         if (isset($meta['index']) && is_array($meta['index'])) {
+            load_library('md5');
             foreach($meta['index'] as $index_name) {
                 if (empty($data_ls[$index_name])) {
                     continue;
                 }
-                $index_uuid = md5($data_ls[$index_name]);
+                $index_uuid = md5_uuid($data_ls[$index_name]);
                 if ($index_uuid === $uuid) {
                     continue; // no need to index
                 }
@@ -373,7 +381,7 @@ function data_delete($resource, $uuid = null) {
                     if (empty($data_ls[$index_name])) {
                         continue;
                     }
-                    $index_uuid = md5($data_ls[$index_name]);
+                    $index_uuid = md5_uuid($data_ls[$index_name]);
                     $result += _data_delete_index($file, $index_name, $index_uuid);
                 }
             }   
@@ -457,6 +465,7 @@ function data_search($data, $term, $level = 0) {
         }
     }
     if ($level === 0) {
+        load_library('data-sort');
         $result = data_sort_numeric($result, 'search_score', SORT_DESC);
         return $result;
     }
@@ -659,7 +668,7 @@ function _data_index_auto_suffix($resource, $uuid, &$data_ls, $field) {
     $field_value = $data_ls[$field];
     $x = 0;
     do {
-        $items = data_read_index($resource, $field, md5($data_ls[$field]));
+        $items = data_read_index($resource, $field, md5_uuid($data_ls[$field]));
         if (empty($items)) {
             return true;
         }
